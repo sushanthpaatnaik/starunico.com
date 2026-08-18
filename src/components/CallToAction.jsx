@@ -10,15 +10,15 @@ export default function CallToAction({
   return (
     <section className="py-20 sm:py-28">
       <div className="container-page">
-        <div className="relative isolate overflow-hidden rounded-3xl bg-slate-900 px-6 py-20 text-center sm:px-16 dark:bg-slate-900/80 dark:ring-1 dark:ring-slate-800">
+        <div className="relative isolate overflow-hidden rounded-3xl bg-neutral-950 px-6 py-20 text-center sm:px-16 dark:bg-neutral-900/60 dark:ring-1 dark:ring-neutral-800">
           <div
             aria-hidden="true"
-            className="absolute -top-24 left-1/2 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-600 to-teal-500 opacity-25 blur-3xl"
+            className="absolute -top-24 left-1/2 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 opacity-25 blur-3xl"
           />
           <h2 className="text-3xl font-bold tracking-tight text-balance text-white sm:text-4xl">
             {title}
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-pretty text-slate-300">{description}</p>
+          <p className="mx-auto mt-4 max-w-xl text-pretty text-neutral-300">{description}</p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button to={primary.to} size="lg" variant="onDark" className="w-full sm:w-auto">
               {primary.label}

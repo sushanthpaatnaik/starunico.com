@@ -1,7 +1,9 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  // Must match the Worker name in Cloudflare, or Workers Builds overrides it
-  // and opens a pull request to reconcile the two.
+  // Cloudflare resource id, NOT the public domain — the site is served at
+  // starunicocapital.com. This must keep matching the Worker's name in the
+  // Cloudflare dashboard; renaming it here alone would deploy to a different
+  // Worker that has no custom domain attached.
   "name": "starunico-com",
   "main": "worker/index.js",
   "compatibility_date": "2026-08-18",
@@ -24,7 +26,8 @@
     "run_worker_first": ["/api", "/api/*"]
   },
 
-  // https://starunico-com.<your-account-subdomain>.workers.dev
+  // Public site: https://starunicocapital.com
+  // Also reachable at https://starunico-com.<account-subdomain>.workers.dev
   "workers_dev": true,
   // Per-branch preview URLs for non-production branch builds.
   "preview_urls": true,

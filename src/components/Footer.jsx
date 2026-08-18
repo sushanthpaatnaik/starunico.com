@@ -10,7 +10,7 @@ const legal = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50">
+    <footer className="border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/50">
       <div className="container-page py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           <div className="lg:col-span-1">
@@ -18,7 +18,7 @@ export default function Footer() {
               <Logo className="h-8 w-auto" />
               <span className="text-lg font-semibold tracking-tight">{site.name}</span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-slate-600 dark:text-slate-400">
+            <p className="mt-4 max-w-xs text-sm text-neutral-600 dark:text-neutral-400">
               {site.descriptor}
             </p>
           </div>
@@ -28,7 +28,7 @@ export default function Footer() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                  className="text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
                 >
                   {item.name}
                 </Link>
@@ -42,7 +42,7 @@ export default function Footer() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                  className="text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
                 >
                   {item.name}
                 </a>
@@ -51,13 +51,13 @@ export default function Footer() {
           </FooterColumn>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row dark:border-slate-800">
-          <p className="text-sm text-slate-500 dark:text-slate-500">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row dark:border-neutral-800">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <a
             href={`mailto:${site.email}`}
-            className="text-sm text-slate-500 transition hover:text-slate-900 dark:hover:text-white"
+            className="text-sm text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
           >
             {site.email}
           </a>
@@ -70,7 +70,7 @@ export default function Footer() {
 function FooterColumn({ title, children }) {
   return (
     <div>
-      <h3 className="text-sm font-semibold tracking-wider text-slate-900 uppercase dark:text-white">
+      <h3 className="text-sm font-semibold tracking-wider text-neutral-900 uppercase dark:text-white">
         {title}
       </h3>
       <ul className="mt-4 space-y-3 text-sm">{children}</ul>

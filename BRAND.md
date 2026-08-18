@@ -111,12 +111,30 @@ Philosophy · Proprietary Capital · Sectors · Partnering · Contact
 Five items. Proprietary Capital is given its own page because the capital structure is
 the differentiation, not a footnote.
 
+## Colour
+
+**White + green + black.** Green is the only hue on the site; everything else is a true
+neutral ramp with no blue tint (`neutral-*`, not `slate-*`). Keep it that way — a second
+accent colour would undo the discipline the palette is doing.
+
+| Use | Light | Dark |
+| --- | --- | --- |
+| Page | white | `neutral-950` (#0b0b0b) |
+| Body text | `neutral-600` / `neutral-700` | `neutral-400` |
+| Headings | `neutral-900` | `neutral-100` |
+| Green text, small | `brand-700` (6.7:1) | `brand-400` / `brand-500` (5.0:1) |
+| Primary button | `brand-700` bg, white text | `brand-500` bg, `neutral-950` text |
+
+The green flips direction between themes: `brand-700` is legible on white but only 2.3:1
+on black, and `brand-500` is the reverse. Every green needs both a light and a dark value.
+All visible text measures at or above WCAG AA in both themes; the lowest is 6.4:1.
+
 ## Open items
 
-- **Domain.** The brand brief names `starunicocapital.com`; this repository and the
-  Cloudflare Worker are `starunico.com`. Decide which is canonical and redirect the other.
-- **Contact address.** `contact@starunicocapital.com` is a placeholder in `site.js`.
 - **Logo.** `public/logo.svg` is a placeholder mark in the brand green, awaiting the real
-  artwork.
+  artwork. Replacing that one file updates the header, footer and favicon.
 - **Policy pages.** Privacy and Terms are `#` links in the footer.
+- **Worker name.** `starunico-com` in `wrangler.jsonc` is a Cloudflare resource id, not
+  the public domain. It must keep matching the Worker in the dashboard; renaming it in
+  config alone would deploy to a different Worker with no custom domain attached.
 - **Portfolio and team.** Deliberately absent — no invented companies, names or figures.

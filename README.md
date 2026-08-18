@@ -135,10 +135,12 @@ Connecting the repository in the Cloudflare dashboard deploys on every push. Und
 | Deploy command | `npx wrangler deploy` (the default) |
 | Root directory | leave empty, unless the project sits in a monorepo subfolder |
 
-Once deployed, the site is live at `https://starunico-com.<your-account-subdomain>.workers.dev`
-(the exact URL is shown at the top of the Worker's dashboard page, and in the deploy
-output). `name` in `wrangler.jsonc` must match the Worker's name in Cloudflare, or
-Workers Builds overrides it and opens a pull request to reconcile the two.
+The site is live at **https://starunicocapital.com**, and also on the Worker's
+`workers.dev` subdomain. `name` in `wrangler.jsonc` (`starunico-com`) is a Cloudflare
+resource id rather than the public domain — it must keep matching the Worker's name in
+the dashboard, or Workers Builds overrides it and opens a pull request to reconcile the
+two. Renaming it in config alone would deploy to a different Worker with no custom
+domain attached.
 
 **Production branch vs. preview branches.** Builds on the production branch run the
 deploy command and go live. Builds on any other branch are replaced with

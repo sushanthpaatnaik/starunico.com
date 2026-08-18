@@ -20,7 +20,7 @@ export const site = {
     'Starunico Capital invests its own capital into a highly selective portfolio of early-stage deep-tech companies and partners with them for long-term value creation.',
   description:
     'A proprietary investment firm backing exceptional early-stage deep-tech companies with its own capital, and partnering with founders for the long term.',
-  // TODO: confirm before launch — the brand brief lists starunicocapital.com.
+  url: 'https://starunicocapital.com',
   email: 'contact@starunicocapital.com',
 }
 

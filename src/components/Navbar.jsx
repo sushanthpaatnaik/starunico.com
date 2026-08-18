@@ -22,15 +22,15 @@ export default function Navbar() {
   const linkClass = ({ isActive }) =>
     `rounded-full px-3 py-2 text-sm font-medium transition ${
       isActive
-        ? 'text-brand-600 dark:text-brand-400'
-        : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+        ? 'text-brand-700 dark:text-brand-400'
+        : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
     }`
 
   return (
     <header
       className={`sticky top-0 z-50 border-b transition ${
         scrolled
-          ? 'border-slate-200 bg-white/85 backdrop-blur dark:border-slate-800 dark:bg-slate-950/85'
+          ? 'border-neutral-200 bg-white/85 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/85'
           : 'border-transparent bg-transparent'
       }`}
     >
@@ -58,7 +58,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="rounded-full p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
             <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
@@ -74,7 +74,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="rounded-full p-2 text-slate-600 transition hover:bg-slate-100 md:hidden dark:text-slate-400 dark:hover:bg-slate-800"
+            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden dark:text-neutral-400 dark:hover:bg-neutral-800"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -87,7 +87,7 @@ export default function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="border-t border-slate-200 bg-white md:hidden dark:border-slate-800 dark:bg-slate-950"
+          className="border-t border-neutral-200 bg-white md:hidden dark:border-neutral-800 dark:bg-neutral-950"
         >
           <ul className="container-page space-y-1 py-4">
             {navigation.map((item) => (
@@ -99,8 +99,8 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `block rounded-lg px-3 py-2 text-base font-medium ${
                       isActive
-                        ? 'bg-brand-50 text-brand-700 dark:bg-slate-800 dark:text-brand-400'
-                        : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800'
+                        ? 'bg-brand-50 text-brand-700 dark:bg-neutral-800 dark:text-brand-400'
+                        : 'text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800'
                     }`
                   }
                 >

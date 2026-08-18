@@ -1,9 +1,9 @@
 {
-  "name": "starunico-template",
+  "name": "starunico-capital",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "A modern marketing website template built with React, Vite and Tailwind CSS.",
+  "description": "Website for Starunico Capital, a proprietary deep-tech investment firm.",
   "scripts": {
     "dev": "vite",
     "dev:worker": "wrangler dev --port 8787",
