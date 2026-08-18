@@ -4,6 +4,13 @@
   "main": "worker/index.js",
   "compatibility_date": "2026-08-18",
 
+  // Runs before the Worker is bundled and the assets are uploaded, so a bare
+  // `npx wrangler deploy` produces dist/ itself. Cloudflare Workers Builds can
+  // then deploy with its default command and no build step configured.
+  "build": {
+    "command": "npm run build"
+  },
+
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

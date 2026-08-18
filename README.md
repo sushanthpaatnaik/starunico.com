@@ -20,16 +20,16 @@ so copy changes never touch component code.
 
 ```bash
 npm install
-npm run dev              # Vite dev server with HMR at http://localhost:5173
-npm run dev:api          # Worker API at http://localhost:8787 (second terminal)
-npm run build            # static bundle in dist/
-npm run preview:worker   # build, then serve site + API exactly as in production
-npm run deploy           # build, then wrangler deploy
-npm run lint             # ESLint
+npm run dev          # Vite dev server with HMR at http://localhost:5173
+npm run dev:worker   # site + API on the real Worker runtime at http://localhost:8787
+npm run build        # static bundle in dist/
+npm run deploy       # wrangler deploy (builds first — see below)
+npm run lint         # ESLint
 ```
 
-`npm run dev` proxies `/api` to `http://127.0.0.1:8787`, so run `npm run dev:api`
-alongside it to work on the front end and the API together with HMR intact.
+`npm run dev` proxies `/api` to `http://127.0.0.1:8787`, so run `npm run dev:worker`
+in a second terminal to work on the front end and the API together with HMR intact.
+`dev:worker` on its own serves the built site and the API exactly as production does.
 
 ## Project structure
 
@@ -83,10 +83,17 @@ scale drives every accent in the site, so changing those nine values rebrands it
 
 ```bash
 npx wrangler login   # once
-npm run deploy       # builds, then npx wrangler deploy
+npx wrangler deploy
 ```
 
-`wrangler.jsonc` wires the two halves together:
+`wrangler.jsonc` carries a `build` step, so `wrangler deploy` produces `dist/` itself
+before uploading — there is no separate build command to remember or configure:
+
+```jsonc
+"build": { "command": "npm run build" }
+```
+
+It also wires the two halves together:
 
 ```jsonc
 "assets": {
@@ -105,6 +112,24 @@ pattern does not match the bare path.
 
 Rename the Worker by changing `name` in `wrangler.jsonc`. To put it on your own
 domain, add a `routes` entry pointing at a zone you control.
+
+### Continuous deployment (Workers Builds)
+
+Connecting the repository in the Cloudflare dashboard deploys on every push. Under
+**Workers & Pages → your Worker → Settings → Build**:
+
+| Setting | Value |
+| --- | --- |
+| Git branch | the branch you actually want deployed — **this defaults to `main`** |
+| Build command | leave empty; `wrangler.jsonc` builds via its `build.command` |
+| Deploy command | `npx wrangler deploy` (the default) |
+| Root directory | leave empty, unless the project sits in a monorepo subfolder |
+
+**If the build fails with `Could not detect a directory containing static files`,**
+Wrangler found no `wrangler.jsonc` — which almost always means it is building a
+branch that does not contain this project. Check the **Git branch** setting first;
+the giveaway in the log is Cloudflare reporting no dependencies and no tools
+detected, because there was no `package.json` to find either.
 
 ### API
 
