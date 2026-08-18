@@ -1,9 +1,14 @@
-# Starunico — React + Vite + Tailwind website template
+# Starunico Capital
 
-A modern, responsive marketing-site template that deploys to Cloudflare Workers with
-`npx wrangler deploy`. Five prebuilt pages, a small set of reusable components,
-class-based dark mode, a JSON API on `/api/*`, and content kept in a single data file
-so copy changes never touch component code.
+The website for Starunico Capital, a proprietary deep-tech investment firm. React +
+Vite + Tailwind, deployed to Cloudflare Workers with `npx wrangler deploy`, with a JSON
+API on `/api/*` served by the same Worker.
+
+**Read [BRAND.md](./BRAND.md) before changing any copy.** It carries the positioning,
+the voice, and the list of words this firm does not use — "fund", "LP", "AUM" and
+"family office" among them. `src/data/site.js` is where the copy actually lives.
+
+Pages: Home, Philosophy, Proprietary Capital, Sectors, Partnering, Contact.
 
 ## Stack
 
@@ -42,32 +47,31 @@ src/
 ├── App.jsx              # route table
 ├── main.jsx             # entry point
 ├── index.css            # Tailwind import + theme tokens
-├── data/site.js         # ALL site copy: nav, features, pricing, FAQ, team
+├── data/site.js         # ALL site copy: nav, criteria, sectors, journey, partnering
 ├── lib/contact.js       # contact validation shared by the form and the Worker
 ├── hooks/useTheme.js    # dark-mode state, persisted to localStorage
 ├── components/
 │   ├── Layout.jsx       # shell: skip link, navbar, main, footer
 │   ├── Navbar.jsx       # sticky nav, mobile drawer, theme toggle
 │   ├── Footer.jsx
-│   ├── Hero.jsx         # gradient hero + stat row
+│   ├── Hero.jsx         # hero + funding-stage row
 │   ├── Section.jsx      # section wrapper with eyebrow/title/description
 │   ├── PageHeader.jsx   # inner-page hero
-│   ├── FeatureGrid.jsx
-│   ├── Testimonials.jsx
-│   ├── PricingTable.jsx # monthly/annual toggle
-│   ├── FAQ.jsx          # native <details> accordion
+│   ├── CriteriaGrid.jsx # Technology x Defensibility x Market x Team x Timing
+│   ├── Journey.jsx      # Discover -> ... -> Compound
 │   ├── CallToAction.jsx
 │   ├── Button.jsx       # variants: primary, secondary, outline, ghost, onDark
 │   ├── Icon.jsx         # inline SVG icon set
 │   ├── Logo.jsx
 │   └── ScrollToTop.jsx  # resets scroll on navigation
-└── pages/               # Home, Features, Pricing, About, Contact, NotFound
+└── pages/               # Home, Philosophy, Capital, Sectors, Partnering, Contact
 ```
 
 ## Making it yours
 
-**Content.** Edit `src/data/site.js`. Site name, navigation, features, stats,
-testimonials, pricing plans, FAQs and team members all live there.
+**Content.** Edit `src/data/site.js` — navigation, investment criteria, sectors, the
+journey, and the partnering list all live there. Check BRAND.md first: the copy uses
+deliberate hedging ("seek to", "can include") that matters for an investment firm.
 
 **The logo.** Replace `public/logo.svg` with your own artwork. That one file is the
 header mark, the footer mark and the browser-tab favicon — there is no code to change.
@@ -160,7 +164,7 @@ detected, because there was no `package.json` to find either.
 | `GET` | `/api` | Self-describing index of the endpoints. |
 | `GET` | `/api/health` | Liveness probe. |
 | `GET` | `/api/content` | Every site content collection in one payload. |
-| `GET` | `/api/pricing?cadence=monthly\|annual` | Plans, with the annual discount applied. |
+| `GET` | `/api/sectors` | The six sector groups. |
 | `GET` | `/api/contact` | Field limits and the allowed subject values. |
 | `POST` | `/api/contact` | Submit the contact form. |
 
@@ -217,4 +221,5 @@ Without a webhook, submissions are logged — watch them with `npx wrangler tail
 
 ## Licence
 
-MIT — see [LICENSE](./LICENSE).
+The site code is MIT — see [LICENSE](./LICENSE). Starunico Capital's brand, copy and
+logo are not.

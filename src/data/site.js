@@ -1,169 +1,173 @@
+/**
+ * All site copy lives here.
+ *
+ * Tone rules from the brand brief, which edits must preserve:
+ * - We invest our OWN capital. Never "fund", "LP", "AUM", "fund management".
+ * - Say "proprietary capital" / "principal capital" / "patient capital".
+ * - "Family capital" appears once as a descriptor; do not lean on it, and never
+ *   say "family office" — it reads as wealth management.
+ * - Institutional, understated, selective. No hype, no "changing the world",
+ *   and never imply that a unicorn outcome is guaranteed.
+ * - Never position against VC firms. Show the structure, not a comparison.
+ */
+
 export const site = {
-  name: 'Starunico',
-  tagline: 'Ship your next idea in days, not months.',
+  name: 'Starunico Capital',
+  shortName: 'Starunico',
+  descriptor: 'A proprietary deep-tech investment firm backed by family capital.',
+  // The one thing a visitor should understand in the first few seconds.
+  positioning:
+    'Starunico Capital invests its own capital into a highly selective portfolio of early-stage deep-tech companies and partners with them for long-term value creation.',
   description:
-    'A production-ready starter for marketing sites — accessible components, dark mode, and a design system you can make your own.',
-  email: 'hello@starunico.com',
-  social: [
-    { name: 'GitHub', href: 'https://github.com' },
-    { name: 'X', href: 'https://x.com' },
-    { name: 'LinkedIn', href: 'https://linkedin.com' },
-  ],
+    'A proprietary investment firm backing exceptional early-stage deep-tech companies with its own capital, and partnering with founders for the long term.',
+  // TODO: confirm before launch — the brand brief lists starunicocapital.com.
+  email: 'contact@starunicocapital.com',
 }
 
 export const navigation = [
-  { name: 'Home', to: '/' },
-  { name: 'Features', to: '/features' },
-  { name: 'Pricing', to: '/pricing' },
-  { name: 'About', to: '/about' },
+  { name: 'Philosophy', to: '/philosophy' },
+  { name: 'Proprietary Capital', to: '/capital' },
+  { name: 'Sectors', to: '/sectors' },
+  { name: 'Partnering', to: '/partnering' },
   { name: 'Contact', to: '/contact' },
 ]
 
-export const features = [
+/** Startup → Unicorn, as an investment framework rather than a promise. */
+export const journey = [
+  { step: 'Discover', note: 'Technology the broader market has not yet priced.' },
+  { step: 'Validate', note: 'Science, defensibility and the team behind them.' },
+  { step: 'Invest', note: 'Our own capital, with conviction and concentration.' },
+  { step: 'Nurture', note: 'Commercial strategy, IP position, governance.' },
+  { step: 'Commercialize', note: 'Technology-market fit and first industrial customers.' },
+  { step: 'Institutionalize', note: 'Readiness for institutional diligence and capital.' },
+  { step: 'Scale', note: 'Successive rounds, partnerships and global reach.' },
+  { step: 'Compound', note: 'Ownership held for the long term.' },
+]
+
+export const stages = ['Seed', 'Pre-Series A', 'Series A', 'Series B', 'Growth']
+
+/** Technology × Defensibility × Market × Team × Timing. Any one at zero is a pass. */
+export const criteria = [
   {
-    title: 'Lightning fast',
+    title: 'Technology',
     description:
-      'Vite gives you instant dev-server startup and near-instant hot module replacement, however large the project grows.',
-    icon: 'bolt',
+      'Breakthrough science or proprietary engineering. Fundamental differentiation, not an incremental business model.',
+    icon: 'atom',
   },
   {
-    title: 'Utility-first styling',
+    title: 'Defensibility',
     description:
-      'Tailwind CSS v4 with a theme layer you control — change a handful of tokens and the whole site follows.',
-    icon: 'palette',
+      'Intellectual property, proprietary know-how, engineering complexity or data advantages that are difficult to replicate.',
+    icon: 'shield',
   },
   {
-    title: 'Dark mode built in',
+    title: 'Market',
     description:
-      'Respects the system preference, remembers an explicit choice, and never flashes the wrong theme on load.',
-    icon: 'moon',
+      'Large industrial or global markets where the technology can address a problem of genuine consequence.',
+    icon: 'globe',
   },
   {
-    title: 'Accessible by default',
+    title: 'Team',
     description:
-      'Semantic landmarks, visible focus rings, labelled controls, and reduced-motion support come out of the box.',
-    icon: 'accessibility',
+      'Technically capable, commercially ambitious founders with the resilience to build a category-defining company.',
+    icon: 'people',
   },
   {
-    title: 'Responsive layouts',
+    title: 'Timing',
     description:
-      'Every section is designed mobile-first and tested from 320px phones up to ultrawide displays.',
-    icon: 'devices',
-  },
-  {
-    title: 'Ready to deploy',
-    description:
-      'A single build command produces a static bundle you can host on Vercel, Netlify, GitHub Pages, or S3.',
-    icon: 'rocket',
+      'A point in the technology’s maturity where early conviction is possible and capital is genuinely useful.',
+    icon: 'clock',
   },
 ]
 
-export const stats = [
-  { value: '< 1s', label: 'Cold dev-server start' },
-  { value: '100', label: 'Lighthouse accessibility' },
-  { value: '6', label: 'Prebuilt page templates' },
-  { value: 'MIT', label: 'Open-source licence' },
+/** Stated plainly, because selectivity is the point. */
+export const avoid = [
+  'Conventional direct-to-consumer brands',
+  'Ordinary e-commerce businesses',
+  'Copycat or derivative business models',
+  'Companies whose main differentiation is marketing',
+  'Growth without underlying technical depth',
 ]
 
-export const testimonials = [
+/** What investing our own capital makes possible. Framed structurally, never comparatively. */
+export const capitalAdvantages = [
   {
-    quote:
-      'We replaced a three-week design sprint with an afternoon of edits. The component structure was obvious enough that our whole team could contribute.',
-    name: 'Amara Osei',
-    role: 'Head of Product, Northwind',
+    title: 'No deployment clock',
+    description:
+      'We invest when a technology and a team are ready, not when a cycle requires capital to be placed.',
   },
   {
-    quote:
-      'The theme tokens are the best part. One file changed, and the entire site matched our brand — no hunting through class names.',
-    name: 'Diego Ferreira',
-    role: 'Design Lead, Cobalt Labs',
+    title: 'Longer horizons',
+    description:
+      'Deep tech matures on its own timeline. Our capital is patient enough to hold through it.',
   },
   {
-    quote:
-      'It is the rare template that is still pleasant to work in six months later. Nothing clever, nothing in the way.',
-    name: 'Priya Raman',
-    role: 'Founding Engineer, Tessera',
-  },
-]
-
-export const pricing = [
-  {
-    name: 'Starter',
-    price: 0,
-    cadence: 'forever',
-    description: 'Everything you need to launch a personal project.',
-    features: [
-      '1 project',
-      'Community support',
-      'Core component library',
-      'MIT licence',
-    ],
-    cta: 'Start for free',
-    featured: false,
+    title: 'Concentration by choice',
+    description:
+      'A small number of high-conviction positions, rather than breadth for its own sake.',
   },
   {
-    name: 'Studio',
-    price: 24,
-    cadence: 'per month',
-    description: 'For teams shipping client work on a schedule.',
-    features: [
-      'Unlimited projects',
-      'Priority email support',
-      'Premium section library',
-      'Figma design kit',
-      'Commercial licence',
-    ],
-    cta: 'Start free trial',
-    featured: true,
+    title: 'Alignment with founders',
+    description:
+      'We are owners alongside them, judged by enterprise value rather than interim markups.',
   },
   {
-    name: 'Enterprise',
-    price: 89,
-    cadence: 'per month',
-    description: 'Governance and support for larger organisations.',
-    features: [
-      'Everything in Studio',
-      'SSO and audit logs',
-      'Dedicated success manager',
-      'Custom component work',
-      '99.9% uptime SLA',
-    ],
-    cta: 'Talk to sales',
-    featured: false,
+    title: 'Flexible follow-on',
+    description:
+      'We can support successive rounds on the merits of the company, without structural constraint.',
+  },
+  {
+    title: 'Early by design',
+    description:
+      'We can take a position before the broader market has recognised what the technology is.',
   },
 ]
 
-export const faqs = [
-  {
-    question: 'Do I need to know Tailwind to use this template?',
-    answer:
-      'Not deeply. The theme tokens in src/index.css cover colour, typography and motion, so most rebranding is a few edits there. Utility classes only come into play when you change layout.',
-  },
-  {
-    question: 'Can I use it for client or commercial work?',
-    answer:
-      'Yes. The template ships under the MIT licence, so you can use, modify and sell work built on it without attribution.',
-  },
-  {
-    question: 'How do I add a new page?',
-    answer:
-      'Create a component in src/pages, add a <Route> for it in src/App.jsx, and add an entry to the navigation array in src/data/site.js. That is the whole process.',
-  },
-  {
-    question: 'Is TypeScript supported?',
-    answer:
-      'The template is plain JSX so it stays approachable, but Vite compiles .tsx out of the box — rename a file, add a tsconfig, and it works.',
-  },
-  {
-    question: 'Where do I deploy it?',
-    answer:
-      'npm run build writes a static bundle to dist/. Any static host will serve it; just make sure client-side routes fall back to index.html.',
-  },
+/** Where we work alongside founders. Investor and owner-partner, not a consultancy. */
+export const partnering = [
+  'Commercial strategy and business-model refinement',
+  'Technology-market fit',
+  'Intellectual-property strategy',
+  'Strategic partnerships and corporate introductions',
+  'Institutional positioning and investor materials',
+  'Governance and institutional readiness',
+  'Fundraising strategy and diligence preparation',
+  'Growth planning across successive rounds',
 ]
 
-export const team = [
-  { name: 'Amara Osei', role: 'Co-founder & CEO', initials: 'AO' },
-  { name: 'Diego Ferreira', role: 'Head of Design', initials: 'DF' },
-  { name: 'Priya Raman', role: 'Engineering Lead', initials: 'PR' },
-  { name: 'Noah Lindqvist', role: 'Developer Relations', initials: 'NL' },
+/** Six groups rather than a long undifferentiated list. */
+export const sectors = [
+  {
+    name: 'Advanced Materials & Manufacturing',
+    description:
+      'New materials, advanced production processes, industrial technology and resource efficiency.',
+    areas: ['Advanced materials', 'Advanced manufacturing', 'Industrial technology', 'Circular economy'],
+  },
+  {
+    name: 'Energy & Climate',
+    description:
+      'Generation, storage and the industrial technologies that make decarbonisation practical.',
+    areas: ['Clean energy', 'Energy storage', 'Climate technology'],
+  },
+  {
+    name: 'Semiconductors & Computing',
+    description:
+      'The physical and computational substrate underneath modern industry and artificial intelligence.',
+    areas: ['Semiconductors', 'Electronics', 'AI infrastructure', 'Frontier and quantum computing'],
+  },
+  {
+    name: 'Robotics & Automation',
+    description: 'Machines and autonomy applied to industrial work and the movement of people and goods.',
+    areas: ['Robotics', 'Industrial automation', 'Mobility'],
+  },
+  {
+    name: 'Aerospace & Strategic Technologies',
+    description: 'Flight, orbit and the technologies nations treat as strategically significant.',
+    areas: ['Aerospace', 'Space technology', 'Strategic technologies'],
+  },
+  {
+    name: 'Life Sciences & Biotechnology',
+    description: 'Biological engineering and platform science with industrial or clinical application.',
+    areas: ['Biotechnology', 'Life sciences'],
+  },
 ]

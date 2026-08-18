@@ -65,15 +65,16 @@ export default function Contact() {
       <PageHeader
         eyebrow="Contact"
         title="Get in touch"
-        description="This form posts to the Cloudflare Worker API that ships with the template."
+        description="Tell us what you have built, what makes it hard to replicate, and where you are today."
       />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <div className="text-left">
-            <h2 className="text-2xl font-bold tracking-tight">We usually reply within a day</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Introduce your company</h2>
             <p className="mt-3 text-slate-600 dark:text-slate-400">
-              Questions about the template, licensing, or custom work — all welcome.
+              We read everything that reaches us. Founders, co-investors and advisers are
+              all welcome to get in touch.
             </p>
 
             <dl className="mt-8 space-y-6 text-sm">
@@ -89,19 +90,10 @@ export default function Contact() {
                 </dd>
               </div>
               <div>
-                <dt className="font-semibold">Elsewhere</dt>
-                <dd className="mt-1 flex gap-4">
-                  {site.social.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+                <dt className="font-semibold">What helps</dt>
+                <dd className="mt-1 text-slate-600 dark:text-slate-400">
+                  A short description of the technology, its defensibility, and the stage
+                  you are at. Decks are welcome but not required.
                 </dd>
               </div>
             </dl>
@@ -195,7 +187,7 @@ export default function Contact() {
             </div>
 
             <Button type="submit" disabled={status === 'sending'} className="mt-8 w-full sm:w-auto">
-              {status === 'sending' ? 'Sending…' : 'Send message'}
+              {status === 'sending' ? 'Sending…' : 'Send'}
               <Icon name="arrow" className="h-4 w-4" />
             </Button>
           </form>
