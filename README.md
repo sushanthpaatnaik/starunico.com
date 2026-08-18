@@ -125,6 +125,22 @@ Connecting the repository in the Cloudflare dashboard deploys on every push. Und
 | Deploy command | `npx wrangler deploy` (the default) |
 | Root directory | leave empty, unless the project sits in a monorepo subfolder |
 
+Once deployed, the site is live at `https://starunico-com.<your-account-subdomain>.workers.dev`
+(the exact URL is shown at the top of the Worker's dashboard page, and in the deploy
+output). `name` in `wrangler.jsonc` must match the Worker's name in Cloudflare, or
+Workers Builds overrides it and opens a pull request to reconcile the two.
+
+**Production branch vs. preview branches.** Builds on the production branch run the
+deploy command and go live. Builds on any other branch are replaced with
+`npx wrangler versions upload`, which creates a *version* with its own per-branch
+preview URL but leaves production traffic untouched — the log says `Uploaded` rather
+than `Deployed`, and points you at `wrangler versions deploy`. To promote a version
+that has already been uploaded:
+
+```bash
+npx wrangler versions deploy   # pick the version, send it 100% of traffic
+```
+
 **If the build fails with `Could not detect a directory containing static files`,**
 Wrangler found no `wrangler.jsonc` — which almost always means it is building a
 branch that does not contain this project. Check the **Git branch** setting first;

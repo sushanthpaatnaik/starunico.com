@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "starunico",
+  // Must match the Worker name in Cloudflare, or Workers Builds overrides it
+  // and opens a pull request to reconcile the two.
+  "name": "starunico-com",
   "main": "worker/index.js",
   "compatibility_date": "2026-08-18",
 
@@ -21,6 +23,11 @@
     // separately because "/api/*" does not match the bare path.
     "run_worker_first": ["/api", "/api/*"]
   },
+
+  // https://starunico-com.<your-account-subdomain>.workers.dev
+  "workers_dev": true,
+  // Per-branch preview URLs for non-production branch builds.
+  "preview_urls": true,
 
   "observability": {
     "enabled": true
