@@ -4,27 +4,13 @@ import Section from '../components/Section.jsx'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
 import { site } from '../data/site.js'
-
-const empty = { name: '', email: '', subject: 'general', message: '' }
-
-function validate(values) {
-  const errors = {}
-  if (!values.name.trim()) errors.name = 'Please tell us your name.'
-  if (!values.email.trim()) {
-    errors.email = 'An email address is required.'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = 'That does not look like a valid email address.'
-  }
-  if (values.message.trim().length < 10) {
-    errors.message = 'Please write at least 10 characters.'
-  }
-  return errors
-}
+import { emptyContact, SUBJECTS, validateContact } from '../lib/contact.js'
 
 export default function Contact() {
-  const [values, setValues] = useState(empty)
+  const [values, setValues] = useState(emptyContact)
   const [errors, setErrors] = useState({})
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | failed
+  const [notice, setNotice] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -32,15 +18,46 @@ export default function Contact() {
     setErrors((current) => ({ ...current, [name]: undefined }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const found = validate(values)
+
+    // Validated here first for instant feedback; the Worker re-runs the exact
+    // same rules, because a client-side check is never a guarantee.
+    const found = validateContact(values)
     setErrors(found)
     if (Object.keys(found).length > 0) return
 
-    // Demo only — wire this up to your own endpoint or form service.
-    setSent(true)
-    setValues(empty)
+    setStatus('sending')
+    setNotice('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(values),
+      })
+      const data = await response.json().catch(() => ({}))
+
+      if (response.status === 422 && data?.error?.fields) {
+        setErrors(data.error.fields)
+        setStatus('failed')
+        setNotice('Some fields need attention.')
+        return
+      }
+
+      if (!response.ok) {
+        setStatus('failed')
+        setNotice(data?.error?.message ?? 'We could not send that. Please try again.')
+        return
+      }
+
+      setValues(emptyContact)
+      setStatus('sent')
+      setNotice(data.message ?? 'Thanks — your message has been received.')
+    } catch {
+      setStatus('failed')
+      setNotice('Network error — please check your connection and try again.')
+    }
   }
 
   return (
@@ -48,7 +65,7 @@ export default function Contact() {
       <PageHeader
         eyebrow="Contact"
         title="Get in touch"
-        description="This form is a front-end demo — connect it to your own backend or a service like Formspree."
+        description="This form posts to the Cloudflare Worker API that ships with the template."
       />
 
       <Section>
@@ -95,13 +112,17 @@ export default function Contact() {
             noValidate
             className="rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-slate-900/60"
           >
-            {sent && (
+            {notice && (
               <p
                 role="status"
-                className="mb-6 flex items-center gap-2 rounded-lg bg-brand-50 px-4 py-3 text-sm font-medium text-brand-800 dark:bg-slate-800 dark:text-brand-300"
+                className={`mb-6 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium ${
+                  status === 'failed'
+                    ? 'bg-red-50 text-red-800 dark:bg-red-950/50 dark:text-red-300'
+                    : 'bg-brand-50 text-brand-800 dark:bg-slate-800 dark:text-brand-300'
+                }`}
               >
-                <Icon name="check" className="h-5 w-5" />
-                Thanks — your message has been queued.
+                <Icon name={status === 'failed' ? 'close' : 'check'} className="h-5 w-5 shrink-0" />
+                {notice}
               </p>
             )}
 
@@ -136,10 +157,11 @@ export default function Contact() {
                 onChange={handleChange}
                 className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900"
               >
-                <option value="general">General enquiry</option>
-                <option value="support">Support</option>
-                <option value="sales">Sales</option>
-                <option value="custom">Custom work</option>
+                {SUBJECTS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -156,9 +178,7 @@ export default function Contact() {
                 aria-invalid={Boolean(errors.message)}
                 aria-describedby={errors.message ? 'message-error' : undefined}
                 className={`mt-2 w-full rounded-lg border px-3 py-2.5 text-sm dark:bg-slate-900 ${
-                  errors.message
-                    ? 'border-red-500'
-                    : 'border-slate-300 dark:border-slate-700'
+                  errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'
                 }`}
               />
               {errors.message && (
@@ -168,8 +188,14 @@ export default function Contact() {
               )}
             </div>
 
-            <Button type="submit" className="mt-8 w-full sm:w-auto">
-              Send message
+            {/* Honeypot: hidden from people, tempting to bots. */}
+            <div aria-hidden="true" className="hidden">
+              <label htmlFor="company">Company</label>
+              <input id="company" name="company" tabIndex={-1} autoComplete="off" />
+            </div>
+
+            <Button type="submit" disabled={status === 'sending'} className="mt-8 w-full sm:w-auto">
+              {status === 'sending' ? 'Sending…' : 'Send message'}
               <Icon name="arrow" className="h-4 w-4" />
             </Button>
           </form>

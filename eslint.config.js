@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '.wrangler']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -24,6 +24,14 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+  {
+    // The Worker runs on workerd, not in a browser or in React.
+    files: ['worker/**/*.js'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      globals: { ...globals.serviceworker, console: 'readonly' },
     },
   },
 ])
