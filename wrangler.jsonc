@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in Cloudflare, or Workers Builds overrides it
+  // and opens a pull request to reconcile the two.
+  "name": "starunico-com",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-08-18",
+
+  // Runs before the Worker is bundled and the assets are uploaded, so a bare
+  // `npx wrangler deploy` produces dist/ itself. Cloudflare Workers Builds can
+  // then deploy with its default command and no build step configured.
+  "build": {
+    "command": "npm run build"
+  },
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Client-side routes (/about, /pricing, ...) fall back to index.html.
+    "not_found_handling": "single-page-application",
+    // Everything else is served straight from the asset layer; only the API
+    // wakes the Worker, so static requests cost nothing. "/api" is listed
+    // separately because "/api/*" does not match the bare path.
+    "run_worker_first": ["/api", "/api/*"]
+  },
+
+  // https://starunico-com.<your-account-subdomain>.workers.dev
+  "workers_dev": true,
+  // Per-branch preview URLs for non-production branch builds.
+  "preview_urls": true,
+
+  "observability": {
+    "enabled": true
+  },
+
+  "vars": {
+    // Comma-separated allow-list, or "*" for any origin.
+    "ALLOWED_ORIGINS": "*"
+  }
+
+  // Optional: forward contact submissions somewhere real.
+  // Set it as a secret rather than a var:
+  //   npx wrangler secret put CONTACT_WEBHOOK_URL
+}
