@@ -4,7 +4,7 @@ import Button from './Button.jsx'
 import Icon from './Icon.jsx'
 import Logo from './Logo.jsx'
 import useTheme from '../hooks/useTheme.js'
-import { navigation } from '../data/site.js'
+import { navigation, site } from '../data/site.js'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -35,9 +35,13 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label="Main">
-        <Link to="/" className="flex items-center gap-2 rounded-lg" aria-label="Starunico home">
-          <Logo className="h-8 w-8" />
-          <span className="text-lg font-bold tracking-tight">Starunico</span>
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 rounded-lg"
+          aria-label={`${site.name} home`}
+        >
+          <Logo className="h-8 w-auto" />
+          <span className="text-lg font-semibold tracking-tight">{site.name}</span>
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
@@ -63,7 +67,7 @@ export default function Navbar() {
           {/* Wrapper handles the responsive hide so it cannot clash with the button's own display utility. */}
           <div className="hidden sm:block">
             <Button to="/contact" size="sm">
-              Get started
+              Present your technology
             </Button>
           </div>
 
@@ -106,7 +110,7 @@ export default function Navbar() {
             ))}
             <li className="pt-2">
               <Button to="/contact" onClick={closeMenu} className="w-full">
-                Get started
+                Present your technology
               </Button>
             </li>
           </ul>

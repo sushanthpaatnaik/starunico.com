@@ -4,10 +4,10 @@
  */
 
 export const SUBJECTS = [
+  { value: 'founder', label: 'Founder — introducing my company' },
+  { value: 'coinvestor', label: 'Co-investor or fund' },
+  { value: 'adviser', label: 'Adviser or partner' },
   { value: 'general', label: 'General enquiry' },
-  { value: 'support', label: 'Support' },
-  { value: 'sales', label: 'Sales' },
-  { value: 'custom', label: 'Custom work' },
 ]
 
 export const LIMITS = {
@@ -22,7 +22,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const emptyContact = {
   name: '',
   email: '',
-  subject: 'general',
+  subject: 'founder',
   message: '',
 }
 

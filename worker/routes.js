@@ -1,14 +1,15 @@
 import { apiError, json } from './http.js'
 import { validateContact, LIMITS, SUBJECTS } from '../src/lib/contact.js'
 import {
-  faqs,
-  features,
+  avoid,
+  capitalAdvantages,
+  criteria,
+  journey,
   navigation,
-  pricing,
+  partnering,
+  sectors,
   site,
-  stats,
-  team,
-  testimonials,
+  stages,
 } from '../src/data/site.js'
 
 const CACHE_PUBLIC = { 'cache-control': 'public, max-age=60' }
@@ -25,11 +26,7 @@ function index(request) {
         { method: 'GET', path: '/api', description: 'This index.' },
         { method: 'GET', path: '/api/health', description: 'Liveness probe.' },
         { method: 'GET', path: '/api/content', description: 'All site content in one payload.' },
-        {
-          method: 'GET',
-          path: '/api/pricing',
-          description: 'Pricing plans. Pass ?cadence=annual for annual prices.',
-        },
+        { method: 'GET', path: '/api/sectors', description: 'Sectors of interest, grouped.' },
         { method: 'POST', path: '/api/contact', description: 'Submit the contact form.' },
       ].map((endpoint) => ({ ...endpoint, url: `${base}${endpoint.path}` })),
     },
@@ -46,36 +43,14 @@ function health() {
 
 function content() {
   return json(
-    { site, navigation, features, stats, testimonials, pricing, faqs, team },
+    { site, navigation, criteria, stages, journey, avoid, capitalAdvantages, partnering, sectors },
     { headers: CACHE_PUBLIC },
   )
 }
 
-/** GET /api/pricing?cadence=monthly|annual */
-function pricingPlans(request) {
-  const cadence = new URL(request.url).searchParams.get('cadence') ?? 'monthly'
-
-  if (cadence !== 'monthly' && cadence !== 'annual') {
-    return apiError(400, 'Unsupported cadence.', {
-      field: 'cadence',
-      allowed: ['monthly', 'annual'],
-    })
-  }
-
-  const discount = cadence === 'annual' ? 0.2 : 0
-  return json(
-    {
-      cadence,
-      currency: 'USD',
-      discount,
-      plans: pricing.map((plan) => ({
-        ...plan,
-        price: Math.round(plan.price * (1 - discount)),
-        listPrice: plan.price,
-      })),
-    },
-    { headers: CACHE_PUBLIC },
-  )
+/** GET /api/sectors */
+function sectorList() {
+  return json({ count: sectors.length, sectors }, { headers: CACHE_PUBLIC })
 }
 
 /** POST /api/contact */
@@ -155,6 +130,6 @@ export const routes = {
   '/api': { GET: index },
   '/api/health': { GET: health },
   '/api/content': { GET: content },
-  '/api/pricing': { GET: pricingPlans },
+  '/api/sectors': { GET: sectorList },
   '/api/contact': { POST: contact, GET: meta },
 }

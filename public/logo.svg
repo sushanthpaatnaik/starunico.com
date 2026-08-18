@@ -1,0 +1,15 @@
+<!--
+  The site logo. This is a PLACEHOLDER — replace this one file with your own
+  artwork and the header, the footer and the browser-tab favicon all follow.
+  Keep the viewBox tight to the mark so it scales predictably.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="starunico-logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="oklch(0.64 0.17 145)" />
+      <stop offset="100%" stop-color="oklch(0.48 0.13 145)" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#starunico-logo)" />
+  <path fill="#fff" d="M16 6.5l2.65 6.16 6.68.56-5.07 4.4 1.53 6.53L16 20.7l-5.79 3.45 1.53-6.53-5.07-4.4 6.68-.56z" />
+</svg>
