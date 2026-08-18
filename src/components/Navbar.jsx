@@ -36,7 +36,7 @@ export default function Navbar() {
     >
       <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label="Main">
         <Link to="/" className="flex items-center gap-2 rounded-lg" aria-label="Starunico home">
-          <Logo className="h-8 w-8" />
+          <Logo className="h-8 w-auto" />
           <span className="text-lg font-bold tracking-tight">Starunico</span>
         </Link>
 

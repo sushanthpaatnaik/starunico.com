@@ -22,7 +22,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2" aria-label="Starunico home">
-              <Logo className="h-8 w-8" />
+              <Logo className="h-8 w-auto" />
               <span className="text-lg font-bold tracking-tight">{site.name}</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-slate-600 dark:text-slate-400">

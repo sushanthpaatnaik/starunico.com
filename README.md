@@ -69,6 +69,12 @@ src/
 **Content.** Edit `src/data/site.js`. Site name, navigation, features, stats,
 testimonials, pricing plans, FAQs and team members all live there.
 
+**The logo.** Replace `public/logo.svg` with your own artwork. That one file is the
+header mark, the footer mark and the browser-tab favicon — there is no code to change.
+The header locks it to 32px tall and lets the width follow, so non-square marks keep
+their proportions. Using a different format? Drop the file in `public/` and update the
+`src` in `src/components/Logo.jsx` and the favicon `href` in `index.html`.
+
 **Colour and type.** Edit the `@theme` block in `src/index.css`. The `--color-brand-*`
 scale drives every accent in the site, so changing those nine values rebrands it. The
 `--font-sans` token sets the type stack.

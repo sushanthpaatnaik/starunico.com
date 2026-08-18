@@ -1,17 +1,13 @@
-export default function Logo({ className = 'h-8 w-8' }) {
-  return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="starunico-logo" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="oklch(0.63 0.19 275)" />
-          <stop offset="100%" stopColor="oklch(0.68 0.2 350)" />
-        </linearGradient>
-      </defs>
-      <rect width="32" height="32" rx="8" fill="url(#starunico-logo)" />
-      <path
-        fill="#fff"
-        d="M16 6.5l2.65 6.16 6.68.56-5.07 4.4 1.53 6.53L16 20.7l-5.79 3.45 1.53-6.53-5.07-4.4 6.68-.56z"
-      />
-    </svg>
-  )
+/**
+ * The site mark. The artwork lives in `public/logo.svg` rather than in this
+ * component, so swapping the logo means replacing one file — the header, the
+ * footer and the favicon in index.html all point at it.
+ *
+ * Using a different format? Drop the file in `public/` and change both this
+ * `src` and the favicon `href` in index.html.
+ *
+ * Width is left to `w-auto` so a non-square mark keeps its aspect ratio.
+ */
+export default function Logo({ className = 'h-8 w-auto' }) {
+  return <img src="/logo.svg" alt="" className={className} />
 }
