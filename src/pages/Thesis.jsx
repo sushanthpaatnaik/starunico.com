@@ -2,7 +2,6 @@ import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import Matrix from '../components/Matrix.jsx'
 import Frontiers from '../components/Frontiers.jsx'
-import Journey from '../components/Journey.jsx'
 import CallToAction from '../components/CallToAction.jsx'
 import Icon from '../components/Icon.jsx'
 import { avoid, stages } from '../data/site.js'
@@ -74,16 +73,12 @@ export default function Thesis() {
         </div>
       </Section>
 
-      <Section
-        eyebrow="Startup → Unicorn"
-        title="How we participate"
-        align="left"
-        className="bg-neutral-50"
-      >
-        <Journey />
-      </Section>
-
-      <CallToAction />
+      <CallToAction
+        title="How we participate, stage by stage"
+        description="The thesis says what we back. The approach says what happens after we do."
+        primary={{ label: 'Read our approach', to: '/approach' }}
+        secondary={{ label: 'Present your technology', to: '/founders' }}
+      />
     </>
   )
 }
