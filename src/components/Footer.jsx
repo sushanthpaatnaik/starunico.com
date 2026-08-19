@@ -50,6 +50,10 @@ export default function Footer() {
           </FooterColumn>
         </div>
 
+        <p className="mt-16 max-w-2xl border-t border-neutral-200 pt-10 text-2xl tracking-tight text-balance sm:text-3xl/tight">
+          Backing difficult technology with patient capital.
+        </p>
+
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row">
           <p className="text-sm text-neutral-600">
             © {new Date().getFullYear()} {site.name}. All rights reserved.

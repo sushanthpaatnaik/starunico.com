@@ -10,7 +10,7 @@ export default function CallToAction({
   return (
     <section className="py-20 sm:py-28">
       <div className="container-page">
-        <div className="relative isolate overflow-hidden rounded-3xl bg-neutral-950 px-6 py-20 text-center sm:px-16">
+        <div className="relative isolate overflow-hidden rounded-sm bg-neutral-950 px-6 py-20 text-center sm:px-16">
           <h2 className="text-3xl font-bold tracking-tight text-balance text-white sm:text-4xl">
             {title}
           </h2>

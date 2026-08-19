@@ -44,6 +44,12 @@
 }
 
 @layer base {
+  body {
+    /* Body copy reads at 17px; headings and .meta set their own sizes. */
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
   :root {
     /* Light only: white, green and black. Pinning this keeps form controls and
        scrollbars light for visitors whose OS prefers dark. */
@@ -79,6 +85,11 @@
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Reading width, for prose that would otherwise span a wide monitor. */
+  .measure {
+    max-width: 68ch;
   }
 
   .container-page {
@@ -123,7 +134,7 @@
 
   /* Staggered reveal of the destination: metadata, headline, copy, the rest. */
   .page-transition[data-phase='entering'] :is(h1, [data-reveal]) {
-    animation: reveal 420ms var(--ease-precision) both;
+    animation: reveal 680ms var(--ease-precision) both;
   }
   .page-transition[data-phase='entering'] [data-reveal='meta'] {
     animation-delay: 0ms;
@@ -141,14 +152,17 @@
     animation-delay: 220ms;
   }
 
+  /* Text rises out of a clipping region rather than fading in. */
   @keyframes reveal {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(18px);
+      clip-path: inset(0 0 100% 0);
     }
     to {
       opacity: 1;
       transform: translateY(0);
+      clip-path: inset(0 0 -20% 0);
     }
   }
 
@@ -185,7 +199,7 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.5rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-neutral-600);
     transition: color 200ms var(--ease-precision);
@@ -242,18 +256,17 @@
 
   /* Mobile overlay: plane masks in, then items reveal in sequence. */
   .menu-panel {
-    animation: menu-open 320ms var(--ease-precision) both;
-    transform-origin: top center;
+    animation: menu-open 340ms var(--ease-precision) both;
   }
 
   @keyframes menu-open {
     from {
       opacity: 0;
-      transform: translateY(-8px) scaleY(0.98);
+      clip-path: inset(0 0 100% 0);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scaleY(1);
+      clip-path: inset(0 0 0 0);
     }
   }
 

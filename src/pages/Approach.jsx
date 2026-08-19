@@ -34,7 +34,7 @@ export default function Approach() {
       />
 
       <Section align="left">
-        <ol className="grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
+        <ol className="grid gap-px overflow-hidden rounded-sm border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
           {steps.map((step, index) => (
             <li key={step.title} className="bg-white p-8">
               <span className="text-xs font-semibold tracking-widest text-neutral-400 tabular-nums">

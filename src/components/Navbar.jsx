@@ -65,7 +65,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden"
+            className="rounded-sm p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -80,35 +80,42 @@ export default function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="menu-panel border-t border-neutral-200 bg-white md:hidden"
+          className="menu-panel fixed inset-0 top-16 z-40 bg-neutral-950 md:hidden"
         >
-          <ul className="container-page space-y-1 py-4">
-            {navigation.map((item) => (
-              <li key={item.to}>
-                <NavLink
-                  to={item.to}
-                  end={item.to === '/'}
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `block rounded-lg px-3 py-2 text-base font-medium ${
-                      isActive
-                        ? 'bg-brand-50 text-brand-700'
-                        : 'text-neutral-700 hover:bg-neutral-50'
-                    }`
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              </li>
-            ))}
-            <li className="pt-2">
-              <Button to="/founders" onClick={closeMenu} className="w-full">
+          <nav className="container-page flex h-full flex-col justify-between py-10" aria-label="Menu">
+            <ul>
+              {navigation.map((item, index) => (
+                <li key={item.to} className="border-b border-white/10">
+                  <NavLink
+                    to={item.to}
+                    end={item.to === '/'}
+                    onClick={closeMenu}
+                    className={({ isActive }) =>
+                      `flex items-baseline gap-5 py-5 text-3xl tracking-tight transition-colors ${
+                        isActive ? 'text-brand-400' : 'text-white'
+                      }`
+                    }
+                  >
+                    <span aria-hidden="true" className="meta text-neutral-500">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+
+            <div>
+              <Button to="/founders" onClick={closeMenu} variant="onDark" size="lg" className="w-full">
                 Present your technology
+                <Icon name="arrow" className="h-4 w-4" />
               </Button>
-            </li>
-          </ul>
+              <p className="meta mt-6 text-neutral-500">{site.descriptor}</p>
+            </div>
+          </nav>
         </div>
       )}
+
     </header>
   )
 }

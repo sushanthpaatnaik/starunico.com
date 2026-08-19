@@ -40,7 +40,7 @@ export default function Capital() {
         align="left"
         className="bg-neutral-50"
       >
-        <ul className="grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-px overflow-hidden rounded-sm border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
           {capitalAdvantages.map((item) => (
             <li key={item.title} className="bg-white p-8">
               <h3 className="text-lg font-semibold">{item.title}</h3>
