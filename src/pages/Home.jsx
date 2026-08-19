@@ -60,7 +60,14 @@ export default function Home() {
       </Section>
 
       <Section index={3} eyebrow="Frontiers" title="Where we underwrite" align="left">
-        <Frontiers />
+        <Frontiers compactOnMobile />
+        <Link
+          to="/thesis"
+          className="group/link mt-8 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline sm:hidden"
+        >
+          What we look for in each
+          <Icon name="arrow" className="h-4 w-4" />
+        </Link>
       </Section>
 
       <Section

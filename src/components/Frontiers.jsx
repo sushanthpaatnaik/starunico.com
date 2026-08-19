@@ -7,7 +7,13 @@ import { sectors } from '../data/site.js'
  * arrow keys all move through it, and it collapses to a plain stacked list on
  * small screens where hover does not exist.
  */
-export default function Frontiers() {
+/**
+ * `compactOnMobile` reduces the phone view to the domain names alone. The
+ * descriptions are worth a screen of scrolling on the pages about where we
+ * invest; on the homepage the names carry the point, and the link goes to the
+ * page that explains them.
+ */
+export default function Frontiers({ compactOnMobile = false }) {
   const [active, setActive] = useState(0)
   const current = sectors[active]
 
@@ -62,13 +68,37 @@ export default function Frontiers() {
         </div>
       </div>
 
-      {/* Small screens: no hover, so everything is shown. */}
+      {/* Small screens: no hover, so the list is shown rather than the rail. */}
       <ul className="lg:hidden">
         {sectors.map((sector, index) => (
-          <li key={sector.name} className="border-b border-neutral-200 py-5 last:border-b-0 sm:py-7">
-            <p className="meta text-neutral-400">{String(index + 1).padStart(2, '0')}</p>
-            <h3 className="mt-2 text-xl tracking-tight">{sector.name}</h3>
-            <p className="mt-2 text-sm/6 text-neutral-600">{sector.description}</p>
+          <li
+            key={sector.name}
+            className={`border-b border-neutral-200 last:border-b-0 sm:py-7 ${
+              compactOnMobile ? 'py-3.5 sm:py-7' : 'py-5'
+            }`}
+          >
+            <p className={`meta text-neutral-400 ${compactOnMobile ? 'hidden sm:block' : ''}`}>
+              {String(index + 1).padStart(2, '0')}
+            </p>
+            <h3
+              className={`tracking-tight sm:mt-2 sm:text-xl ${
+                compactOnMobile ? 'flex items-baseline gap-4 text-lg' : 'mt-2 text-xl'
+              }`}
+            >
+              {compactOnMobile && (
+                <span aria-hidden="true" className="meta text-neutral-400 sm:hidden">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              )}
+              {sector.name}
+            </h3>
+            <p
+              className={`text-sm/6 text-neutral-600 sm:mt-2 sm:block ${
+                compactOnMobile ? 'hidden' : 'mt-2'
+              }`}
+            >
+              {sector.description}
+            </p>
             {/* The tags restate the description; on a phone that is a screen
                 of scrolling for no new information. */}
             <ul className="mt-3 hidden flex-wrap gap-x-5 gap-y-1 sm:flex">
