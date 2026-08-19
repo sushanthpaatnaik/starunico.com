@@ -87,9 +87,15 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Reading width, for prose that would otherwise span a wide monitor. */
+  /*
+   * Reading width, for prose that would otherwise span a wide monitor.
+   *
+   * `ch` is the width of "0", which in Inter is far wider than the average
+   * lowercase letter: 68ch measured out at 87 characters per line, well past
+   * the 45-70 a reader is comfortable with. 54ch lands at about 69.
+   */
   .measure {
-    max-width: 68ch;
+    max-width: 54ch;
   }
 
   .container-page {
@@ -104,12 +110,29 @@
 @layer components {
   :root {
     --ease-precision: cubic-bezier(0.76, 0, 0.24, 1);
+
+    /*
+     * The route transition budget, and the only place it is written down.
+     * PageTransition reads these back with getComputedStyle, so the
+     * JavaScript timers and the CSS animations cannot drift apart.
+     */
+    --t-exit: 280ms;
+    --t-enter: 300ms;
+  }
+
+  /* Mobile gets a shorter budget: the same motion at desktop length reads as
+     lag on a phone, where taps come faster and pages are shorter. */
+  @media (max-width: 767px) {
+    :root {
+      --t-exit: 180ms;
+      --t-enter: 220ms;
+    }
   }
 
   .page-transition {
     transition:
-      opacity 280ms var(--ease-precision),
-      transform 280ms var(--ease-precision);
+      opacity var(--t-exit) var(--ease-precision),
+      transform var(--t-exit) var(--ease-precision);
   }
 
   .page-transition[data-phase='exiting'] {
@@ -118,7 +141,7 @@
   }
 
   .page-transition[data-phase='entering'] {
-    animation: page-enter 300ms var(--ease-precision) both;
+    animation: page-enter var(--t-enter) var(--ease-precision) both;
   }
 
   @keyframes page-enter {
@@ -288,6 +311,7 @@
     z-index: 80;
     pointer-events: none;
     opacity: 0;
+    transition: opacity 120ms var(--ease-precision);
   }
 
   .sweep::before {
@@ -318,12 +342,20 @@
     opacity: 1;
   }
 
+  /*
+   * The sweep runs for the whole transition — exit plus enter — because it is
+   * the bridge between the two pages. Scoping it to the exit alone cut the
+   * line off mid-stroke and made it vanish, which is what made the transition
+   * feel abrupt.
+   */
   .sweep--active::before {
-    animation: sweep-line 560ms var(--ease-precision) both;
+    animation: sweep-line calc(var(--t-exit) + var(--t-enter))
+      var(--ease-precision) both;
   }
 
   .sweep--active .sweep__label {
-    animation: sweep-label 560ms var(--ease-precision) both;
+    animation: sweep-label calc(var(--t-exit) + var(--t-enter))
+      var(--ease-precision) both;
   }
 
   @keyframes sweep-line {

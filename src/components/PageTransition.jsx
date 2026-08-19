@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { navigation } from '../data/site.js'
 import {
-  ENTER_MS,
-  EXIT_MS,
+  enterMs,
+  exitMs,
   prefersReducedMotion,
   TransitionContext,
 } from '../lib/transition.js'
@@ -24,6 +24,13 @@ function labelFor(pathname) {
  * on the site participates without being rewritten. Navigation is deferred
  * until the exit finishes, which is what makes the sweep read as a bridge
  * between two pages rather than decoration over a swap that already happened.
+ *
+ * The sweep stays mounted for exit *and* enter. Scoping it to the exit alone
+ * cut the line off mid-stroke, so the bridge disappeared before it had crossed.
+ *
+ * Back and forward get the reveal half of the sequence. The browser owns that
+ * navigation, so there is no exit to play, but replacing the page in a single
+ * frame is exactly the abruptness the rest of this system exists to avoid.
  *
  * Every route is in the main bundle, so there is nothing to prefetch and no
  * loading state that could flash behind the animation.
@@ -48,24 +55,44 @@ export default function PageTransition({ children }) {
 
       if (prefersReducedMotion()) {
         navigate(to)
-        window.scrollTo({ top: 0, behavior: 'instant' })
         return
       }
 
+      const exit = exitMs()
       setLabel(labelFor(to.split('#')[0]))
       setPhase('exiting')
 
       timers.current.push(
         setTimeout(() => {
           navigate(to)
-          window.scrollTo({ top: 0, behavior: 'instant' })
           setPhase('entering')
-        }, EXIT_MS),
+        }, exit),
       )
-      timers.current.push(setTimeout(() => setPhase('idle'), EXIT_MS + ENTER_MS))
+      timers.current.push(setTimeout(() => setPhase('idle'), exit + enterMs()))
     },
     [navigate, location.pathname, location.hash],
   )
+
+  /*
+   * Back and forward. History is the external system here: popstate fires only
+   * for browser-driven navigation, never for the pushes this component makes,
+   * so there is no need to tell the two apart after the fact.
+   *
+   * There is no exit to play — the browser has already committed — but the
+   * destination still reveals rather than appearing in a single frame.
+   */
+  useEffect(() => {
+    const onPopState = () => {
+      if (prefersReducedMotion()) return
+      clearTimers()
+      setLabel(labelFor(window.location.pathname))
+      setPhase('entering')
+      timers.current.push(setTimeout(() => setPhase('idle'), enterMs()))
+    }
+
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
 
   // Capture internal link clicks anywhere in the tree.
   useEffect(() => {
@@ -97,7 +124,7 @@ export default function PageTransition({ children }) {
 
       <div
         aria-hidden="true"
-        className={`sweep ${phase === 'exiting' ? 'sweep--active' : ''}`}
+        className={`sweep ${phase === 'idle' ? '' : 'sweep--active'}`}
       >
         <span className="sweep__label">{label}</span>
       </div>

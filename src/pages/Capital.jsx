@@ -13,7 +13,7 @@ export default function Capital() {
       />
 
       <Section align="left">
-        <div className="mx-auto max-w-3xl space-y-6 text-pretty text-lg/8 text-neutral-600">
+        <div className="measure mx-auto space-y-6 text-pretty text-lg/8 text-neutral-600">
           <p>
             Starunico Capital invests principal capital. We do not raise from external
             investors and deploy on their behalf, which means the structure we operate

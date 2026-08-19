@@ -17,7 +17,7 @@ export default function Terms() {
         <Prose>
           {showLegalNotice && <ReviewNotice />}
 
-          <p className="text-lg text-pretty text-neutral-700">
+          <p className="measure text-lg text-pretty text-neutral-700">
             These terms govern your use of this website. By using it, you accept them. If
             you do not, please do not use the site.
           </p>

@@ -373,7 +373,7 @@ export default function Founders() {
           </div>
         </form>
 
-        <p className="mt-8 max-w-3xl text-sm text-neutral-500">
+        <p className="measure mt-8 text-sm text-neutral-500">
           By sending this you agree to our{' '}
           <a href="/terms" className="text-brand-700 hover:underline">
             terms

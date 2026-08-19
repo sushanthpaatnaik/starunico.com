@@ -42,7 +42,7 @@ export default function Thesis() {
             {stages.map((stage) => (
               <li
                 key={stage}
-                className="rounded-xl border border-neutral-200 bg-white px-5 py-4 font-semibold"
+                className="rounded-sm border border-neutral-200 bg-white px-5 py-4 font-semibold"
               >
                 {stage}
               </li>

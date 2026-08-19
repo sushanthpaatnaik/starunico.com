@@ -16,7 +16,7 @@ export default function Privacy() {
         <Prose>
           {showLegalNotice && <ReviewNotice />}
 
-          <p className="text-lg text-pretty text-neutral-700">
+          <p className="measure text-lg text-pretty text-neutral-700">
             This policy explains what {legal.entity} does with personal information when you
             visit this website or contact us through it. We collect as little as we can, and
             we do not sell it or use it for advertising.

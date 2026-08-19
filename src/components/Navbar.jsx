@@ -18,6 +18,31 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /*
+   * While the menu plane is up it is the only thing on screen, so the page
+   * behind it must not move: without this the document scrolls under the
+   * overlay and closing the menu leaves the visitor somewhere they never
+   * navigated to. Escape closes it, as any dismissable layer should.
+   */
+  useEffect(() => {
+    if (!open) return
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    // The viewport scroller is the root element, so locking `body` alone still
+    // lets the page move underneath the plane.
+    const root = document.documentElement
+    const previous = root.style.overflow
+    root.style.overflow = 'hidden'
+    document.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      root.style.overflow = previous
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   const linkClass = ({ isActive }) =>
     `nav-link ${isActive ? 'nav-link--active' : ''}`
 
@@ -32,7 +57,7 @@ export default function Navbar() {
       <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label="Main">
         <Link
           to="/"
-          className="flex items-center gap-2.5 rounded-lg"
+          className="flex items-center gap-2.5 rounded-sm"
           aria-label={`${site.name} home`}
         >
           <Logo className="h-8 w-auto" />

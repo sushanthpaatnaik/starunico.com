@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { PATHS, REDIRECTS } from './lib/routes.js'
 import Layout from './components/Layout.jsx'
 import PageTransition from './components/PageTransition.jsx'
-import ScrollToTop from './components/ScrollToTop.jsx'
+import ScrollManager from './components/ScrollManager.jsx'
 import Home from './pages/Home.jsx'
 import Thesis from './pages/Thesis.jsx'
 import Capital from './pages/Capital.jsx'
@@ -18,7 +18,7 @@ import NotFound from './pages/NotFound.jsx'
 export default function App() {
   return (
     <PageTransition>
-      <ScrollToTop />
+      <ScrollManager />
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />

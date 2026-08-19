@@ -30,7 +30,13 @@ export default function Section({
               <h2 className="mt-4 text-3xl tracking-tight text-balance sm:text-4xl">{title}</h2>
             )}
             {description && (
-              <p className="mt-4 text-lg text-pretty text-neutral-600">{description}</p>
+              <p
+                className={`measure mt-4 text-lg text-pretty text-neutral-600 ${
+                  centred ? 'mx-auto' : ''
+                }`}
+              >
+                {description}
+              </p>
             )}
           </div>
         )}
