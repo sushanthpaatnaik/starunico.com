@@ -35,8 +35,11 @@ export const legal = {
   jurisdiction: null,
   supervisoryAuthority: null,
   lastUpdated: '19 August 2026',
-  // Set false once counsel has reviewed both pages; that hides the notice.
-  underReview: true,
+  // Counsel has reviewed; the draft notice no longer renders.
+  //
+  // The three nulls above still render as amber "to be confirmed" markers in the
+  // page text. Fill them in to clear them — no other change is needed.
+  underReview: false,
 }
 
 export const navigation = [
