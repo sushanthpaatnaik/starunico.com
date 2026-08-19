@@ -40,10 +40,21 @@ export default function Privacy() {
 
           <Clause n={2} title="Information you give us">
             <p>
-              The contact form on this site asks for your name, email address, a subject
-              category and your message. We receive exactly those fields, and nothing else
-              from the form. Anything you choose to put in the message — including details
-              about a company or a technology — reaches us as you wrote it.
+              The submission form asks for your name, your role, your email address, the
+              company name, its website and location, the domain it sits in, your stage and
+              the capital you are seeking, a link to a deck or data room if you have one,
+              and your answers on what you have built, what is technically difficult about
+              it, what makes it hard to replicate, and what evidence exists today.
+            </p>
+            <p>
+              We receive exactly those fields and nothing else — the server stores only the
+              ones it recognises. Everything you write in the longer answers, including
+              detail about a company or a technology, reaches us as you wrote it. Please read
+              clause 4 of our{' '}
+              <a href="/terms" className="text-brand-700 hover:underline">
+                terms
+              </a>{' '}
+              before sending anything you would not want read without an agreement in place.
             </p>
             <p>
               The form also contains a hidden field that people never see and never fill in.

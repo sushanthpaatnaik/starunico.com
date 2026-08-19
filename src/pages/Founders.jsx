@@ -205,7 +205,7 @@ export default function Founders() {
 
       <Section
         eyebrow="Submission"
-        title="Six questions, one at a time"
+        title="Seven questions, one at a time"
         align="left"
         className="border-t border-neutral-200 bg-neutral-50"
       >
