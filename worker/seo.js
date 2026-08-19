@@ -44,6 +44,13 @@ export function sitemap() {
  * The Worker also answers on its workers.dev subdomain. That host serves the
  * same site, so letting it be crawled would compete with the real domain —
  * anything but the canonical host is disallowed outright.
+ *
+ * Cloudflare's managed robots.txt feature prepends its own block to whatever we
+ * return here, which already contains a `User-agent: *` group allowing
+ * everything. So this adds only what that block lacks: the /api/ exclusion and
+ * the sitemap reference. Omitting a redundant `Allow: /` keeps the merged file
+ * readable, and costs nothing if the managed block is ever turned off — an
+ * unlisted path is allowed by default.
  */
 export function robots(url) {
   if (url.host !== CANONICAL.host) {
@@ -52,8 +59,6 @@ export function robots(url) {
 
   const body = [
     'User-agent: *',
-    'Allow: /',
-    '',
     '# JSON endpoints, nothing to index.',
     'Disallow: /api/',
     '',
