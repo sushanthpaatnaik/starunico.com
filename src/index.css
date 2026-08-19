@@ -48,6 +48,12 @@
     color-scheme: light;
   }
 
+  /* The header is sticky, so anything scrolled to by focus or by an anchor
+     needs room to clear it. */
+  :where(input, select, textarea, fieldset, [id]) {
+    scroll-margin-top: 6rem;
+  }
+
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brand-500;
   }

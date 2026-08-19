@@ -1,5 +1,12 @@
 import { apiError, json } from './http.js'
-import { validateContact, LIMITS, SUBJECTS } from '../src/lib/contact.js'
+import {
+  CAPITAL_BANDS,
+  DOMAINS,
+  emptySubmission,
+  LIMITS,
+  STAGES,
+  validateSubmission,
+} from '../src/lib/submission.js'
 import {
   avoid,
   capitalAdvantages,
@@ -13,7 +20,7 @@ import {
 } from '../src/data/site.js'
 
 const CACHE_PUBLIC = { 'cache-control': 'public, max-age=60' }
-const MAX_BODY_BYTES = 16 * 1024
+const MAX_BODY_BYTES = 64 * 1024
 
 /** GET /api — a self-describing index of the available endpoints. */
 function index(request) {
@@ -27,7 +34,16 @@ function index(request) {
         { method: 'GET', path: '/api/health', description: 'Liveness probe.' },
         { method: 'GET', path: '/api/content', description: 'All site content in one payload.' },
         { method: 'GET', path: '/api/sectors', description: 'Sectors of interest, grouped.' },
-        { method: 'POST', path: '/api/contact', description: 'Submit the contact form.' },
+        {
+          method: 'GET',
+          path: '/api/submissions',
+          description: 'Field vocabulary and limits for the submission form.',
+        },
+        {
+          method: 'POST',
+          path: '/api/submissions',
+          description: 'Submit a founder introduction.',
+        },
       ].map((endpoint) => ({ ...endpoint, url: `${base}${endpoint.path}` })),
     },
     { headers: CACHE_PUBLIC },
@@ -53,8 +69,8 @@ function sectorList() {
   return json({ count: sectors.length, sectors }, { headers: CACHE_PUBLIC })
 }
 
-/** POST /api/contact */
-async function contact(request, env, ctx) {
+/** POST /api/submissions — the founder submission form. */
+async function submit(request, env, ctx) {
   const type = request.headers.get('content-type') ?? ''
   if (!type.includes('application/json')) {
     return apiError(415, 'Send a JSON body with content-type: application/json.')
@@ -62,7 +78,7 @@ async function contact(request, env, ctx) {
 
   const declared = Number(request.headers.get('content-length') ?? 0)
   if (declared > MAX_BODY_BYTES) {
-    return apiError(413, 'That message is too large.')
+    return apiError(413, 'That submission is too large.')
   }
 
   let body
@@ -77,37 +93,35 @@ async function contact(request, env, ctx) {
   }
 
   // A hidden field real people never fill in; bots usually do.
-  if (typeof body.company === 'string' && body.company.trim() !== '') {
+  if (typeof body.referrer === 'string' && body.referrer.trim() !== '') {
     return json({ ok: true, id: crypto.randomUUID() }, { status: 202 })
   }
 
-  const errors = validateContact(body)
+  const errors = validateSubmission(body)
   if (Object.keys(errors).length > 0) {
     return apiError(422, 'Some fields need attention.', { fields: errors })
   }
 
-  const submission = {
-    id: crypto.randomUUID(),
-    receivedAt: new Date().toISOString(),
-    name: String(body.name).trim(),
-    email: String(body.email).trim(),
-    subject: String(body.subject ?? 'general').trim() || 'general',
-    message: String(body.message).trim(),
-    country: request.headers.get('cf-ipcountry') ?? null,
+  // Copy only the fields we know about, so nothing extra is stored or forwarded.
+  const submission = { id: crypto.randomUUID(), receivedAt: new Date().toISOString() }
+  for (const key of Object.keys(emptySubmission)) {
+    submission[key] = String(body[key] ?? '').trim()
   }
+  submission.country = request.headers.get('cf-ipcountry') ?? null
 
-  // Optional fan-out. Without CONTACT_WEBHOOK_URL the submission is only logged,
-  // which is enough to see it in `wrangler tail` while you wire up a real sink.
-  if (env.CONTACT_WEBHOOK_URL) {
+  // Optional fan-out. Without SUBMISSION_WEBHOOK_URL the submission is only
+  // logged, which is enough to see it in `wrangler tail` while a sink is wired.
+  const webhook = env.SUBMISSION_WEBHOOK_URL ?? env.CONTACT_WEBHOOK_URL
+  if (webhook) {
     ctx.waitUntil(
-      fetch(env.CONTACT_WEBHOOK_URL, {
+      fetch(webhook, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(submission),
-      }).catch((error) => console.error('contact webhook failed', error)),
+      }).catch((error) => console.error('submission webhook failed', error)),
     )
   } else {
-    console.log('contact submission', JSON.stringify(submission))
+    console.log('founder submission', JSON.stringify(submission))
   }
 
   return json(
@@ -115,14 +129,18 @@ async function contact(request, env, ctx) {
       ok: true,
       id: submission.id,
       receivedAt: submission.receivedAt,
-      message: 'Thanks — your message has been received.',
+      message: 'Received. Thank you — we read everything that reaches us.',
     },
     { status: 201 },
   )
 }
 
-function meta() {
-  return json({ limits: LIMITS, subjects: SUBJECTS }, { headers: CACHE_PUBLIC })
+/** GET /api/submissions — the field vocabulary, so the form is self-describing. */
+function schema() {
+  return json(
+    { limits: LIMITS, domains: DOMAINS, stages: STAGES, capitalBands: CAPITAL_BANDS },
+    { headers: CACHE_PUBLIC },
+  )
 }
 
 /** path -> method -> handler. Used to answer 405 with a correct Allow header. */
@@ -131,5 +149,7 @@ export const routes = {
   '/api/health': { GET: health },
   '/api/content': { GET: content },
   '/api/sectors': { GET: sectorList },
-  '/api/contact': { POST: contact, GET: meta },
+  '/api/submissions': { POST: submit, GET: schema },
+  // Kept so the previously published endpoint keeps working.
+  '/api/contact': { POST: submit, GET: schema },
 }
