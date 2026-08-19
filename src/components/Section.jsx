@@ -12,7 +12,7 @@ export default function Section({
   const hasHeader = eyebrow || title || description
 
   return (
-    <section id={id} className={`py-20 sm:py-28 ${className}`}>
+    <section id={id} className={`py-14 sm:py-28 ${className}`}>
       <div className="container-page">
         {hasHeader && (
           <div className={centred ? 'mx-auto max-w-2xl text-center' : 'max-w-3xl text-left'}>
@@ -34,7 +34,7 @@ export default function Section({
             )}
           </div>
         )}
-        <div className={hasHeader ? 'mt-14' : ''}>{children}</div>
+        <div className={hasHeader ? 'mt-10 sm:mt-14' : ''}>{children}</div>
       </div>
     </section>
   )

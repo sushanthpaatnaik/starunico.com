@@ -65,11 +65,13 @@ export default function Frontiers() {
       {/* Small screens: no hover, so everything is shown. */}
       <ul className="lg:hidden">
         {sectors.map((sector, index) => (
-          <li key={sector.name} className="border-b border-neutral-200 py-7 last:border-b-0">
+          <li key={sector.name} className="border-b border-neutral-200 py-5 last:border-b-0 sm:py-7">
             <p className="meta text-neutral-400">{String(index + 1).padStart(2, '0')}</p>
             <h3 className="mt-2 text-xl tracking-tight">{sector.name}</h3>
             <p className="mt-2 text-sm/6 text-neutral-600">{sector.description}</p>
-            <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+            {/* The tags restate the description; on a phone that is a screen
+                of scrolling for no new information. */}
+            <ul className="mt-3 hidden flex-wrap gap-x-5 gap-y-1 sm:flex">
               {sector.areas.map((area) => (
                 <li key={area} className="meta text-neutral-500">
                   {area}

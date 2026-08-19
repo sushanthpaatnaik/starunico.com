@@ -20,7 +20,7 @@ export default function Home() {
             Five conditions, considered together. The framework is multiplicative rather
             than a scorecard — a company strong on four and absent on the fifth is a pass.
           </p>
-          <Matrix />
+          <Matrix compactOnMobile />
         </div>
       </Section>
 
@@ -46,7 +46,16 @@ export default function Home() {
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>
-          <DataBand items={capitalAdvantages} />
+          <div>
+            <DataBand items={capitalAdvantages} mobileLimit={3} />
+            <Link
+              to="/capital"
+              className="group/link mt-6 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline sm:hidden"
+            >
+              All six, and why they follow
+              <Icon name="arrow" className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </Section>
 
@@ -70,7 +79,9 @@ export default function Home() {
           {partnering.map((item, index) => (
             <li
               key={item}
-              className="flex items-baseline gap-5 border-b border-neutral-200 py-4 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
+              className={`items-baseline gap-5 border-b border-neutral-200 py-4 sm:flex sm:odd:border-r sm:odd:pr-8 sm:even:pl-8 ${
+                index >= 6 ? 'hidden' : 'flex'
+              }`}
             >
               <span className="meta shrink-0 text-neutral-400">
                 {String(index + 1).padStart(2, '0')}
@@ -79,6 +90,14 @@ export default function Home() {
             </li>
           ))}
         </ol>
+
+        <Link
+          to="/approach"
+          className="group/link mt-6 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline sm:hidden"
+        >
+          How we work with founders
+          <Icon name="arrow" className="h-4 w-4" />
+        </Link>
       </Section>
 
       <CallToAction
