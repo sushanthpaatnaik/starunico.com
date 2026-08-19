@@ -25,9 +25,13 @@ export default function Privacy() {
           <Clause n={1} title="Who we are">
             <p>
               {legal.entity}
-              {legal.registeredAddress ? `, ${legal.registeredAddress}` : ' '}
-              {!legal.registeredAddress && (
-                <Pending>registered entity name and address to be confirmed</Pending>
+              {legal.registeredAddress ? (
+                <>, of {legal.registeredAddress},</>
+              ) : (
+                <>
+                  {' '}
+                  <Pending>registered address to be confirmed</Pending>
+                </>
               )}{' '}
               is the controller of the personal information described here. You can reach us
               at{' '}
