@@ -4,7 +4,7 @@ import Icon from './Icon.jsx'
 export default function CallToAction({
   title = 'Present your technology',
   description = 'If you are building something technically differentiated and early, we would like to hear about it.',
-  primary = { label: 'Introduce your company', to: '/founders' },
+  primary = { label: 'Present your technology', to: '/founders' },
   secondary = { label: 'Explore our thesis', to: '/thesis' },
 }) {
   return (

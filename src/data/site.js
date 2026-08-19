@@ -87,6 +87,16 @@ export const journey = [
 
 export const stages = ['Seed', 'Pre-Series A', 'Series A', 'Series B', 'Growth']
 
+/** The trajectory device: one line, six marks, breakthrough to scale. */
+export const trajectory = [
+  'Breakthrough',
+  'Validation',
+  'Product',
+  'Market',
+  'Institutional capital',
+  'Scale',
+]
+
 /** Technology × Defensibility × Market × Team × Timing. Any one at zero is a pass. */
 export const criteria = [
   {
