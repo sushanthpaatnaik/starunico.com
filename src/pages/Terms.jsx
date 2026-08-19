@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import { Bullets, Clause, Pending, Prose, ReviewNotice } from '../components/Prose.jsx'
-import { legal, site } from '../data/site.js'
+import { legal, showLegalNotice, site } from '../data/site.js'
 
 export default function Terms() {
   return (
@@ -15,7 +15,7 @@ export default function Terms() {
 
       <Section align="left">
         <Prose>
-          {legal.underReview && <ReviewNotice />}
+          {showLegalNotice && <ReviewNotice />}
 
           <p className="text-lg text-pretty text-neutral-700">
             These terms govern your use of this website. By using it, you accept them. If

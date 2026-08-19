@@ -35,12 +35,26 @@ export const legal = {
   jurisdiction: null,
   supervisoryAuthority: null,
   lastUpdated: '19 August 2026',
-  // Counsel has reviewed; the draft notice no longer renders.
-  //
-  // The three nulls above still render as amber "to be confirmed" markers in the
-  // page text. Fill them in to clear them — no other change is needed.
-  underReview: false,
+  // Counsel sign-off, tracked separately from whether the facts above exist.
+  counselReviewed: true,
 }
+
+/**
+ * Whether the legal pages still carry unconfirmed details.
+ *
+ * Derived rather than set by hand. A manual flag and the data it describes drift
+ * apart — clearing the flag once left both pages publishing amber "to be
+ * confirmed" markers with nothing to explain them. Fill in the three values
+ * above and the notice retires itself.
+ */
+export const legalDetailsPending = [
+  legal.registeredAddress,
+  legal.jurisdiction,
+  legal.supervisoryAuthority,
+].some((value) => !value)
+
+/** The notice shows while anything is unconfirmed, or before counsel signs off. */
+export const showLegalNotice = legalDetailsPending || !legal.counselReviewed
 
 export const navigation = [
   { name: 'About', to: '/about' },

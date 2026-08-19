@@ -41,11 +41,10 @@ export function Pending({ children }) {
 
 export function ReviewNotice() {
   return (
-    <p className="mb-10 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-sm text-amber-900">
-      <strong className="font-semibold">Draft pending legal review.</strong> This page
-      describes how the site actually works, but it has not been reviewed by a qualified
-      adviser and the highlighted details are still to be confirmed. It should not be
-      relied on as it stands.
+    <p className="mb-10 rounded-sm border border-amber-300 bg-amber-50 px-5 py-4 text-sm text-amber-900">
+      <strong className="font-semibold">Details still to be confirmed.</strong> This page
+      describes how the site actually works, but the highlighted items below are not yet
+      settled. It should not be relied on until they are.
     </p>
   )
 }
