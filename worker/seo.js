@@ -3,7 +3,7 @@ import { portfolio, site } from '../src/data/site.js'
 
 const CANONICAL = new URL(site.url)
 
-function text(body, { status = 200, type = 'text/plain; charset=utf-8', maxAge = 3600 } = {}) {
+function text(body, { status = 200, type = 'text/plain; charset=utf-8', maxAge = 300 } = {}) {
   return new Response(body, {
     status,
     headers: {
@@ -53,6 +53,9 @@ export function sitemap() {
  * unlisted path is allowed by default.
  */
 export function robots(url) {
+  // Short TTL: Cloudflare's managed block is layered on at the edge, so this
+  // file's content can change from a dashboard setting with no deploy. A long
+  // cache would hide that for an hour.
   if (url.host !== CANONICAL.host) {
     return text(['User-agent: *', 'Disallow: /', ''].join('\n'))
   }
