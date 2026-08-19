@@ -74,7 +74,13 @@ export default function Home() {
         <Trajectory points={trajectory} />
       </Section>
 
-      <Section index={5} eyebrow="Beyond capital" title="Investor first, partner second" align="left">
+      <Section
+        index={5}
+        eyebrow="Beyond capital"
+        title="Investor first, partner second"
+        align="left"
+        className="hidden sm:block"
+      >
         <ol className="grid border-t border-neutral-200 sm:grid-cols-2">
           {partnering.map((item, index) => (
             <li
@@ -91,13 +97,6 @@ export default function Home() {
           ))}
         </ol>
 
-        <Link
-          to="/approach"
-          className="group/link mt-6 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline sm:hidden"
-        >
-          How we work with founders
-          <Icon name="arrow" className="h-4 w-4" />
-        </Link>
       </Section>
 
       <CallToAction
