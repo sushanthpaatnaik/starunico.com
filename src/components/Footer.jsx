@@ -2,15 +2,14 @@ import { Link } from 'react-router-dom'
 import Logo from './Logo.jsx'
 import { navigation, site } from '../data/site.js'
 
-// TODO: add the real policy pages before launch.
 const legal = [
-  { name: 'Privacy', href: '#' },
-  { name: 'Terms', href: '#' },
+  { name: 'Privacy', to: '/privacy' },
+  { name: 'Terms', to: '/terms' },
 ]
 
 export default function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/50">
+    <footer className="border-t border-neutral-200 bg-neutral-50">
       <div className="container-page py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           <div className="lg:col-span-1">
@@ -18,7 +17,7 @@ export default function Footer() {
               <Logo className="h-8 w-auto" />
               <span className="text-lg font-semibold tracking-tight">{site.name}</span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="mt-4 max-w-xs text-sm text-neutral-600">
               {site.descriptor}
             </p>
           </div>
@@ -28,7 +27,7 @@ export default function Footer() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+                  className="text-neutral-600 transition hover:text-neutral-900"
                 >
                   {item.name}
                 </Link>
@@ -40,24 +39,24 @@ export default function Footer() {
           <FooterColumn title="Legal">
             {legal.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+                <Link
+                  to={item.to}
+                  className="text-neutral-600 transition hover:text-neutral-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))}
           </FooterColumn>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row dark:border-neutral-800">
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row">
+          <p className="text-sm text-neutral-600">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <a
             href={`mailto:${site.email}`}
-            className="text-sm text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            className="text-sm text-neutral-600 transition hover:text-neutral-900"
           >
             {site.email}
           </a>
@@ -70,7 +69,7 @@ export default function Footer() {
 function FooterColumn({ title, children }) {
   return (
     <div>
-      <h3 className="text-sm font-semibold tracking-wider text-neutral-900 uppercase dark:text-white">
+      <h3 className="text-sm font-semibold tracking-wider text-neutral-900 uppercase">
         {title}
       </h3>
       <ul className="mt-4 space-y-3 text-sm">{children}</ul>

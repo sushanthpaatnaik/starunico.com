@@ -72,7 +72,7 @@ export default function Contact() {
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <div className="text-left">
             <h2 className="text-2xl font-semibold tracking-tight">Introduce your company</h2>
-            <p className="mt-3 text-neutral-600 dark:text-neutral-400">
+            <p className="mt-3 text-neutral-600">
               We read everything that reaches us. Founders, co-investors and advisers are
               all welcome to get in touch.
             </p>
@@ -83,7 +83,7 @@ export default function Contact() {
                 <dd className="mt-1">
                   <a
                     href={`mailto:${site.email}`}
-                    className="text-brand-700 hover:underline dark:text-brand-400"
+                    className="text-brand-700 hover:underline"
                   >
                     {site.email}
                   </a>
@@ -91,7 +91,7 @@ export default function Contact() {
               </div>
               <div>
                 <dt className="font-semibold">What helps</dt>
-                <dd className="mt-1 text-neutral-600 dark:text-neutral-400">
+                <dd className="mt-1 text-neutral-600">
                   A short description of the technology, its defensibility, and the stage
                   you are at. Decks are welcome but not required.
                 </dd>
@@ -102,15 +102,15 @@ export default function Contact() {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="rounded-2xl border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900/60"
+            className="rounded-2xl border border-neutral-200 bg-white p-8"
           >
             {notice && (
               <p
                 role="status"
                 className={`mb-6 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium ${
                   status === 'failed'
-                    ? 'bg-red-50 text-red-800 dark:bg-red-950/50 dark:text-red-300'
-                    : 'bg-brand-50 text-brand-800 dark:bg-neutral-800 dark:text-brand-300'
+                    ? 'bg-red-50 text-red-800'
+                    : 'bg-brand-50 text-brand-800'
                 }`}
               >
                 <Icon name={status === 'failed' ? 'close' : 'check'} className="h-5 w-5 shrink-0" />
@@ -147,7 +147,7 @@ export default function Contact() {
                 name="subject"
                 value={values.subject}
                 onChange={handleChange}
-                className="mt-2 w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+                className="mt-2 w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm"
               >
                 {SUBJECTS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -169,12 +169,12 @@ export default function Contact() {
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.message)}
                 aria-describedby={errors.message ? 'message-error' : undefined}
-                className={`mt-2 w-full rounded-lg border px-3 py-2.5 text-sm dark:bg-neutral-900 ${
-                  errors.message ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-700'
+                className={`mt-2 w-full rounded-lg border px-3 py-2.5 text-sm ${
+                  errors.message ? 'border-red-500' : 'border-neutral-300'
                 }`}
               />
               {errors.message && (
-                <p id="message-error" className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+                <p id="message-error" className="mt-1.5 text-sm text-red-600">
                   {errors.message}
                 </p>
               )}
@@ -208,13 +208,13 @@ function Field({ label, name, error, ...props }) {
         name={name}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={`mt-2 w-full rounded-lg border px-3 py-2.5 text-sm dark:bg-neutral-900 ${
-          error ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-700'
+        className={`mt-2 w-full rounded-lg border px-3 py-2.5 text-sm ${
+          error ? 'border-red-500' : 'border-neutral-300'
         }`}
         {...props}
       />
       {error && (
-        <p id={`${name}-error`} className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+        <p id={`${name}-error`} className="mt-1.5 text-sm text-red-600">
           {error}
         </p>
       )}

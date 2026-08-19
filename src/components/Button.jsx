@@ -8,14 +8,14 @@ const base =
 const variants = {
   primary:
     'bg-brand-700 text-white shadow-sm hover:bg-brand-800 active:bg-brand-900 ' +
-    'dark:bg-brand-500 dark:hover:bg-brand-400 dark:active:bg-brand-300 dark:text-neutral-950',
+    '',
   secondary:
-    'bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200',
+    'bg-neutral-900 text-white hover:bg-neutral-700',
   outline:
     'border border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50 ' +
-    'dark:border-neutral-700 dark:text-neutral-200 dark:hover:border-neutral-500 dark:hover:bg-neutral-800',
+    '',
   ghost:
-    'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800',
+    'text-neutral-700 hover:bg-neutral-100',
   // For panels that are dark in both themes (e.g. the call-to-action band).
   onDark: 'bg-white text-neutral-900 shadow-sm hover:bg-neutral-200 active:bg-neutral-300',
   onDarkGhost: 'text-neutral-200 hover:bg-white/10 hover:text-white',

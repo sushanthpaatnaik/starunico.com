@@ -24,6 +24,21 @@ export const site = {
   email: 'contact@starunicocapital.com',
 }
 
+/**
+ * Facts the legal pages need. Anything null renders as a visible "to be
+ * confirmed" marker rather than a guess — these must come from the company,
+ * and the pages carry a review notice until they do.
+ */
+export const legal = {
+  entity: 'Starunico Capital',
+  registeredAddress: null,
+  jurisdiction: null,
+  supervisoryAuthority: null,
+  lastUpdated: '19 August 2026',
+  // Set false once counsel has reviewed both pages; that hides the notice.
+  underReview: true,
+}
+
 export const navigation = [
   { name: 'Philosophy', to: '/philosophy' },
   { name: 'Proprietary Capital', to: '/capital' },

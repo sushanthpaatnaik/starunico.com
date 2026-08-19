@@ -33,7 +33,7 @@ export default function Partnering() {
           {founderNotes.map((note) => (
             <li key={note.title}>
               <h2 className="text-lg font-semibold">{note.title}</h2>
-              <p className="mt-2 text-pretty text-neutral-600 dark:text-neutral-400">{note.body}</p>
+              <p className="mt-2 text-pretty text-neutral-600">{note.body}</p>
             </li>
           ))}
         </ul>
@@ -43,7 +43,7 @@ export default function Partnering() {
         eyebrow="Where we help"
         title="Practical, and led by the company's needs"
         align="left"
-        className="bg-neutral-50 dark:bg-neutral-900/40"
+        className="bg-neutral-50"
       >
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <ul className="grid gap-4 sm:grid-cols-2">
@@ -51,13 +51,13 @@ export default function Partnering() {
               <li key={item} className="flex items-start gap-3">
                 <Icon
                   name="check"
-                  className="mt-0.5 h-5 w-5 shrink-0 text-brand-700 dark:text-brand-400"
+                  className="mt-0.5 h-5 w-5 shrink-0 text-brand-700"
                 />
-                <span className="text-neutral-700 dark:text-neutral-300">{item}</span>
+                <span className="text-neutral-700">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="self-start text-pretty text-neutral-600 dark:text-neutral-400">
+          <p className="self-start text-pretty text-neutral-600">
             We are investors and owners first. This support exists because it makes the
             companies we own stronger and more investable — not because we are running an
             advisory practice alongside.

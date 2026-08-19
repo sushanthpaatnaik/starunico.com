@@ -3,13 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
 import Logo from './Logo.jsx'
-import useTheme from '../hooks/useTheme.js'
 import { navigation, site } from '../data/site.js'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { theme, toggleTheme } = useTheme()
   const closeMenu = () => setOpen(false)
 
   useEffect(() => {
@@ -22,15 +20,15 @@ export default function Navbar() {
   const linkClass = ({ isActive }) =>
     `rounded-full px-3 py-2 text-sm font-medium transition ${
       isActive
-        ? 'text-brand-700 dark:text-brand-400'
-        : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+        ? 'text-brand-700'
+        : 'text-neutral-600 hover:text-neutral-900'
     }`
 
   return (
     <header
       className={`sticky top-0 z-50 border-b transition ${
         scrolled
-          ? 'border-neutral-200 bg-white/85 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/85'
+          ? 'border-neutral-200 bg-white/85 backdrop-blur'
           : 'border-transparent bg-transparent'
       }`}
     >
@@ -55,14 +53,6 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-          >
-            <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
-          </button>
 
           {/* Wrapper handles the responsive hide so it cannot clash with the button's own display utility. */}
           <div className="hidden sm:block">
@@ -74,7 +64,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden dark:text-neutral-400 dark:hover:bg-neutral-800"
+            className="rounded-full p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -87,7 +77,7 @@ export default function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="border-t border-neutral-200 bg-white md:hidden dark:border-neutral-800 dark:bg-neutral-950"
+          className="border-t border-neutral-200 bg-white md:hidden"
         >
           <ul className="container-page space-y-1 py-4">
             {navigation.map((item) => (
@@ -99,8 +89,8 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `block rounded-lg px-3 py-2 text-base font-medium ${
                       isActive
-                        ? 'bg-brand-50 text-brand-700 dark:bg-neutral-800 dark:text-brand-400'
-                        : 'text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800'
+                        ? 'bg-brand-50 text-brand-700'
+                        : 'text-neutral-700 hover:bg-neutral-50'
                     }`
                   }
                 >

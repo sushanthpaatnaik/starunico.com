@@ -17,17 +17,17 @@ export default function Sectors() {
           {sectors.map((sector) => (
             <li
               key={sector.name}
-              className="rounded-2xl border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900/60"
+              className="rounded-2xl border border-neutral-200 bg-white p-8"
             >
               <h2 className="text-xl font-semibold">{sector.name}</h2>
-              <p className="mt-3 text-pretty text-neutral-600 dark:text-neutral-400">
+              <p className="mt-3 text-pretty text-neutral-600">
                 {sector.description}
               </p>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {sector.areas.map((area) => (
                   <li
                     key={area}
-                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600 dark:border-neutral-700 dark:text-neutral-400"
+                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-600"
                   >
                     {area}
                   </li>

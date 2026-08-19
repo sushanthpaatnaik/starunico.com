@@ -7,6 +7,8 @@ import Capital from './pages/Capital.jsx'
 import Sectors from './pages/Sectors.jsx'
 import Partnering from './pages/Partnering.jsx'
 import Contact from './pages/Contact.jsx'
+import Privacy from './pages/Privacy.jsx'
+import Terms from './pages/Terms.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="sectors" element={<Sectors />} />
           <Route path="partnering" element={<Partnering />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

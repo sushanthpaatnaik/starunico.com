@@ -10,7 +10,7 @@ export default function CallToAction({
   return (
     <section className="py-20 sm:py-28">
       <div className="container-page">
-        <div className="relative isolate overflow-hidden rounded-3xl bg-neutral-950 px-6 py-20 text-center sm:px-16 dark:bg-neutral-900/60 dark:ring-1 dark:ring-neutral-800">
+        <div className="relative isolate overflow-hidden rounded-3xl bg-neutral-950 px-6 py-20 text-center sm:px-16">
           <div
             aria-hidden="true"
             className="absolute -top-24 left-1/2 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 opacity-25 blur-3xl"

@@ -12,13 +12,13 @@ export default function Home() {
     <>
       <Hero />
 
-      <Section className="bg-neutral-50 dark:bg-neutral-900/40">
+      <Section className="bg-neutral-50">
         <div className="mx-auto max-w-3xl">
           <p className="text-2xl font-medium tracking-tight text-balance sm:text-3xl/tight">
             We invest our own capital. That single fact shapes everything else about how we
             invest.
           </p>
-          <p className="mt-6 text-pretty text-neutral-600 dark:text-neutral-400">
+          <p className="mt-6 text-pretty text-neutral-600">
             Without capital raised against a cycle, there is no obligation to deploy on a
             schedule, no pressure toward interim markups, and no structural reason to exit a
             company before its technology has matured. We can enter early, concentrate, and
@@ -26,7 +26,7 @@ export default function Home() {
           </p>
           <Link
             to="/capital"
-            className="mt-8 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline dark:text-brand-400"
+            className="mt-8 inline-flex items-center gap-2 font-semibold text-brand-700 hover:underline"
           >
             Why proprietary capital matters
             <Icon name="arrow" className="h-4 w-4" />
@@ -37,7 +37,7 @@ export default function Home() {
           {capitalAdvantages.slice(0, 3).map((item) => (
             <li key={item.title}>
               <h3 className="font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm/6 text-neutral-600 dark:text-neutral-400">
+              <p className="mt-2 text-sm/6 text-neutral-600">
                 {item.description}
               </p>
             </li>
@@ -58,16 +58,16 @@ export default function Home() {
         eyebrow="Sectors"
         title="Where we look"
         align="left"
-        className="bg-neutral-50 dark:bg-neutral-900/40"
+        className="bg-neutral-50"
       >
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {sectors.map((sector) => (
             <li
               key={sector.name}
-              className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-950"
+              className="rounded-2xl border border-neutral-200 bg-white p-6"
             >
               <h3 className="text-lg font-semibold">{sector.name}</h3>
-              <p className="mt-2 text-sm/6 text-neutral-600 dark:text-neutral-400">
+              <p className="mt-2 text-sm/6 text-neutral-600">
                 {sector.description}
               </p>
             </li>
@@ -88,16 +88,16 @@ export default function Home() {
         eyebrow="Beyond capital"
         title="An owner-partner, not a passive cheque"
         align="left"
-        className="bg-neutral-50 dark:bg-neutral-900/40"
+        className="bg-neutral-50"
       >
         <ul className="grid gap-4 sm:grid-cols-2">
           {partnering.slice(0, 6).map((item) => (
             <li key={item} className="flex items-start gap-3">
               <Icon
                 name="check"
-                className="mt-0.5 h-5 w-5 shrink-0 text-brand-700 dark:text-brand-400"
+                className="mt-0.5 h-5 w-5 shrink-0 text-brand-700"
               />
-              <span className="text-neutral-700 dark:text-neutral-300">{item}</span>
+              <span className="text-neutral-700">{item}</span>
             </li>
           ))}
         </ul>

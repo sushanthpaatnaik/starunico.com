@@ -15,7 +15,7 @@ export default function Section({
         {(eyebrow || title || description) && (
           <div className={`max-w-2xl ${alignment}`}>
             {eyebrow && (
-              <p className="text-sm font-semibold tracking-widest text-brand-700 uppercase dark:text-brand-400">
+              <p className="text-sm font-semibold tracking-widest text-brand-700 uppercase">
                 {eyebrow}
               </p>
             )}
@@ -25,7 +25,7 @@ export default function Section({
               </h2>
             )}
             {description && (
-              <p className="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400">
+              <p className="mt-4 text-lg text-pretty text-neutral-600">
                 {description}
               </p>
             )}

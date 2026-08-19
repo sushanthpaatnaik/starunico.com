@@ -13,7 +13,7 @@ export default function Capital() {
       />
 
       <Section align="left">
-        <div className="mx-auto max-w-3xl space-y-6 text-pretty text-lg/8 text-neutral-600 dark:text-neutral-400">
+        <div className="mx-auto max-w-3xl space-y-6 text-pretty text-lg/8 text-neutral-600">
           <p>
             Starunico Capital invests principal capital. We do not raise from external
             investors and deploy on their behalf, which means the structure we operate
@@ -38,13 +38,13 @@ export default function Capital() {
         eyebrow="What it enables"
         title="Structure shaping strategy"
         align="left"
-        className="bg-neutral-50 dark:bg-neutral-900/40"
+        className="bg-neutral-50"
       >
-        <ul className="grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3 dark:border-neutral-800 dark:bg-neutral-800">
+        <ul className="grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
           {capitalAdvantages.map((item) => (
-            <li key={item.title} className="bg-white p-8 dark:bg-neutral-950">
+            <li key={item.title} className="bg-white p-8">
               <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm/6 text-neutral-600 dark:text-neutral-400">
+              <p className="mt-2 text-sm/6 text-neutral-600">
                 {item.description}
               </p>
             </li>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
     <meta
       name="description"
       content="Starunico Capital is a proprietary deep-tech investment firm backed by family capital. We invest our own capital into a highly selective portfolio of early-stage deep-tech companies."
@@ -19,21 +20,8 @@
       content="We invest our own capital into a highly selective portfolio of early-stage deep-tech companies and partner with them for long-term value creation."
     />
     <meta name="twitter:card" content="summary" />
-    <script>
-      // Apply the stored/system theme before first paint so the page never flashes.
-      (function () {
-        try {
-          var stored = localStorage.getItem('starunico-theme')
-          var dark =
-            stored === 'dark' ||
-            (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)
-          document.documentElement.classList.toggle('dark', dark)
-          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
-        } catch (e) {}
-      })()
-    </script>
   </head>
-  <body class="bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
+  <body class="bg-white text-neutral-900 antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
