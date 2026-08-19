@@ -1,6 +1,7 @@
 import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
-import CriteriaGrid from '../components/CriteriaGrid.jsx'
+import Matrix from '../components/Matrix.jsx'
+import Frontiers from '../components/Frontiers.jsx'
 import Journey from '../components/Journey.jsx'
 import CallToAction from '../components/CallToAction.jsx'
 import Icon from '../components/Icon.jsx'
@@ -20,7 +21,7 @@ export default function Thesis() {
         title="Technology × Defensibility × Market × Team × Timing"
         align="left"
       >
-        <CriteriaGrid />
+        <Matrix />
       </Section>
 
       <Section align="left" title="Stage" className="bg-neutral-50">
@@ -49,6 +50,10 @@ export default function Thesis() {
             ))}
           </ol>
         </div>
+      </Section>
+
+      <Section eyebrow="Frontiers" title="Where we underwrite" align="left">
+        <Frontiers />
       </Section>
 
       <Section eyebrow="Selectivity" title="What we do not invest in" align="left">

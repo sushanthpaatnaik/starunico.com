@@ -57,7 +57,7 @@ export default function Trajectory({ points, className = '' }) {
       <ol className="mt-6 grid grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
         {points.map((point, index) => (
           <li key={point} className="border-t border-neutral-200 pt-3">
-            <span className="block text-xs font-semibold tracking-widest text-neutral-400 tabular-nums">
+            <span className="meta block text-neutral-400">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="mt-1 block text-sm font-semibold tracking-tight">{point}</span>

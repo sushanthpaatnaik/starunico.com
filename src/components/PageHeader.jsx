@@ -3,7 +3,7 @@ export default function PageHeader({ eyebrow, title, description }) {
     <section className="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
       <div className="container-page py-20 text-center sm:py-24">
         {eyebrow && (
-          <p data-reveal="meta" className="text-sm font-semibold tracking-widest text-brand-700 uppercase">
+          <p data-reveal="meta" className="meta text-brand-700">
             {eyebrow}
           </p>
         )}

@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom'
 import Hero from '../components/Hero.jsx'
 import Section from '../components/Section.jsx'
 import Matrix from '../components/Matrix.jsx'
+import Frontiers from '../components/Frontiers.jsx'
+import DataBand from '../components/DataBand.jsx'
 import Trajectory from '../components/Trajectory.jsx'
 import CallToAction from '../components/CallToAction.jsx'
 import Icon from '../components/Icon.jsx'
-import { capitalAdvantages, partnering, sectors, trajectory } from '../data/site.js'
+import { capitalAdvantages, partnering, trajectory } from '../data/site.js'
 
 export default function Home() {
   return (
@@ -44,46 +46,12 @@ export default function Home() {
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>
-          <ul className="grid gap-px overflow-hidden border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
-            {capitalAdvantages.map((item, index) => (
-              <li key={item.title} className="bg-white p-6">
-                <span className="text-xs font-semibold tracking-widest text-neutral-400 tabular-nums">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="mt-2 font-semibold tracking-tight">{item.title}</h3>
-                <p className="mt-2 text-sm/6 text-neutral-600">{item.description}</p>
-              </li>
-            ))}
-          </ul>
+          <DataBand items={capitalAdvantages} />
         </div>
       </Section>
 
       <Section index={3} eyebrow="Frontiers" title="Where we underwrite" align="left">
-        <ul className="grid gap-px overflow-hidden border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
-          {sectors.map((sector, index) => (
-            <li key={sector.name} className="group bg-white p-8 transition-colors hover:bg-neutral-950">
-              <span className="text-xs font-semibold tracking-widest text-neutral-400 tabular-nums">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-3 text-lg font-semibold tracking-tight transition-colors group-hover:text-white">
-                {sector.name}
-              </h3>
-              <p className="mt-2 text-sm/6 text-neutral-600 transition-colors group-hover:text-neutral-300">
-                {sector.description}
-              </p>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {sector.areas.map((area) => (
-                  <li
-                    key={area}
-                    className="rounded-full border border-neutral-200 px-3 py-1 text-xs text-neutral-600 transition-colors group-hover:border-neutral-700 group-hover:text-neutral-400"
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+        <Frontiers />
       </Section>
 
       <Section
@@ -98,14 +66,19 @@ export default function Home() {
       </Section>
 
       <Section index={5} eyebrow="Beyond capital" title="Investor first, partner second" align="left">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {partnering.map((item) => (
-            <li key={item} className="flex items-start gap-3">
-              <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
+        <ol className="grid border-t border-neutral-200 sm:grid-cols-2">
+          {partnering.map((item, index) => (
+            <li
+              key={item}
+              className="flex items-baseline gap-5 border-b border-neutral-200 py-4 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
+            >
+              <span className="meta shrink-0 text-neutral-400">
+                {String(index + 1).padStart(2, '0')}
+              </span>
               <span className="text-neutral-700">{item}</span>
             </li>
           ))}
-        </ul>
+        </ol>
       </Section>
 
       <CallToAction

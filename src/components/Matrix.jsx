@@ -28,11 +28,7 @@ export default function Matrix() {
                   selected ? 'bg-neutral-950 text-white' : 'hover:bg-neutral-50'
                 }`}
               >
-                <span
-                  className={`text-xs font-semibold tabular-nums ${
-                    selected ? 'text-brand-400' : 'text-neutral-400'
-                  }`}
-                >
+                <span className={`meta ${selected ? 'text-brand-400' : 'text-neutral-400'}`}>
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <span className="font-semibold tracking-tight">{item.title}</span>
@@ -48,7 +44,7 @@ export default function Matrix() {
 
       <div className="flex flex-col justify-between gap-8 bg-white p-8 sm:p-12">
         <div>
-          <p className="text-xs font-semibold tracking-widest text-neutral-400 uppercase">
+          <p className="meta text-neutral-400">
             Dimension {String(active + 1).padStart(2, '0')} / {criteria.length}
           </p>
           <p className="mt-4 text-2xl text-pretty sm:text-3xl/tight">{current.description}</p>

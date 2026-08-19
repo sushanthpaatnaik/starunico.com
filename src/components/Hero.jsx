@@ -1,14 +1,18 @@
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
+import Lattice from './Lattice.jsx'
 import { site, stages } from '../data/site.js'
 
 export default function Hero() {
   return (
-    <section className="border-b border-neutral-200">
+    <section className="relative isolate overflow-hidden border-b border-neutral-200">
+      {/* Masked so the structure never competes with the headline. */}
+      <Lattice className="lattice-mask pointer-events-none absolute -top-16 -right-8 -z-10 hidden w-[54%] lg:block" />
+
       <div className="container-page py-28 sm:py-36">
         <div className="max-w-4xl">
-          <p className="flex flex-wrap items-baseline gap-x-3 text-xs font-semibold tracking-[0.2em] uppercase">
-            <span className="text-neutral-900">Starunico Capital</span>
+          <p className="meta flex flex-wrap items-baseline gap-x-3">
+            <span className="text-neutral-900">{site.name}</span>
             <span aria-hidden="true" className="text-neutral-300">
               /
             </span>
@@ -38,7 +42,7 @@ export default function Hero() {
       <div className="border-t border-neutral-200">
         <div className="container-page py-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:gap-10">
-            <p className="shrink-0 text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+            <p className="meta shrink-0 text-neutral-600">
               We invest early and support the rounds that follow
             </p>
             <ol className="flex flex-wrap items-center gap-x-4 gap-y-2">

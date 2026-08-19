@@ -5,6 +5,8 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Source Serif 4", ui-serif, Georgia, "Times New Roman", serif;
+  /* Technical metadata only: section indices, labels, coordinates. */
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /*
    * The palette is white + green + black. `neutral-*` supplies the true
@@ -69,6 +71,16 @@
 }
 
 @layer components {
+  /* Technical metadata: numbers, labels, annotations. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
   .container-page {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
@@ -138,6 +150,33 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* The hero lattice fades toward the type it sits behind. */
+  .lattice-mask {
+    -webkit-mask-image: linear-gradient(
+      to left,
+      rgb(0 0 0 / 0.85) 0%,
+      rgb(0 0 0 / 0.5) 45%,
+      transparent 78%
+    );
+    mask-image: linear-gradient(
+      to left,
+      rgb(0 0 0 / 0.85) 0%,
+      rgb(0 0 0 / 0.5) 45%,
+      transparent 78%
+    );
+  }
+
+  /* Arrows inside buttons and links step forward on hover. */
+  .group\/btn:hover svg,
+  .group\/link:hover svg {
+    transform: translateX(3px);
+  }
+
+  .group\/btn svg,
+  .group\/link svg {
+    transition: transform 200ms var(--ease-precision);
   }
 
   /* Navigation: an index appears, a rule extends, the label steps across. */

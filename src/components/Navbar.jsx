@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
 import Logo from './Logo.jsx'
+import ScrollTrajectory from './ScrollTrajectory.jsx'
 import { navigation, site } from '../data/site.js'
 
 export default function Navbar() {
@@ -73,6 +74,8 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
+
+      <ScrollTrajectory />
 
       {open && (
         <div

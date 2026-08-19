@@ -40,11 +40,11 @@ export const legal = {
 }
 
 export const navigation = [
+  { name: 'About', to: '/about' },
   { name: 'Thesis', to: '/thesis' },
   { name: 'Capital', to: '/capital' },
   { name: 'Approach', to: '/approach' },
   { name: 'Portfolio', to: '/portfolio' },
-  { name: 'About', to: '/about' },
 ]
 
 /**

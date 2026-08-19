@@ -1,7 +1,8 @@
 import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import CallToAction from '../components/CallToAction.jsx'
-import { portfolio, sectors } from '../data/site.js'
+import Frontiers from '../components/Frontiers.jsx'
+import { portfolio } from '../data/site.js'
 
 export default function Portfolio() {
   const { disclosed, note } = portfolio
@@ -43,16 +44,9 @@ export default function Portfolio() {
         eyebrow="Where we invest"
         title="The domains we underwrite"
         align="left"
-        className="border-t border-neutral-200 bg-neutral-50"
+        className="border-t border-neutral-200"
       >
-        <ul className="grid gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
-          {sectors.map((sector) => (
-            <li key={sector.name} className="bg-white p-8">
-              <h3 className="font-semibold">{sector.name}</h3>
-              <p className="mt-2 text-sm/6 text-neutral-600">{sector.description}</p>
-            </li>
-          ))}
-        </ul>
+        <Frontiers />
       </Section>
 
       <CallToAction />
