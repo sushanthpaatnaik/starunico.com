@@ -1,18 +1,43 @@
 import { apiError, corsHeaders, withHeaders } from './http.js'
 import { routes } from './routes.js'
+import { isKnownRoute } from '../src/lib/routes.js'
 
 /**
- * Only /api/* reaches this Worker — wrangler.jsonc sets
- * `assets.run_worker_first: ["/api/*"]`, so the static bundle and the SPA
- * fallback are served by Cloudflare's asset layer without invoking us.
- * `env.ASSETS.fetch` is still available for anything that slips through.
+ * Requests for real files are served by Cloudflare's asset layer without
+ * invoking this Worker. Everything else arrives here: /api/* because
+ * `run_worker_first` names it, and any other path because
+ * `not_found_handling` is "none", so the asset layer stops rather than
+ * inventing a fallback.
+ *
+ * That is what lets a genuinely unknown path answer 404. The single-page
+ * fallback is served here instead, with the status the path deserves.
  */
+/**
+ * Serves the single-page document for a client route, or the same document with
+ * a 404 for a path the router does not answer. Search engines and link checkers
+ * then see the truth, while a visitor still gets the styled page.
+ */
+async function documentFor(url, request, env) {
+  const index = await env.ASSETS.fetch(new URL('/', url.origin))
+
+  if (!index.ok) return index
+
+  const known = isKnownRoute(url.pathname)
+  const headers = new Headers(index.headers)
+  headers.set('cache-control', known ? 'public, max-age=0, must-revalidate' : 'no-store')
+
+  return new Response(request.method === 'HEAD' ? null : index.body, {
+    status: known ? 200 : 404,
+    headers,
+  })
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
 
     if (!url.pathname.startsWith('/api')) {
-      return env.ASSETS.fetch(request)
+      return documentFor(url, request, env)
     }
 
     const cors = corsHeaders(request, env)

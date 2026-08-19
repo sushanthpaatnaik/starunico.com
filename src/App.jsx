@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { PATHS, REDIRECTS } from './lib/routes.js'
 import Layout from './components/Layout.jsx'
 import PageTransition from './components/PageTransition.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'

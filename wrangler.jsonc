@@ -18,8 +18,11 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    // Client-side routes (/about, /pricing, ...) fall back to index.html.
-    "not_found_handling": "single-page-application",
+    // "none" rather than "single-page-application": the asset layer must stop at
+    // real files so unmatched paths reach the Worker, which serves the
+    // single-page document itself and can answer 404 for a path the router does
+    // not know. With the SPA setting the asset layer answered 200 for anything.
+    "not_found_handling": "none",
     // Everything else is served straight from the asset layer; only the API
     // wakes the Worker, so static requests cost nothing. "/api" is listed
     // separately because "/api/*" does not match the bare path.
