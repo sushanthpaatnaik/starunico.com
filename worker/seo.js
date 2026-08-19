@@ -41,6 +41,42 @@ export function sitemap() {
 }
 
 /**
+ * INTERIM. Cloudflare's "Managed robots.txt" setting prepends a block that
+ * disallows these crawlers, and the setting has not taken effect from the
+ * dashboard. Until it does, we re-allow them here.
+ *
+ * Cloudflare's block is emitted first and ours second. RFC 9309 says a crawler
+ * merges every group matching its user-agent and prefers the allow rule when an
+ * allow and a disallow are equivalent, which would make these win.
+ *
+ * That is not universal. Parsers modelled on the original 1994 convention take
+ * the first matching group and stop, and Python's urllib.robotparser is one of
+ * them — tested against the merged file, it still reports these crawlers as
+ * blocked. So this helps only where the crawler merges groups. It cannot make
+ * matters worse than the block alone, but it is not a substitute for the
+ * dashboard setting.
+ *
+ * Delete this list and the block that renders it once the dashboard toggle is
+ * off. It is then redundant: a path no rule disallows is allowed anyway.
+ *
+ * Known limitation: this cannot remove Cloudflare's `Content-Signal:
+ * ai-train=no`, so the published file grants crawl access while still carrying
+ * that reservation. Fixing the setting resolves the contradiction; this does
+ * not.
+ */
+const REALLOWED_CRAWLERS = [
+  'Amazonbot',
+  'Applebot-Extended',
+  'Bytespider',
+  'CCBot',
+  'ClaudeBot',
+  'CloudflareBrowserRenderingCrawler',
+  'Google-Extended',
+  'GPTBot',
+  'meta-externalagent',
+]
+
+/**
  * The Worker also answers on its workers.dev subdomain. That host serves the
  * same site, so letting it be crawled would compete with the real domain —
  * anything but the canonical host is disallowed outright.
@@ -65,6 +101,10 @@ export function robots(url) {
     '# JSON endpoints, nothing to index.',
     'Disallow: /api/',
     '',
+    '# Starunico Capital permits the crawlers below. Where these rules conflict',
+    '# with an earlier block for the same user-agent, these express the site',
+    '# operator\'s intent and, per RFC 9309, take precedence.',
+    ...REALLOWED_CRAWLERS.flatMap((agent) => [`User-agent: ${agent}`, 'Allow: /', '']),
     `Sitemap: ${new URL('/sitemap.xml', CANONICAL).href}`,
     '',
   ].join('\n')
