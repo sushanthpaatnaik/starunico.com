@@ -1,6 +1,7 @@
 import { apiError, corsHeaders, withHeaders } from './http.js'
 import { routes } from './routes.js'
 import { isKnownRoute } from '../src/lib/routes.js'
+import { robots, sitemap } from './seo.js'
 
 /**
  * Requests for real files are served by Cloudflare's asset layer without
@@ -35,6 +36,10 @@ async function documentFor(url, request, env) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
+
+    // Generated rather than shipped as files, so they follow the route table.
+    if (url.pathname === '/robots.txt') return robots(url)
+    if (url.pathname === '/sitemap.xml') return sitemap()
 
     if (!url.pathname.startsWith('/api')) {
       return documentFor(url, request, env)
