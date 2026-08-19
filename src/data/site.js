@@ -27,28 +27,34 @@ export const site = {
 /**
  * Where the firm actually is.
  *
- * Separate from `legal.registeredAddress` below on purpose: an office is where
- * people sit, a registered address is the entity's address of record, and the
- * two are not required to match. `address` stays null while an office has a
- * city but no confirmed street — the footer then shows the city alone rather
- * than inventing one.
+ * One office is flagged `registered` — its address is the entity's address of
+ * record, and `legal.registeredAddress` below reads it from here rather than
+ * repeating it. Two copies of the same address drift; one does not.
+ *
+ * `address` stays null while an office has a confirmed city but no confirmed
+ * street. Everything downstream treats that as unknown and says so, rather
+ * than inventing a street or quietly dropping the office.
  */
 export const offices = [
   {
     city: 'Dubai',
     region: 'United Arab Emirates',
-    headquarters: true,
+    label: 'HQ',
+    registered: true,
     address: null,
   },
   {
     city: 'New Delhi',
     region: 'India',
-    headquarters: false,
-    // Non-breaking hyphen in Part‑3: a plain hyphen lets the footer column
-    // wrap the line as "Part-" / "3", which reads as a different address.
+    label: 'Branch',
+    registered: false,
+    // Non-breaking hyphen in Part‑3: a plain hyphen lets a narrow column wrap
+    // the line as "Part-" / "3", which reads as a different address.
     address: '237, 1st Floor, Gujranwala Town, Part‑3, New Delhi – 110009',
   },
 ]
+
+const registeredOffice = offices.find((office) => office.registered)
 
 /**
  * Facts the legal pages need. Anything null renders as a visible "to be
@@ -57,7 +63,12 @@ export const offices = [
  */
 export const legal = {
   entity: 'Starunico Capital',
-  registeredAddress: null,
+  // The registered office's address, qualified with its country because the
+  // legal pages name a controller to an international audience. Null while
+  // that office has no confirmed street.
+  registeredAddress: registeredOffice.address
+    ? `${registeredOffice.address}, ${registeredOffice.region}`
+    : null,
   jurisdiction: null,
   supervisoryAuthority: null,
   lastUpdated: '19 August 2026',

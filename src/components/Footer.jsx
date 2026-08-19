@@ -40,18 +40,19 @@ export default function Footer() {
             {offices.map((office) => (
               <li key={office.city} className="text-neutral-600">
                 <span className="block font-medium text-neutral-900">
-                  {office.city}
-                  {office.headquarters && (
-                    <>
-                      {' '}
-                      <span className="text-xs font-normal tracking-wider text-neutral-600 uppercase">
-                        HQ
-                      </span>
-                    </>
-                  )}
+                  {office.city}{' '}
+                  <span className="text-xs font-normal tracking-wider text-neutral-600 uppercase">
+                    {office.label}
+                  </span>
                 </span>
                 <address className="mt-1 block not-italic">
-                  {office.address ?? office.region}
+                  {office.address && (
+                    <>
+                      {office.address}
+                      <br />
+                    </>
+                  )}
+                  {office.region}
                 </address>
               </li>
             ))}
