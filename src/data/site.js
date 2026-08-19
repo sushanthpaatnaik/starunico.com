@@ -31,7 +31,7 @@ export const site = {
  */
 export const legal = {
   entity: 'Starunico Capital',
-  registeredAddress: '5 Chandos Place, London WC2N 4HZ',
+  registeredAddress: null,
   jurisdiction: null,
   supervisoryAuthority: null,
   lastUpdated: '19 August 2026',
