@@ -7,6 +7,7 @@ import Thesis from './pages/Thesis.jsx'
 import Capital from './pages/Capital.jsx'
 import Approach from './pages/Approach.jsx'
 import Portfolio from './pages/Portfolio.jsx'
+import PortfolioCompany from './pages/PortfolioCompany.jsx'
 import About from './pages/About.jsx'
 import Founders from './pages/Founders.jsx'
 import Privacy from './pages/Privacy.jsx'
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="capital" element={<Capital />} />
           <Route path="approach" element={<Approach />} />
           <Route path="portfolio" element={<Portfolio />} />
+          <Route path="portfolio/:slug" element={<PortfolioCompany />} />
           <Route path="about" element={<About />} />
           <Route path="founders" element={<Founders />} />
           {/* Older paths that were linked before the rebuild. */}
