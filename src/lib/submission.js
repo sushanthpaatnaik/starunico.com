@@ -67,6 +67,68 @@ export const emptySubmission = {
 /** Long-form answers we will not evaluate a company without. */
 export const NARRATIVE_FIELDS = ['technology', 'difficulty', 'defensibility']
 
+/**
+ * The submission asked one question at a time. Technology comes first because
+ * that is the order we actually read in; identity comes last, once the
+ * substance is down.
+ */
+export const STEPS = [
+  {
+    id: 'technology',
+    question: 'What are you building?',
+    help: 'The technology itself, in the terms you would use with another engineer.',
+    fields: ['technology'],
+  },
+  {
+    id: 'difficulty',
+    question: 'What is technically difficult about it?',
+    help: 'The problem that took real work to solve.',
+    fields: ['difficulty'],
+  },
+  {
+    id: 'defensibility',
+    question: 'What makes it hard to replicate?',
+    help: 'Intellectual property, know-how, engineering complexity, data — whatever applies.',
+    fields: ['defensibility'],
+  },
+  {
+    id: 'validation',
+    question: 'What evidence exists today?',
+    help: 'Prototypes, test data, pilots, qualification, publications, first customers.',
+    fields: ['validation'],
+  },
+  {
+    id: 'stage',
+    question: 'Where are you, and what are you seeking?',
+    help: 'A range is fine. We are not holding you to it.',
+    fields: ['stage', 'capital', 'deckUrl'],
+  },
+  {
+    id: 'company',
+    question: 'Tell us about the company.',
+    help: 'Enough to place it.',
+    fields: ['company', 'website', 'location', 'domain'],
+  },
+  {
+    id: 'you',
+    question: 'And who are we speaking with?',
+    help: 'We reply to every submission we receive.',
+    fields: ['name', 'role', 'email'],
+  },
+]
+
+/** Errors for one step only, so a step never reports problems further on. */
+export function validateStep(stepIndex, values) {
+  const step = STEPS[stepIndex]
+  if (!step) return {}
+  const all = validateSubmission(values)
+  const errors = {}
+  for (const field of step.fields) {
+    if (all[field]) errors[field] = all[field]
+  }
+  return errors
+}
+
 const isUrl = (value) => {
   try {
     const url = new URL(value.startsWith('http') ? value : `https://${value}`)

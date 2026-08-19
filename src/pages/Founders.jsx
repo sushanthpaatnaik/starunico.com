@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
-import { Field, Fieldset, Select, TextArea } from '../components/Form.jsx'
+import StepTrajectory from '../components/StepTrajectory.jsx'
+import { Field, Select, TextArea } from '../components/Form.jsx'
 import { founders, site } from '../data/site.js'
 import {
   CAPITAL_BANDS,
@@ -11,6 +12,8 @@ import {
   emptySubmission,
   LIMITS,
   STAGES,
+  STEPS,
+  validateStep,
   validateSubmission,
 } from '../lib/submission.js'
 
@@ -23,33 +26,71 @@ const qualifiers = [
 ]
 
 export default function Founders() {
+  const [step, setStep] = useState(0)
   const [values, setValues] = useState(emptySubmission)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | sent | failed
   const [notice, setNotice] = useState('')
-  const noticeRef = useRef(null)
+  const headingRef = useRef(null)
+  const movedRef = useRef(false)
+
+  const current = STEPS[step]
+  const isLast = step === STEPS.length - 1
+
+  // Focus the new question when the step changes, but never on first render.
+  useEffect(() => {
+    if (!movedRef.current) return
+    headingRef.current?.focus()
+  }, [step])
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setValues((current) => ({ ...current, [name]: value }))
-    setErrors((current) => ({ ...current, [name]: undefined }))
+    setValues((c) => ({ ...c, [name]: value }))
+    setErrors((c) => ({ ...c, [name]: undefined }))
   }
 
   const focusFirstError = (found) => {
     const first = Object.keys(found)[0]
-    document.getElementById(first)?.focus()
+    if (first) document.getElementById(first)?.focus()
   }
 
-  const handleSubmit = async (event) => {
+  const goTo = (next) => {
+    movedRef.current = true
+    setStep(next)
+    setNotice('')
+    setStatus('idle')
+  }
+
+  const back = () => step > 0 && goTo(step - 1)
+
+  const next = () => {
+    const found = validateStep(step, values)
+    setErrors(found)
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found)
+      return
+    }
+    goTo(step + 1)
+  }
+
+  const submit = async (event) => {
     event.preventDefault()
 
+    // The last step gates on the whole submission, not just its own fields, so
+    // nothing can be skipped by navigating oddly.
     const found = validateSubmission(values)
     setErrors(found)
     if (Object.keys(found).length > 0) {
+      const firstBad = STEPS.findIndex((s) => s.fields.some((f) => found[f]))
+      if (firstBad >= 0 && firstBad !== step) {
+        goTo(firstBad)
+        setErrors(found)
+        setStatus('failed')
+        setNotice('Something earlier needs attention.')
+        return
+      }
       setStatus('failed')
-      setNotice(
-        `${Object.keys(found).length} ${Object.keys(found).length === 1 ? 'field needs' : 'fields need'} attention.`,
-      )
+      setNotice('Some answers need attention.')
       focusFirstError(found)
       return
     }
@@ -67,9 +108,10 @@ export default function Founders() {
 
       if (response.status === 422 && data?.error?.fields) {
         setErrors(data.error.fields)
+        const firstBad = STEPS.findIndex((s) => s.fields.some((f) => data.error.fields[f]))
+        if (firstBad >= 0) goTo(firstBad)
         setStatus('failed')
-        setNotice('Some fields need attention.')
-        focusFirstError(data.error.fields)
+        setNotice('Some answers need attention.')
         return
       }
 
@@ -79,14 +121,20 @@ export default function Founders() {
         return
       }
 
-      setValues(emptySubmission)
       setStatus('sent')
       setNotice(data.message ?? 'Received. Thank you — we read everything that reaches us.')
-      noticeRef.current?.scrollIntoView({ block: 'center' })
     } catch {
       setStatus('failed')
       setNotice('Network error — please check your connection and try again.')
     }
+  }
+
+  // Enter advances from single-line inputs; textareas keep their newlines.
+  const onKeyDown = (event) => {
+    if (event.key !== 'Enter' || event.target.tagName === 'TEXTAREA') return
+    if (isLast) return
+    event.preventDefault()
+    next()
   }
 
   const field = (name) => ({
@@ -95,6 +143,28 @@ export default function Founders() {
     error: errors[name],
     onChange: handleChange,
   })
+
+  if (status === 'sent') {
+    return (
+      <>
+        <PageHeader eyebrow="For founders" title="Received" description={notice} />
+        <Section align="left">
+          <div className="max-w-2xl">
+            <p className="text-lg text-neutral-700">
+              We read every submission. If your work fits what we are looking for, you will
+              hear from us directly.
+            </p>
+            <div className="mt-10">
+              <Button to="/thesis" variant="outline">
+                Explore our thesis
+                <Icon name="arrow" className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </Section>
+      </>
+    )
+  }
 
   return (
     <>
@@ -134,130 +204,144 @@ export default function Founders() {
       </Section>
 
       <Section
-        index={1}
         eyebrow="Submission"
-        title="Introduce your company"
+        title="Six questions, one at a time"
         align="left"
         className="border-t border-neutral-200 bg-neutral-50"
       >
-        <form onSubmit={handleSubmit} noValidate className="max-w-4xl">
+        <form
+          onSubmit={submit}
+          onKeyDown={onKeyDown}
+          noValidate
+          className="max-w-3xl border border-neutral-200 bg-white p-8 sm:p-12"
+        >
+          <StepTrajectory current={step} />
+
+          {/* Announces each move without stealing focus from the field. */}
+          <p aria-live="polite" className="sr-only">
+            Step {step + 1} of {STEPS.length}: {current.question}
+          </p>
+
+          <div className="mt-12 min-h-[22rem]">
+            <h3
+              ref={headingRef}
+              tabIndex={-1}
+              className="text-3xl tracking-tight text-balance outline-none sm:text-4xl"
+            >
+              {current.question}
+            </h3>
+            <p className="mt-3 text-neutral-600">{current.help}</p>
+
+            <div className="mt-8 grid gap-5">
+              {current.id === 'technology' && (
+                <TextArea label="Your answer" rows={6} max={LIMITS.long} {...field('technology')} />
+              )}
+
+              {current.id === 'difficulty' && (
+                <TextArea label="Your answer" rows={6} max={LIMITS.long} {...field('difficulty')} />
+              )}
+
+              {current.id === 'defensibility' && (
+                <TextArea
+                  label="Your answer"
+                  rows={6}
+                  max={LIMITS.long}
+                  {...field('defensibility')}
+                />
+              )}
+
+              {current.id === 'validation' && (
+                <TextArea
+                  label="Your answer"
+                  optional
+                  rows={6}
+                  max={LIMITS.long}
+                  {...field('validation')}
+                />
+              )}
+
+              {current.id === 'stage' && (
+                <>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Select
+                      label="Stage"
+                      placeholder="Select a stage"
+                      options={STAGES}
+                      {...field('stage')}
+                    />
+                    <Select
+                      label="Capital sought"
+                      optional
+                      options={CAPITAL_BANDS}
+                      {...field('capital')}
+                    />
+                  </div>
+                  <Field
+                    label="Pitch deck or data room link"
+                    optional
+                    placeholder="https://…"
+                    inputMode="url"
+                    hint="A link we can open. Please do not send anything confidential before we have an agreement in place."
+                    {...field('deckUrl')}
+                  />
+                </>
+              )}
+
+              {current.id === 'company' && (
+                <>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Company" autoComplete="organization" {...field('company')} />
+                    <Field
+                      label="Website"
+                      optional
+                      placeholder="example.com"
+                      inputMode="url"
+                      {...field('website')}
+                    />
+                  </div>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Location" placeholder="City, country" {...field('location')} />
+                    <Select
+                      label="Domain"
+                      placeholder="Select the closest"
+                      options={DOMAINS}
+                      {...field('domain')}
+                    />
+                  </div>
+                </>
+              )}
+
+              {current.id === 'you' && (
+                <>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Name" autoComplete="name" {...field('name')} />
+                    <Field
+                      label="Role"
+                      optional
+                      placeholder="Co-founder & CTO"
+                      autoComplete="organization-title"
+                      {...field('role')}
+                    />
+                  </div>
+                  <Field label="Email" type="email" autoComplete="email" {...field('email')} />
+                </>
+              )}
+            </div>
+          </div>
+
           {notice && (
             <p
-              ref={noticeRef}
               role="status"
-              aria-live="polite"
-              className={`mb-10 flex items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium ${
+              className={`mt-8 flex items-start gap-3 px-4 py-3 text-sm font-medium ${
                 status === 'failed'
                   ? 'bg-red-50 text-red-800 ring-1 ring-red-200'
                   : 'bg-brand-50 text-brand-800 ring-1 ring-brand-200'
               }`}
             >
-              <Icon
-                name={status === 'failed' ? 'close' : 'check'}
-                className="mt-0.5 h-5 w-5 shrink-0"
-              />
+              <Icon name="close" className="mt-0.5 h-5 w-5 shrink-0" />
               {notice}
             </p>
           )}
-
-          <div className="grid gap-10">
-            <Fieldset index={1} legend="You" description="Who we would be speaking with.">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Name" autoComplete="name" {...field('name')} />
-                <Field
-                  label="Role"
-                  optional
-                  placeholder="Co-founder & CTO"
-                  autoComplete="organization-title"
-                  {...field('role')}
-                />
-              </div>
-              <Field label="Email" type="email" autoComplete="email" {...field('email')} />
-            </Fieldset>
-
-            <Fieldset index={2} legend="Company" description="The basics, so we can place it.">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Company" autoComplete="organization" {...field('company')} />
-                <Field
-                  label="Website"
-                  optional
-                  placeholder="example.com"
-                  inputMode="url"
-                  {...field('website')}
-                />
-              </div>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field
-                  label="Location"
-                  placeholder="City, country"
-                  hint="Where the work actually happens."
-                  {...field('location')}
-                />
-                <Select
-                  label="Domain"
-                  placeholder="Select the closest"
-                  options={DOMAINS}
-                  {...field('domain')}
-                />
-              </div>
-            </Fieldset>
-
-            <Fieldset
-              index={3}
-              legend="Technology"
-              description="The part we care about most. Detail is welcome — we would rather understand how it works than be walked around it."
-            >
-              <TextArea
-                label="What have you built?"
-                rows={5}
-                max={LIMITS.long}
-                hint="The technology itself, in the terms you would use with another engineer."
-                {...field('technology')}
-              />
-              <TextArea
-                label="What is technically difficult about it?"
-                rows={4}
-                max={LIMITS.long}
-                hint="The problem that took real work to solve."
-                {...field('difficulty')}
-              />
-              <TextArea
-                label="What makes it hard to replicate?"
-                rows={4}
-                max={LIMITS.long}
-                hint="Intellectual property, know-how, engineering complexity, data — whatever applies."
-                {...field('defensibility')}
-              />
-              <TextArea
-                label="What evidence exists today?"
-                optional
-                rows={4}
-                max={LIMITS.long}
-                hint="Prototypes, test data, pilots, qualification, publications, first customers."
-                {...field('validation')}
-              />
-            </Fieldset>
-
-            <Fieldset index={4} legend="Raise" description="Where you are, and what you are seeking.">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Select label="Stage" placeholder="Select a stage" options={STAGES} {...field('stage')} />
-                <Select
-                  label="Capital sought"
-                  optional
-                  options={CAPITAL_BANDS}
-                  {...field('capital')}
-                />
-              </div>
-              <Field
-                label="Pitch deck or data room link"
-                optional
-                placeholder="https://…"
-                inputMode="url"
-                hint="A link we can open. Please do not send anything confidential before we have an agreement in place."
-                {...field('deckUrl')}
-              />
-            </Fieldset>
-          </div>
 
           {/* Hidden from people, tempting to bots. */}
           <div aria-hidden="true" className="hidden">
@@ -265,23 +349,36 @@ export default function Founders() {
             <input id="referrer" name="referrer" tabIndex={-1} autoComplete="off" />
           </div>
 
-          <div className="mt-10 flex flex-col gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-md text-sm text-neutral-500">
-              By sending this you agree to our{' '}
-              <a href="/terms" className="text-brand-700 hover:underline">
-                terms
-              </a>
-              , including how unsolicited material is treated.
-            </p>
-            <Button type="submit" size="lg" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending…' : 'Present your technology'}
-              <Icon name="arrow" className="h-4 w-4" />
-            </Button>
+          <div className="mt-10 flex items-center justify-between gap-4 border-t border-neutral-200 pt-8">
+            <button
+              type="button"
+              onClick={back}
+              disabled={step === 0}
+              className="meta text-neutral-500 transition hover:text-neutral-900 disabled:invisible"
+            >
+              ← Back
+            </button>
+
+            {isLast ? (
+              <Button type="submit" size="lg" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Present your technology'}
+                <Icon name="arrow" className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button type="button" onClick={next} size="lg">
+                Continue
+                <Icon name="arrow" className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </form>
 
-        <p className="mt-10 max-w-4xl text-sm text-neutral-500">
-          Prefer email? Write to{' '}
+        <p className="mt-8 max-w-3xl text-sm text-neutral-500">
+          By sending this you agree to our{' '}
+          <a href="/terms" className="text-brand-700 hover:underline">
+            terms
+          </a>
+          , including how unsolicited material is treated. Prefer email? Write to{' '}
           <a href={`mailto:${site.email}`} className="text-brand-700 hover:underline">
             {site.email}
           </a>
