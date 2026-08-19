@@ -6,7 +6,7 @@ import CallToAction from '../components/CallToAction.jsx'
 import Icon from '../components/Icon.jsx'
 import { avoid, stages } from '../data/site.js'
 
-export default function Philosophy() {
+export default function Thesis() {
   return (
     <>
       <PageHeader

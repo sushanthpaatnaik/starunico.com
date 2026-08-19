@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
 
           <FooterColumn title="Firm">
-            {navigation.map((item) => (
+            {[...navigation, { name: 'For founders', to: '/founders' }].map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}

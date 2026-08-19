@@ -3,10 +3,10 @@ import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import Button from '../components/Button.jsx'
 import Icon from '../components/Icon.jsx'
-import { site } from '../data/site.js'
+import { founders, site } from '../data/site.js'
 import { emptyContact, SUBJECTS, validateContact } from '../lib/contact.js'
 
-export default function Contact() {
+export default function Founders() {
   const [values, setValues] = useState(emptyContact)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | sent | failed
@@ -63,12 +63,24 @@ export default function Contact() {
   return (
     <>
       <PageHeader
-        eyebrow="Contact"
-        title="Get in touch"
+        eyebrow="For founders"
+        title="Present your technology"
         description="Tell us what you have built, what makes it hard to replicate, and where you are today."
       />
 
-      <Section>
+      <Section align="left">
+        <p className="max-w-3xl text-xl text-pretty text-neutral-700">{founders.lede}</p>
+        <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {founders.points.map((point) => (
+            <li key={point.title}>
+              <h2 className="font-semibold">{point.title}</h2>
+              <p className="mt-2 text-sm/6 text-neutral-600">{point.body}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section align="left" className="border-t border-neutral-200 bg-neutral-50">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <div className="text-left">
             <h2 className="text-2xl font-semibold tracking-tight">Introduce your company</h2>

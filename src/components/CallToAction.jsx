@@ -4,17 +4,13 @@ import Icon from './Icon.jsx'
 export default function CallToAction({
   title = 'Present your technology',
   description = 'If you are building something technically differentiated and early, we would like to hear about it.',
-  primary = { label: 'Introduce your company', to: '/contact' },
-  secondary = { label: 'Explore our philosophy', to: '/philosophy' },
+  primary = { label: 'Introduce your company', to: '/founders' },
+  secondary = { label: 'Explore our thesis', to: '/thesis' },
 }) {
   return (
     <section className="py-20 sm:py-28">
       <div className="container-page">
         <div className="relative isolate overflow-hidden rounded-3xl bg-neutral-950 px-6 py-20 text-center sm:px-16">
-          <div
-            aria-hidden="true"
-            className="absolute -top-24 left-1/2 -z-10 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-600 to-brand-500 opacity-25 blur-3xl"
-          />
           <h2 className="text-3xl font-bold tracking-tight text-balance text-white sm:text-4xl">
             {title}
           </h2>

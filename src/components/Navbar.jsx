@@ -56,7 +56,7 @@ export default function Navbar() {
 
           {/* Wrapper handles the responsive hide so it cannot clash with the button's own display utility. */}
           <div className="hidden sm:block">
-            <Button to="/contact" size="sm">
+            <Button to="/founders" size="sm">
               Present your technology
             </Button>
           </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="pt-2">
-              <Button to="/contact" onClick={closeMenu} className="w-full">
+              <Button to="/founders" onClick={closeMenu} className="w-full">
                 Present your technology
               </Button>
             </li>

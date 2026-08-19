@@ -1,12 +1,13 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home.jsx'
-import Philosophy from './pages/Philosophy.jsx'
+import Thesis from './pages/Thesis.jsx'
 import Capital from './pages/Capital.jsx'
-import Sectors from './pages/Sectors.jsx'
-import Partnering from './pages/Partnering.jsx'
-import Contact from './pages/Contact.jsx'
+import Approach from './pages/Approach.jsx'
+import Portfolio from './pages/Portfolio.jsx'
+import About from './pages/About.jsx'
+import Founders from './pages/Founders.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Terms from './pages/Terms.jsx'
 import NotFound from './pages/NotFound.jsx'
@@ -18,11 +19,17 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="philosophy" element={<Philosophy />} />
+          <Route path="thesis" element={<Thesis />} />
           <Route path="capital" element={<Capital />} />
-          <Route path="sectors" element={<Sectors />} />
-          <Route path="partnering" element={<Partnering />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="approach" element={<Approach />} />
+          <Route path="portfolio" element={<Portfolio />} />
+          <Route path="about" element={<About />} />
+          <Route path="founders" element={<Founders />} />
+          {/* Older paths that were linked before the rebuild. */}
+          <Route path="contact" element={<Navigate to="/founders" replace />} />
+          <Route path="philosophy" element={<Navigate to="/thesis" replace />} />
+          <Route path="sectors" element={<Navigate to="/thesis" replace />} />
+          <Route path="partnering" element={<Navigate to="/approach" replace />} />
           <Route path="privacy" element={<Privacy />} />
           <Route path="terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />

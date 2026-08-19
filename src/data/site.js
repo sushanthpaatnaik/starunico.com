@@ -40,23 +40,49 @@ export const legal = {
 }
 
 export const navigation = [
-  { name: 'Philosophy', to: '/philosophy' },
-  { name: 'Proprietary Capital', to: '/capital' },
-  { name: 'Sectors', to: '/sectors' },
-  { name: 'Partnering', to: '/partnering' },
-  { name: 'Contact', to: '/contact' },
+  { name: 'Thesis', to: '/thesis' },
+  { name: 'Capital', to: '/capital' },
+  { name: 'Approach', to: '/approach' },
+  { name: 'Portfolio', to: '/portfolio' },
+  { name: 'About', to: '/about' },
 ]
 
-/** Startup → Unicorn, as an investment framework rather than a promise. */
+/**
+ * The name reads Startup → Unicorn. This is the same idea stated as stages of
+ * company formation, which is honest: it describes where we participate, not an
+ * outcome anyone can promise.
+ */
 export const journey = [
-  { step: 'Discover', note: 'Technology the broader market has not yet priced.' },
-  { step: 'Validate', note: 'Science, defensibility and the team behind them.' },
-  { step: 'Invest', note: 'Our own capital, with conviction and concentration.' },
-  { step: 'Nurture', note: 'Commercial strategy, IP position, governance.' },
-  { step: 'Commercialize', note: 'Technology-market fit and first industrial customers.' },
-  { step: 'Institutionalize', note: 'Readiness for institutional diligence and capital.' },
-  { step: 'Scale', note: 'Successive rounds, partnerships and global reach.' },
-  { step: 'Compound', note: 'Ownership held for the long term.' },
+  {
+    step: 'Formation',
+    label: 'Startup',
+    note: 'The science works and the team is right. Little else is settled, and the market has not yet priced it.',
+  },
+  {
+    step: 'Validation',
+    label: 'Technical and commercial proof',
+    note: 'The technology survives contact with a real industrial problem, and a first customer takes it seriously.',
+  },
+  {
+    step: 'Commercialization',
+    label: 'Product and pathway',
+    note: 'A manufacturable product, a defensible position, and a route to revenue that does not depend on hope.',
+  },
+  {
+    step: 'Institutionalization',
+    label: 'Governance and readiness',
+    note: 'Reporting, IP and governance in the shape institutional diligence expects to find them.',
+  },
+  {
+    step: 'Scale',
+    label: 'Institutional capital',
+    note: 'Successive rounds, industrial partnerships, and the operating discipline to absorb both.',
+  },
+  {
+    step: 'Category leadership',
+    label: 'Compounding ownership',
+    note: 'The rare outcome the name points at. We hold, rather than look for an exit.',
+  },
 ]
 
 export const stages = ['Seed', 'Pre-Series A', 'Series A', 'Series B', 'Growth']
@@ -137,6 +163,56 @@ export const capitalAdvantages = [
       'We can take a position before the broader market has recognised what the technology is.',
   },
 ]
+
+/** For the About page. Origin and ownership mentality, in our own words. */
+export const about = {
+  name: 'The name reads Startup → Unicorn.',
+  origin:
+    'Starunico Capital exists because the most consequential technologies are often the hardest to fund. Work that takes years to qualify, that needs a laboratory before it needs a market, and that cannot be assessed from a deck sits awkwardly against capital with a defined life. We built a firm whose structure does not have that problem.',
+  ownership:
+    'We invest our own capital, so we behave like owners rather than allocators. That means concentration instead of breadth, entry before the market agrees, and a willingness to hold through the years in which enterprise value is actually created. Our judgement is measured by what a company becomes, not by where it is marked in the interim.',
+  why: 'Deep technology is where scientific insight turns into industrial capability. It is slow, capital-intensive and unforgiving of superficial analysis — which is precisely why patient, technically literate capital is worth something to the people building it.',
+}
+
+/** Founder-facing page. */
+export const founders = {
+  lede: 'We are comfortable engaging early — often before a company looks fundable to an institutional investor.',
+  points: [
+    {
+      title: 'Early is not too early',
+      body: 'If the science works and the team is right, the absence of revenue is not a reason for us to wait.',
+    },
+    {
+      title: 'We read the technology',
+      body: 'Bring the engineering. We would rather understand how it works than be walked around it.',
+    },
+    {
+      title: 'Long cycles are expected',
+      body: 'Qualification, iteration and industrial sales take the time they take. Our capital is structured for that.',
+    },
+    {
+      title: 'Defensibility matters',
+      body: 'Intellectual property, know-how and engineering complexity are what we underwrite.',
+    },
+    {
+      title: 'We stay aligned',
+      body: 'We can support successive rounds on the merits of the company, without structural constraint.',
+    },
+    {
+      title: 'We are selective',
+      body: 'We make few investments. A pass is not a verdict on your company, only on our fit with it.',
+    },
+  ],
+}
+
+/**
+ * Portfolio. Deliberately empty until the firm chooses to disclose holdings —
+ * inventing companies on an investment firm's site would be indefensible.
+ */
+export const portfolio = {
+  disclosed: [],
+  note: 'We invest privately, and we disclose a holding only with the founders’ agreement. Where a company would rather stay quiet while its technology matures, that is usually the right call, and it is theirs to make.',
+}
 
 /** Where we work alongside founders. Investor and owner-partner, not a consultancy. */
 export const partnering = [
