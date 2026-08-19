@@ -18,11 +18,7 @@ export default function Navbar() {
   }, [])
 
   const linkClass = ({ isActive }) =>
-    `rounded-full px-3 py-2 text-sm font-medium transition ${
-      isActive
-        ? 'text-brand-700'
-        : 'text-neutral-600 hover:text-neutral-900'
-    }`
+    `nav-link ${isActive ? 'nav-link--active' : ''}`
 
   return (
     <header
@@ -43,10 +39,14 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {navigation.map((item) => (
+          {navigation.map((item, index) => (
             <li key={item.to}>
               <NavLink to={item.to} end={item.to === '/'} className={linkClass}>
-                {item.name}
+                <span aria-hidden="true" className="nav-link__index">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="nav-link__rule" aria-hidden="true" />
+                <span className="nav-link__label">{item.name}</span>
               </NavLink>
             </li>
           ))}
@@ -77,7 +77,7 @@ export default function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="border-t border-neutral-200 bg-white md:hidden"
+          className="menu-panel border-t border-neutral-200 bg-white md:hidden"
         >
           <ul className="container-page space-y-1 py-4">
             {navigation.map((item) => (

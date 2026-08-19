@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
+import PageTransition from './components/PageTransition.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home.jsx'
 import Thesis from './pages/Thesis.jsx'
@@ -14,7 +15,7 @@ import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
   return (
-    <>
+    <PageTransition>
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
@@ -35,6 +36,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </>
+    </PageTransition>
   )
 }

@@ -3,7 +3,7 @@ export default function PageHeader({ eyebrow, title, description }) {
     <section className="relative isolate overflow-hidden border-b border-neutral-200 bg-neutral-50">
       <div className="container-page py-20 text-center sm:py-24">
         {eyebrow && (
-          <p className="text-sm font-semibold tracking-widest text-brand-700 uppercase">
+          <p data-reveal="meta" className="text-sm font-semibold tracking-widest text-brand-700 uppercase">
             {eyebrow}
           </p>
         )}
@@ -11,7 +11,7 @@ export default function PageHeader({ eyebrow, title, description }) {
           {title}
         </h1>
         {description && (
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-pretty text-neutral-600">
+          <p data-reveal="copy" className="mx-auto mt-5 max-w-2xl text-lg text-pretty text-neutral-600">
             {description}
           </p>
         )}
