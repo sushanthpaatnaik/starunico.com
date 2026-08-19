@@ -25,6 +25,32 @@ export const site = {
 }
 
 /**
+ * Where the firm actually is.
+ *
+ * Separate from `legal.registeredAddress` below on purpose: an office is where
+ * people sit, a registered address is the entity's address of record, and the
+ * two are not required to match. `address` stays null while an office has a
+ * city but no confirmed street — the footer then shows the city alone rather
+ * than inventing one.
+ */
+export const offices = [
+  {
+    city: 'Dubai',
+    region: 'United Arab Emirates',
+    headquarters: true,
+    address: null,
+  },
+  {
+    city: 'New Delhi',
+    region: 'India',
+    headquarters: false,
+    // Non-breaking hyphen in Part‑3: a plain hyphen lets the footer column
+    // wrap the line as "Part-" / "3", which reads as a different address.
+    address: '237, 1st Floor, Gujranwala Town, Part‑3, New Delhi – 110009',
+  },
+]
+
+/**
  * Facts the legal pages need. Anything null renders as a visible "to be
  * confirmed" marker rather than a guess — these must come from the company,
  * and the pages carry a review notice until they do.

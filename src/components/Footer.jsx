@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo.jsx'
-import { navigation, site } from '../data/site.js'
+import { navigation, offices, site } from '../data/site.js'
 
 const legal = [
   { name: 'Privacy', to: '/privacy' },
@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-neutral-200 bg-neutral-50">
       <div className="container-page py-16">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2" aria-label="Starunico home">
               <Logo className="h-8 w-auto" />
@@ -35,6 +35,27 @@ export default function Footer() {
             ))}
           </FooterColumn>
 
+
+          <FooterColumn title="Offices">
+            {offices.map((office) => (
+              <li key={office.city} className="text-neutral-600">
+                <span className="block font-medium text-neutral-900">
+                  {office.city}
+                  {office.headquarters && (
+                    <>
+                      {' '}
+                      <span className="text-xs font-normal tracking-wider text-neutral-600 uppercase">
+                        HQ
+                      </span>
+                    </>
+                  )}
+                </span>
+                <address className="mt-1 block not-italic">
+                  {office.address ?? office.region}
+                </address>
+              </li>
+            ))}
+          </FooterColumn>
 
           <FooterColumn title="Legal">
             {legal.map((item) => (
