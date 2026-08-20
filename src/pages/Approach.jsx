@@ -34,14 +34,14 @@ export default function Approach() {
       />
 
       <Section align="left">
-        <ol className="grid gap-px overflow-hidden rounded-sm border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
+        <ol className="grid gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2">
           {steps.map((step, index) => (
-            <li key={step.title} className="bg-white p-8">
-              <span className="text-xs font-semibold tracking-widest text-neutral-400 tabular-nums">
+            <li key={step.title} className="bg-surface p-8">
+              <span className="text-xs font-semibold tracking-widest text-ink-3 tabular-nums">
                 {String(index + 1).padStart(2, '0')}
               </span>
               <h2 className="mt-3 text-xl font-semibold tracking-tight">{step.title}</h2>
-              <p className="mt-3 text-pretty text-neutral-700">{step.body}</p>
+              <p className="mt-3 text-pretty text-ink-2">{step.body}</p>
             </li>
           ))}
         </ol>
@@ -51,7 +51,7 @@ export default function Approach() {
         eyebrow="Startup → Unicorn"
         title="Where we participate"
         align="left"
-        className="border-t border-neutral-200 bg-neutral-50"
+        className="border-t border-line bg-canvas-2"
       >
         <Journey />
       </Section>
@@ -61,12 +61,12 @@ export default function Approach() {
           <ul className="grid gap-4 sm:grid-cols-2">
             {partnering.map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
-                <span className="text-neutral-700">{item}</span>
+                <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                <span className="text-ink-2">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="self-start text-pretty text-neutral-700">
+          <p className="self-start text-pretty text-ink-2">
             This support exists because it makes the companies we own stronger and more
             investable — not because we are running an advisory practice alongside. We are
             owners, and this is what owners do.

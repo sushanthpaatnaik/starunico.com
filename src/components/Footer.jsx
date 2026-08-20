@@ -8,18 +8,19 @@ const legal = [
 ]
 
 /**
- * The address below the city heading, which already names the city — so these
- * lines must not repeat it. Ends on the country in both cases, whether or not
- * a street is known.
+ * The address below the country heading, which already names the country — so
+ * these lines carry the street and then the city with its postcode. Where no
+ * street is confirmed the city stands alone rather than the entry collapsing
+ * to a country with nothing under it.
  */
 function addressLines(office) {
-  const locality = [office.postcode, office.region].filter(Boolean).join(', ')
-  return [office.street, locality].filter(Boolean)
+  const locality = office.postcode ? `${office.city} – ${office.postcode}` : office.city
+  return office.street ? [`${office.street},`, locality] : [locality]
 }
 
 export default function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-neutral-50">
+    <footer className="border-t border-line bg-canvas-2">
       <div className="container-page py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
@@ -27,7 +28,7 @@ export default function Footer() {
               <Logo className="h-8 w-auto" />
               <span className="text-lg font-semibold tracking-tight">{site.name}</span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-neutral-600">
+            <p className="mt-4 max-w-xs text-sm text-ink-2">
               {site.descriptor}
             </p>
           </div>
@@ -37,7 +38,7 @@ export default function Footer() {
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="text-neutral-600 transition hover:text-neutral-900"
+                  className="text-ink-2 transition hover:text-ink"
                 >
                   {item.name}
                 </Link>
@@ -51,9 +52,9 @@ export default function Footer() {
               <li key={office.city}>
                 {/* Role above name, the same eyebrow-then-content order the
                     rest of the site uses, so the two never compete inline. */}
-                <p className="meta text-neutral-500">{office.role}</p>
-                <p className="mt-1.5 font-medium text-neutral-900">{office.city}</p>
-                <address className="mt-1 block leading-relaxed text-neutral-600 not-italic">
+                <p className="meta text-ink-3">{office.role}</p>
+                <p className="mt-1.5 font-medium text-ink">{office.region}</p>
+                <address className="mt-1 block leading-relaxed text-ink-2 not-italic">
                   {addressLines(office).map((line) => (
                     <span key={line} className="block">
                       {line}
@@ -69,7 +70,7 @@ export default function Footer() {
               <li key={item.name}>
                 <Link
                   to={item.to}
-                  className="text-neutral-600 transition hover:text-neutral-900"
+                  className="text-ink-2 transition hover:text-ink"
                 >
                   {item.name}
                 </Link>
@@ -78,17 +79,17 @@ export default function Footer() {
           </FooterColumn>
         </div>
 
-        <p className="mt-16 max-w-2xl border-t border-neutral-200 pt-10 text-2xl tracking-tight text-balance sm:text-3xl/tight">
+        <p className="mt-16 max-w-2xl border-t border-line pt-10 text-2xl tracking-tight text-balance sm:text-3xl/tight">
           Backing difficult technology with patient capital.
         </p>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-neutral-200 pt-8 sm:flex-row">
-          <p className="text-sm text-neutral-600">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 sm:flex-row">
+          <p className="text-sm text-ink-2">
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <a
             href={`mailto:${site.email}`}
-            className="text-sm text-neutral-600 transition hover:text-neutral-900"
+            className="text-sm text-ink-2 transition hover:text-ink"
           >
             {site.email}
           </a>
@@ -101,7 +102,7 @@ export default function Footer() {
 function FooterColumn({ title, children, spacing = 'space-y-3' }) {
   return (
     <div>
-      <h3 className="text-sm font-semibold tracking-wider text-neutral-900 uppercase">
+      <h3 className="text-sm font-semibold tracking-wider text-ink uppercase">
         {title}
       </h3>
       <ul className={`mt-4 text-sm ${spacing}`}>{children}</ul>

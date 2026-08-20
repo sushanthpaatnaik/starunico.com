@@ -17,7 +17,7 @@ export default function Terms() {
         <Prose>
           {showLegalNotice && <ReviewNotice />}
 
-          <p className="measure text-lg text-pretty text-neutral-700">
+          <p className="measure text-lg text-pretty text-ink-2">
             These terms govern your use of this website. By using it, you accept them. If
             you do not, please do not use the site.
           </p>
@@ -132,7 +132,7 @@ export default function Terms() {
           <Clause n={10} title="Privacy">
             <p>
               Our{' '}
-              <Link to="/privacy" className="text-brand-700 hover:underline">
+              <Link to="/privacy" className="text-accent hover:underline">
                 Privacy Policy
               </Link>{' '}
               explains what we do with personal information, and forms part of these terms.
@@ -159,7 +159,7 @@ export default function Terms() {
           <Clause n={13} title="Contact">
             <p>
               Questions about these terms can go to{' '}
-              <a href={`mailto:${site.email}`} className="text-brand-700 hover:underline">
+              <a href={`mailto:${site.email}`} className="text-accent hover:underline">
                 {site.email}
               </a>
               .

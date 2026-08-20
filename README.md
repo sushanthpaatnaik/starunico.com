@@ -195,6 +195,41 @@ npx wrangler secret put CONTACT_WEBHOOK_URL
 
 Without a webhook, submissions are logged — watch them with `npx wrangler tail`.
 
+## Appearance
+
+Three modes — auto, light, dark — selected in the navigation and at the foot of
+the mobile menu. What is stored is the *mode*, never the theme it resolved to:
+saving "dark" because auto happened to resolve dark one evening would freeze a
+visitor into night permanently.
+
+Auto resolves from daylight rather than a fixed clock, since 18:30 is after dark
+in Berlin in December and broad daylight there in June. Latitude comes from the
+browser's IANA timezone via a small table in `src/lib/theme.js` — never from GPS,
+which would mean a permission prompt for the sake of choosing a colour. Zones
+outside the table fall back to local clock hours. The next sunrise or sunset is
+scheduled as a single timer rather than polled.
+
+`src/theme-boot.js` is bundled into a blocking inline script by a plugin in
+`vite.config.js` and decides the theme before the first paint. It is generated
+from the same module the app uses, so there is only one implementation of the
+rule: a hand-copied version in `index.html` would be the copy nobody tests, and
+it is the one that decides the very first frame.
+
+### Colours go through tokens
+
+Every colour resolves through the semantic tokens at the top of `src/index.css`
+— `bg-canvas`, `text-ink`, `border-line`, `bg-surface`, `text-accent` and so on.
+Components never name a literal colour, and there is not a single `dark:`
+variant in the codebase.
+
+Two rules are easy to get wrong:
+
+- **The accent flips direction between themes.** `brand-700` clears 4.5:1 on the
+  light ground, `brand-400` on the dark one. One value cannot serve both.
+- **Panels are inverted relative to the active theme**, so anything sitting on
+  one takes the `panel-*` tokens. `text-accent` on a panel is a dark green on
+  near-black in light mode. Use `text-panel-accent`.
+
 ## Notes
 
 - **Dark mode** is class-based. An inline script in `index.html` applies the stored

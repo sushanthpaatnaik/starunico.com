@@ -43,17 +43,188 @@
   }
 }
 
+/* ---- Semantic theme tokens ---------------------------------------------
+   The two themes are one system seen under different illumination. Every
+   colour in the interface resolves through the semantic names below, so a
+   component never states a literal colour and never needs a `dark:` variant.
+
+   Light is not white-with-black-text: the page sits on a faintly warm mineral
+   ground with true-white surfaces raised above it. Dark is not inverted light:
+   it is a deeper ground with its own surface ramp.
+
+   Green is the only hue in either theme, and it has to change direction
+   between them — brand-700 clears 4.5:1 on the light ground, brand-400 clears
+   it on the dark one. A single accent value cannot serve both.
+   ------------------------------------------------------------------------ */
+:root {
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f2f2ee;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f6f6f2;
+
+  --text-primary: #14161a;
+  --text-secondary: #4e545a;
+  --text-muted: #676d73;
+
+  --border-subtle: rgb(17 19 21 / 0.11);
+  --border-strong: rgb(17 19 21 / 0.22);
+
+  --accent: var(--color-brand-700);
+  --accent-hover: var(--color-brand-800);
+  --accent-ink: #f7f7f5;
+
+  --trajectory: var(--color-brand-600);
+  --trajectory-muted: rgb(17 19 21 / 0.14);
+
+  --nav-surface: rgb(255 255 255 / 0.85);
+  --footer-surface: #f4f4f0;
+
+  /* The closing panel is a deliberate tonal inversion in light, and a raised
+     surface in dark, where a black panel on a black page would vanish. */
+  --panel-surface: #111315;
+  --panel-text: #f2f0ea;
+  --panel-border: transparent;
+  --panel-hover: #23262a;
+  /*
+   * A panel is a tonal inversion of whichever theme is active, so anything
+   * sitting on one cannot use the theme's own accent or surfaces: in light
+   * mode `--accent` is a dark green that disappears against a near-black
+   * panel. These four hold their values across both themes for that reason.
+   */
+  --panel-accent: var(--color-brand-400);
+  --panel-solid: #f2f0ea;
+  --panel-solid-ink: #111315;
+  --panel-solid-hover: #dedbd2;
+
+  --focus-ring: var(--color-brand-600);
+  --selection-bg: var(--color-brand-100);
+  --selection-text: #14161a;
+  --image-overlay: rgb(17 19 21 / 0.04);
+
+  --shadow-soft: 0 1px 2px rgb(17 19 21 / 0.05);
+  --shadow-strong: 0 12px 32px rgb(17 19 21 / 0.1);
+
+  --input-bg: #ffffff;
+  --input-border: rgb(17 19 21 / 0.22);
+  --input-focus: var(--color-brand-600);
+  --disabled: #9aa0a6;
+
+  --danger: var(--color-red-600);
+  --notice-bg: var(--color-amber-50);
+  --notice-border: var(--color-amber-300);
+  --notice-text: var(--color-amber-900);
+  --mark-bg: var(--color-amber-100);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #08090a;
+  --bg-secondary: #101214;
+  --surface-primary: #131518;
+  --surface-secondary: #191c20;
+
+  --text-primary: #f2f0ea;
+  --text-secondary: #adb2b7;
+  --text-muted: #8b9197;
+
+  --border-subtle: rgb(255 255 255 / 0.11);
+  --border-strong: rgb(255 255 255 / 0.22);
+
+  --accent: var(--color-brand-400);
+  --accent-hover: var(--color-brand-300);
+  --accent-ink: #08090a;
+
+  --trajectory: var(--color-brand-400);
+  --trajectory-muted: rgb(255 255 255 / 0.16);
+
+  --nav-surface: rgb(8 9 10 / 0.85);
+  --footer-surface: #0c0d0f;
+
+  --panel-surface: #16191d;
+  --panel-text: #f2f0ea;
+  --panel-border: rgb(255 255 255 / 0.11);
+  --panel-hover: #22262b;
+  --panel-accent: var(--color-brand-400);
+  --panel-solid: #f2f0ea;
+  --panel-solid-ink: #111315;
+  --panel-solid-hover: #dedbd2;
+
+  --focus-ring: var(--color-brand-400);
+  --selection-bg: var(--color-brand-900);
+  --selection-text: #f2f0ea;
+  --image-overlay: rgb(0 0 0 / 0.2);
+
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-strong: 0 12px 32px rgb(0 0 0 / 0.6);
+
+  --input-bg: #101214;
+  --input-border: rgb(255 255 255 / 0.22);
+  --input-focus: var(--color-brand-400);
+  --disabled: #61686e;
+
+  --danger: #ff8b8b;
+  --notice-bg: rgb(120 53 15 / 0.28);
+  --notice-border: rgb(252 211 77 / 0.35);
+  --notice-text: #fcd34d;
+  --mark-bg: rgb(252 211 77 / 0.2);
+
+  color-scheme: dark;
+}
+
+/* Expose the semantic tokens as Tailwind colours, so components use
+   `bg-surface` / `text-ink` rather than a literal and its dark counterpart. */
+@theme inline {
+  --color-canvas: var(--bg-primary);
+  --color-canvas-2: var(--bg-secondary);
+  --color-surface: var(--surface-primary);
+  --color-surface-2: var(--surface-secondary);
+
+  --color-ink: var(--text-primary);
+  --color-ink-2: var(--text-secondary);
+  --color-ink-3: var(--text-muted);
+
+  --color-line: var(--border-subtle);
+  --color-line-2: var(--border-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-hover);
+  --color-trace: var(--trajectory);
+  --color-trace-2: var(--trajectory-muted);
+
+  --color-panel: var(--panel-surface);
+  --color-panel-ink: var(--panel-text);
+  --color-panel-line: var(--panel-border);
+  --color-panel-hover: var(--panel-hover);
+  --color-panel-accent: var(--panel-accent);
+  --color-panel-solid: var(--panel-solid);
+  --color-panel-solid-ink: var(--panel-solid-ink);
+  --color-panel-solid-hover: var(--panel-solid-hover);
+  --color-accent-ink: var(--accent-ink);
+
+  --color-footer: var(--footer-surface);
+  --color-input: var(--input-bg);
+  --color-input-line: var(--input-border);
+  --color-disabled: var(--disabled);
+  --color-danger: var(--danger);
+  --color-notice: var(--notice-bg);
+  --color-notice-line: var(--notice-border);
+  --color-notice-ink: var(--notice-text);
+  --color-mark: var(--mark-bg);
+}
+
 @layer base {
   body {
     /* Body copy reads at 17px; headings and .meta set their own sizes. */
     font-size: 1.0625rem;
     line-height: 1.65;
+    background: var(--bg-primary);
+    color: var(--text-primary);
   }
 
-  :root {
-    /* Light only: white, green and black. Pinning this keeps form controls and
-       scrollbars light for visitors whose OS prefers dark. */
-    color-scheme: light;
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
   }
 
   /* The header is sticky, so anything scrolled to by focus or by an anchor
@@ -63,7 +234,8 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-500;
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
   }
 }
 
@@ -224,7 +396,7 @@
     padding: 0.5rem 0.5rem;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--color-neutral-600);
+    color: var(--text-secondary);
     transition: color 200ms var(--ease-precision);
   }
 
@@ -232,7 +404,7 @@
     font-size: 0.625rem;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
-    color: var(--color-neutral-400);
+    color: var(--text-muted);
     opacity: 0;
     transition: opacity 200ms var(--ease-precision);
   }
@@ -252,7 +424,7 @@
 
   .nav-link:hover,
   .nav-link--active {
-    color: var(--color-neutral-900);
+    color: var(--text-primary);
   }
 
   .nav-link:hover .nav-link__index,
@@ -270,11 +442,11 @@
   }
 
   .nav-link--active {
-    color: var(--color-brand-700);
+    color: var(--accent);
   }
 
   .nav-link--active .nav-link__index {
-    color: var(--color-brand-600);
+    color: var(--accent);
   }
 
   /* Mobile overlay: plane masks in, then items reveal in sequence. */
@@ -320,7 +492,7 @@
     inset-inline: 0;
     top: 50%;
     height: 1px;
-    background: var(--color-brand-600);
+    background: var(--trajectory);
     transform: scaleX(0);
     transform-origin: left center;
   }
@@ -333,7 +505,7 @@
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-brand-700);
+    color: var(--accent);
     opacity: 0;
     white-space: nowrap;
   }
@@ -417,4 +589,40 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ---- Theme change ------------------------------------------------------
+   Colours are not transitioned by default: doing so would make every hover
+   and route change drag its colour behind it. The transition is enabled for
+   the length of a theme change only, by a class the controller adds and then
+   removes, so the environment reads as changing illumination rather than as a
+   new page arriving.
+   ------------------------------------------------------------------------ */
+.theme-changing,
+.theme-changing *,
+.theme-changing *::before,
+.theme-changing *::after {
+  transition:
+    background-color 300ms var(--ease-precision),
+    border-color 340ms var(--ease-precision),
+    color 340ms var(--ease-precision),
+    fill 380ms var(--ease-precision),
+    stroke 380ms var(--ease-precision),
+    box-shadow 300ms var(--ease-precision) !important;
+  transition-delay: 0ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Tokens swap in one step; no staged environmental fade. */
+  .theme-changing,
+  .theme-changing *,
+  .theme-changing *::before,
+  .theme-changing *::after {
+    transition: none !important;
+  }
+}
+
+/* The nav is a translucent plane over whichever ground is active. */
+.nav-surface {
+  background: var(--nav-surface);
 }

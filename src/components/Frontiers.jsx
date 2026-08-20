@@ -18,10 +18,10 @@ export default function Frontiers({ compactOnMobile = false }) {
   const current = sectors[active]
 
   return (
-    <div className="border-y border-neutral-200">
+    <div className="border-y border-line">
       {/* Desktop: rail plus detail. */}
       <div className="hidden lg:grid lg:grid-cols-[1fr_1.3fr]">
-        <ul className="border-r border-neutral-200">
+        <ul className="border-r border-line">
           {sectors.map((sector, index) => {
             const selected = index === active
             return (
@@ -31,16 +31,16 @@ export default function Frontiers({ compactOnMobile = false }) {
                   onMouseEnter={() => setActive(index)}
                   onFocus={() => setActive(index)}
                   aria-current={selected}
-                  className="group flex w-full items-baseline gap-5 border-b border-neutral-200 px-2 py-6 text-left transition-colors last:border-b-0"
+                  className="group flex w-full items-baseline gap-5 border-b border-line px-2 py-6 text-left transition-colors last:border-b-0"
                 >
                   <span
-                    className={`meta transition-colors ${selected ? 'text-brand-600' : 'text-neutral-400'}`}
+                    className={`meta transition-colors ${selected ? 'text-accent' : 'text-ink-3'}`}
                   >
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span
                     className={`text-2xl tracking-tight transition-all ${
-                      selected ? 'translate-x-1 text-neutral-950' : 'text-neutral-400'
+                      selected ? 'translate-x-1 text-ink' : 'text-ink-3'
                     }`}
                   >
                     {sector.name}
@@ -53,14 +53,14 @@ export default function Frontiers({ compactOnMobile = false }) {
 
         <div className="flex flex-col justify-between gap-10 px-10 py-10">
           <div>
-            <p className="meta text-neutral-400">
+            <p className="meta text-ink-3">
               Domain {String(active + 1).padStart(2, '0')} / {String(sectors.length).padStart(2, '0')}
             </p>
             <p className="mt-6 text-2xl text-pretty sm:text-3xl/tight">{current.description}</p>
           </div>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 border-t border-neutral-200 pt-6">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-6">
             {current.areas.map((area) => (
-              <li key={area} className="meta text-neutral-500">
+              <li key={area} className="meta text-ink-3">
                 {area}
               </li>
             ))}
@@ -73,11 +73,11 @@ export default function Frontiers({ compactOnMobile = false }) {
         {sectors.map((sector, index) => (
           <li
             key={sector.name}
-            className={`border-b border-neutral-200 last:border-b-0 sm:py-7 ${
+            className={`border-b border-line last:border-b-0 sm:py-7 ${
               compactOnMobile ? 'py-3.5 sm:py-7' : 'py-5'
             }`}
           >
-            <p className={`meta text-neutral-400 ${compactOnMobile ? 'hidden sm:block' : ''}`}>
+            <p className={`meta text-ink-3 ${compactOnMobile ? 'hidden sm:block' : ''}`}>
               {String(index + 1).padStart(2, '0')}
             </p>
             <h3
@@ -86,14 +86,14 @@ export default function Frontiers({ compactOnMobile = false }) {
               }`}
             >
               {compactOnMobile && (
-                <span aria-hidden="true" className="meta text-neutral-400 sm:hidden">
+                <span aria-hidden="true" className="meta text-ink-3 sm:hidden">
                   {String(index + 1).padStart(2, '0')}
                 </span>
               )}
               {sector.name}
             </h3>
             <p
-              className={`text-sm/6 text-neutral-600 sm:mt-2 sm:block ${
+              className={`text-sm/6 text-ink-2 sm:mt-2 sm:block ${
                 compactOnMobile ? 'hidden' : 'mt-2'
               }`}
             >
@@ -103,7 +103,7 @@ export default function Frontiers({ compactOnMobile = false }) {
                 of scrolling for no new information. */}
             <ul className="mt-3 hidden flex-wrap gap-x-5 gap-y-1 sm:flex">
               {sector.areas.map((area) => (
-                <li key={area} className="meta text-neutral-500">
+                <li key={area} className="meta text-ink-3">
                   {area}
                 </li>
               ))}

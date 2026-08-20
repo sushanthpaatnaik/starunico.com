@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import AppearanceControl from './AppearanceControl.jsx'
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
 import Logo from './Logo.jsx'
@@ -50,7 +51,7 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-50 border-b transition ${
         scrolled
-          ? 'border-neutral-200 bg-white/85 backdrop-blur'
+          ? 'nav-surface border-line backdrop-blur'
           : 'border-transparent bg-transparent'
       }`}
     >
@@ -78,7 +79,8 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <AppearanceControl className="hidden lg:block" />
 
           {/* Wrapper handles the responsive hide so it cannot clash with the button's own display utility. */}
           <div className="hidden sm:block">
@@ -90,7 +92,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="rounded-sm p-2 text-neutral-600 transition hover:bg-neutral-100 md:hidden"
+            className="rounded-sm p-2 text-ink-2 transition hover:bg-surface-2 md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -105,23 +107,23 @@ export default function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="menu-panel fixed inset-0 top-16 z-40 bg-neutral-950 md:hidden"
+          className="menu-panel fixed inset-0 top-16 z-40 bg-panel md:hidden"
         >
           <nav className="container-page flex h-full flex-col justify-between py-10" aria-label="Menu">
             <ul>
               {navigation.map((item, index) => (
-                <li key={item.to} className="border-b border-white/10">
+                <li key={item.to} className="border-b border-panel-ink/10">
                   <NavLink
                     to={item.to}
                     end={item.to === '/'}
                     onClick={closeMenu}
                     className={({ isActive }) =>
                       `flex items-baseline gap-5 py-5 text-3xl tracking-tight transition-colors ${
-                        isActive ? 'text-brand-400' : 'text-white'
+                        isActive ? 'text-panel-accent' : 'text-panel-ink'
                       }`
                     }
                   >
-                    <span aria-hidden="true" className="meta text-neutral-500">
+                    <span aria-hidden="true" className="meta text-panel-ink/55">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     {item.name}
@@ -135,7 +137,8 @@ export default function Navbar() {
                 Present your technology
                 <Icon name="arrow" className="h-4 w-4" />
               </Button>
-              <p className="meta mt-6 text-neutral-500">{site.descriptor}</p>
+              <AppearanceControl tone="panel" className="mt-8" />
+              <p className="meta mt-8 text-panel-ink/55">{site.descriptor}</p>
             </div>
           </nav>
         </div>

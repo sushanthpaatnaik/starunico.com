@@ -23,9 +23,9 @@ export default function Thesis() {
         <Matrix />
       </Section>
 
-      <Section align="left" title="Stage" className="bg-neutral-50">
+      <Section align="left" title="Stage" className="bg-canvas-2">
         <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-5 text-pretty text-neutral-600">
+          <div className="space-y-5 text-pretty text-ink-2">
             <p>
               We aim to enter at an early stage, when the technology and the founding team
               are strong but the full commercial value of the work is not yet recognised by
@@ -42,7 +42,7 @@ export default function Thesis() {
             {stages.map((stage) => (
               <li
                 key={stage}
-                className="rounded-sm border border-neutral-200 bg-white px-5 py-4 font-semibold"
+                className="rounded-sm border border-line bg-surface px-5 py-4 font-semibold"
               >
                 {stage}
               </li>
@@ -60,12 +60,12 @@ export default function Thesis() {
           <ul className="space-y-3">
             {avoid.map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <Icon name="close" className="mt-1 h-4 w-4 shrink-0 text-neutral-400" />
-                <span className="text-neutral-700">{item}</span>
+                <Icon name="close" className="mt-1 h-4 w-4 shrink-0 text-ink-3" />
+                <span className="text-ink-2">{item}</span>
               </li>
             ))}
           </ul>
-          <p className="self-start text-pretty text-neutral-600">
+          <p className="self-start text-pretty text-ink-2">
             We would rather back a small number of technologies capable of changing an
             industry than invest broadly across conventional companies. Being explicit about
             what falls outside our remit is part of that discipline.

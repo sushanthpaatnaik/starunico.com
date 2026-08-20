@@ -3,11 +3,11 @@ import Button from '../components/Button.jsx'
 export default function NotFound() {
   return (
     <section className="container-page flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
-      <p className="text-sm font-semibold tracking-widest text-brand-700 uppercase">
+      <p className="text-sm font-semibold tracking-widest text-accent uppercase">
         404
       </p>
       <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Page not found</h1>
-      <p className="mt-4 max-w-md text-neutral-600">
+      <p className="mt-4 max-w-md text-ink-2">
         The page you were looking for has moved, or never existed in the first place.
       </p>
       <Button to="/" size="lg" className="mt-10">

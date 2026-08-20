@@ -7,18 +7,18 @@ import { Link } from 'react-router-dom'
  */
 const base =
   'group/btn inline-flex items-center justify-center gap-2.5 font-semibold tracking-tight transition ' +
-  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 ' +
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ' +
   'disabled:cursor-not-allowed disabled:opacity-60'
 
 const variants = {
-  primary: 'bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900',
-  secondary: 'bg-neutral-950 text-white hover:bg-neutral-800',
+  primary: 'bg-accent text-accent-ink hover:bg-accent-2 active:bg-accent-2',
+  secondary: 'bg-panel text-panel-ink hover:bg-panel-hover',
   outline:
-    'border border-neutral-300 text-neutral-900 hover:border-neutral-900 hover:bg-neutral-50',
-  ghost: 'text-neutral-700 hover:bg-neutral-100',
+    'border border-line-2 text-ink hover:border-line-2 hover:bg-canvas-2',
+  ghost: 'text-ink-2 hover:bg-surface-2',
   // For panels that are dark in both themes.
-  onDark: 'bg-white text-neutral-950 hover:bg-neutral-200',
-  onDarkGhost: 'text-neutral-300 hover:bg-white/10 hover:text-white',
+  onDark: 'bg-panel-solid text-panel-solid-ink hover:bg-panel-solid-hover',
+  onDarkGhost: 'text-panel-ink/70 hover:bg-panel-ink/10 hover:text-panel-ink',
 }
 
 const sizes = {

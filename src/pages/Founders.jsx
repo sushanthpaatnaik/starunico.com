@@ -150,7 +150,7 @@ export default function Founders() {
         <PageHeader eyebrow="For founders" title="Received" description={notice} />
         <Section align="left">
           <div className="max-w-2xl">
-            <p className="text-lg text-neutral-700">
+            <p className="text-lg text-ink-2">
               We read every submission. If your work fits what we are looking for, you will
               hear from us directly.
             </p>
@@ -181,12 +181,12 @@ export default function Founders() {
             <ul className="mt-6 space-y-4">
               {qualifiers.map((line) => (
                 <li key={line} className="flex items-start gap-3">
-                  <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
-                  <span className="text-neutral-700">{line}</span>
+                  <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                  <span className="text-ink-2">{line}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-8 border-l-2 border-neutral-200 pl-6 text-sm/6 text-neutral-500">
+            <p className="mt-8 border-l-2 border-line pl-6 text-sm/6 text-ink-3">
               We make few investments, and we read every submission. A pass is not a verdict
               on your company — only on our fit with it at this moment.
             </p>
@@ -196,7 +196,7 @@ export default function Founders() {
             {founders.points.map((point) => (
               <li key={point.title}>
                 <h3 className="font-semibold">{point.title}</h3>
-                <p className="mt-2 text-sm/6 text-neutral-600">{point.body}</p>
+                <p className="mt-2 text-sm/6 text-ink-2">{point.body}</p>
               </li>
             ))}
           </ul>
@@ -207,13 +207,13 @@ export default function Founders() {
         eyebrow="Submission"
         title="Seven questions, one at a time"
         align="left"
-        className="border-t border-neutral-200 bg-neutral-50"
+        className="border-t border-line bg-canvas-2"
       >
         <form
           onSubmit={submit}
           onKeyDown={onKeyDown}
           noValidate
-          className="max-w-3xl border border-neutral-200 bg-white p-8 sm:p-12"
+          className="max-w-3xl border border-line bg-surface p-8 sm:p-12"
         >
           <StepTrajectory current={step} />
 
@@ -230,7 +230,7 @@ export default function Founders() {
             >
               {current.question}
             </h3>
-            <p className="mt-3 text-neutral-600">{current.help}</p>
+            <p className="mt-3 text-ink-2">{current.help}</p>
 
             <div className="mt-8 grid gap-5">
               {current.id === 'technology' && (
@@ -334,8 +334,8 @@ export default function Founders() {
               role="status"
               className={`mt-8 flex items-start gap-3 px-4 py-3 text-sm font-medium ${
                 status === 'failed'
-                  ? 'bg-red-50 text-red-800 ring-1 ring-red-200'
-                  : 'bg-brand-50 text-brand-800 ring-1 ring-brand-200'
+                  ? 'bg-notice text-danger ring-1 ring-danger/30'
+                  : 'bg-accent/10 text-accent ring-1 ring-accent/25'
               }`}
             >
               <Icon name="close" className="mt-0.5 h-5 w-5 shrink-0" />
@@ -349,12 +349,12 @@ export default function Founders() {
             <input id="referrer" name="referrer" tabIndex={-1} autoComplete="off" />
           </div>
 
-          <div className="mt-10 flex items-center justify-between gap-4 border-t border-neutral-200 pt-8">
+          <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-8">
             <button
               type="button"
               onClick={back}
               disabled={step === 0}
-              className="meta text-neutral-500 transition hover:text-neutral-900 disabled:invisible"
+              className="meta text-ink-3 transition hover:text-ink disabled:invisible"
             >
               ← Back
             </button>
@@ -373,13 +373,13 @@ export default function Founders() {
           </div>
         </form>
 
-        <p className="measure mt-8 text-sm text-neutral-500">
+        <p className="measure mt-8 text-sm text-ink-3">
           By sending this you agree to our{' '}
-          <a href="/terms" className="text-brand-700 hover:underline">
+          <a href="/terms" className="text-accent hover:underline">
             terms
           </a>
           , including how unsolicited material is treated. Prefer email? Write to{' '}
-          <a href={`mailto:${site.email}`} className="text-brand-700 hover:underline">
+          <a href={`mailto:${site.email}`} className="text-accent hover:underline">
             {site.email}
           </a>
           .

@@ -28,10 +28,10 @@ export default function PortfolioCompany() {
 
       <Section align="left">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
-          <dl className="self-start border-t border-neutral-200">
+          <dl className="self-start border-t border-line">
             {facts.map(([label, value]) => (
-              <div key={label} className="flex justify-between gap-6 border-b border-neutral-200 py-4">
-                <dt className="meta text-neutral-400">{label}</dt>
+              <div key={label} className="flex justify-between gap-6 border-b border-line py-4">
+                <dt className="meta text-ink-3">{label}</dt>
                 <dd className="text-sm font-semibold">{value}</dd>
               </div>
             ))}
@@ -39,17 +39,17 @@ export default function PortfolioCompany() {
 
           <div className="space-y-10">
             <div>
-              <h2 className="meta text-brand-700">The breakthrough</h2>
-              <p className="mt-4 text-pretty text-lg/8 text-neutral-700">{company.breakthrough}</p>
+              <h2 className="meta text-accent">The breakthrough</h2>
+              <p className="mt-4 text-pretty text-lg/8 text-ink-2">{company.breakthrough}</p>
             </div>
             <div>
-              <h2 className="meta text-brand-700">Why we invested</h2>
-              <p className="mt-4 text-pretty text-lg/8 text-neutral-700">{company.thesis}</p>
+              <h2 className="meta text-accent">Why we invested</h2>
+              <p className="mt-4 text-pretty text-lg/8 text-ink-2">{company.thesis}</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 border-t border-neutral-200 pt-8">
+        <div className="mt-16 border-t border-line pt-8">
           <Button to="/portfolio" variant="outline">
             <Icon name="arrow" className="h-4 w-4 rotate-180" />
             All holdings

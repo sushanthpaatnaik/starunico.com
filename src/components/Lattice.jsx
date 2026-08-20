@@ -27,7 +27,7 @@ export default function Lattice({ className = '' }) {
       aria-hidden="true"
       role="presentation"
     >
-      <g stroke="currentColor" strokeWidth="0.75" className="text-neutral-200">
+      <g stroke="currentColor" strokeWidth="0.75" className="text-panel-ink/80">
         {nodes.map((n) => (
           <g key={`${n.c}-${n.r}`}>
             {n.c < cols - 1 && (
@@ -45,7 +45,7 @@ export default function Lattice({ className = '' }) {
         fill="none"
         stroke="currentColor"
         strokeWidth="1.75"
-        className="text-brand-600"
+        className="text-accent"
         points={Array.from({ length: cols }, (_, c) => {
           const r = Math.max(0, rows - 1 - Math.round((c / (cols - 1)) * (rows - 1)))
           const n = at(c, r)
@@ -55,7 +55,7 @@ export default function Lattice({ className = '' }) {
       {Array.from({ length: cols }, (_, c) => {
         const r = Math.max(0, rows - 1 - Math.round((c / (cols - 1)) * (rows - 1)))
         const n = at(c, r)
-        return <circle key={c} cx={n.x} cy={n.y} r="2.5" className="fill-brand-600" />
+        return <circle key={c} cx={n.x} cy={n.y} r="2.5" className="fill-trace" />
       })}
     </svg>
   )

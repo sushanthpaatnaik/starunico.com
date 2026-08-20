@@ -36,13 +36,13 @@ export default function ScrollTrajectory() {
   const stage = Math.min(STAGES.length - 1, Math.floor(progress * STAGES.length))
 
   return (
-    <div aria-hidden="true" className="relative h-px w-full bg-neutral-200">
+    <div aria-hidden="true" className="relative h-px w-full bg-line">
       <div
-        className="absolute inset-y-0 left-0 bg-brand-600"
+        className="absolute inset-y-0 left-0 bg-accent"
         style={{ width: `${progress * 100}%` }}
       />
       <span
-        className="meta absolute top-2 hidden text-neutral-400 transition-opacity lg:block"
+        className="meta absolute top-2 hidden text-ink-3 transition-opacity lg:block"
         style={{ left: `min(${progress * 100}%, calc(100% - 11rem))`, opacity: progress > 0.02 ? 1 : 0 }}
       >
         {String(stage + 1).padStart(2, '0')} {STAGES[stage]}

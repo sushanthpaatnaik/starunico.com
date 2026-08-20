@@ -17,9 +17,9 @@ export default function Section({
         {hasHeader && (
           <div className={centred ? 'mx-auto max-w-2xl text-center' : 'max-w-3xl text-left'}>
             {(eyebrow || index != null) && (
-              <p className="meta flex items-baseline gap-3 text-brand-700">
+              <p className="meta flex items-baseline gap-3 text-accent">
                 {index != null && (
-                  <span className="text-neutral-400 tabular-nums">
+                  <span className="text-ink-3 tabular-nums">
                     {String(index).padStart(2, '0')}
                   </span>
                 )}
@@ -31,7 +31,7 @@ export default function Section({
             )}
             {description && (
               <p
-                className={`measure mt-4 text-lg text-pretty text-neutral-600 ${
+                className={`measure mt-4 text-lg text-pretty text-ink-2 ${
                   centred ? 'mx-auto' : ''
                 }`}
               >

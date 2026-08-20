@@ -39,13 +39,13 @@ export default function Trajectory({ points, className = '' }) {
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        <path d={path} fill="none" stroke="currentColor" strokeWidth="1" className="text-neutral-200" />
+        <path d={path} fill="none" stroke="currentColor" strokeWidth="1" className="text-panel-ink/80" />
         <path
           d={path}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className="text-brand-600"
+          className="text-accent"
           pathLength="1"
           style={{
             strokeDasharray: 1,
@@ -56,8 +56,8 @@ export default function Trajectory({ points, className = '' }) {
       </svg>
       <ol className="mt-6 grid grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
         {points.map((point, index) => (
-          <li key={point} className="border-t border-neutral-200 pt-3">
-            <span className="meta block text-neutral-400">
+          <li key={point} className="border-t border-line pt-3">
+            <span className="meta block text-ink-3">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="mt-1 block text-sm font-semibold tracking-tight">{point}</span>

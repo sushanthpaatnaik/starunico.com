@@ -16,7 +16,7 @@ export default function Privacy() {
         <Prose>
           {showLegalNotice && <ReviewNotice />}
 
-          <p className="measure text-lg text-pretty text-neutral-700">
+          <p className="measure text-lg text-pretty text-ink-2">
             This policy explains what {legal.entity} does with personal information when you
             visit this website or contact us through it. We collect as little as we can, and
             we do not sell it or use it for advertising.
@@ -35,7 +35,7 @@ export default function Privacy() {
               )}{' '}
               is the controller of the personal information described here. You can reach us
               at{' '}
-              <a href={`mailto:${site.email}`} className="text-brand-700 hover:underline">
+              <a href={`mailto:${site.email}`} className="text-accent hover:underline">
                 {site.email}
               </a>
               .
@@ -55,7 +55,7 @@ export default function Privacy() {
               ones it recognises. Everything you write in the longer answers, including
               detail about a company or a technology, reaches us as you wrote it. Please read
               clause 4 of our{' '}
-              <a href="/terms" className="text-brand-700 hover:underline">
+              <a href="/terms" className="text-accent hover:underline">
                 terms
               </a>{' '}
               before sending anything you would not want read without an agreement in place.
@@ -150,7 +150,7 @@ export default function Privacy() {
             </p>
             <p>
               Write to{' '}
-              <a href={`mailto:${site.email}`} className="text-brand-700 hover:underline">
+              <a href={`mailto:${site.email}`} className="text-accent hover:underline">
                 {site.email}
               </a>{' '}
               and we will respond within the period the applicable law allows. You may also

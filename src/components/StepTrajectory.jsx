@@ -11,15 +11,15 @@ export default function StepTrajectory({ current }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="meta text-neutral-500">
+        <p className="meta text-ink-3">
           {String(current + 1).padStart(2, '0')} / {String(STEPS.length).padStart(2, '0')}
         </p>
-        <p className="meta text-neutral-400">Submission</p>
+        <p className="meta text-ink-3">Submission</p>
       </div>
 
-      <div className="relative mt-3 h-px w-full bg-neutral-200">
+      <div className="relative mt-3 h-px w-full bg-line">
         <div
-          className="absolute inset-y-0 left-0 bg-brand-600 transition-[width] duration-500"
+          className="absolute inset-y-0 left-0 bg-accent transition-[width] duration-500"
           style={{ width: `${progress * 100}%`, transitionTimingFunction: 'var(--ease-precision)' }}
         />
         <ol className="absolute inset-x-0 -top-1 flex justify-between">
@@ -32,7 +32,7 @@ export default function StepTrajectory({ current }) {
               <span
                 aria-hidden="true"
                 className={`block h-2 w-2 rounded-full transition-colors ${
-                  index <= current ? 'bg-brand-600' : 'bg-neutral-300'
+                  index <= current ? 'bg-accent' : 'bg-line-2'
                 }`}
               />
             </li>
