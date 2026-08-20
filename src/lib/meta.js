@@ -86,7 +86,9 @@ export function metaFor(pathname) {
     if (company) {
       meta = {
         title: titled(company.name),
-        description: company.summary ?? META[PATHS.portfolio].description,
+        // `technology` is the one-line description of what the company builds;
+        // it is what the dossier page leads with, so the two agree.
+        description: company.technology ?? META[PATHS.portfolio].description,
       }
     }
   }
