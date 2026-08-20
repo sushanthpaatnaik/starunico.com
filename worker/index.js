@@ -1,5 +1,6 @@
 import { apiError, corsHeaders, withHeaders } from './http.js'
 import { routes } from './routes.js'
+import { metaFor } from '../src/lib/meta.js'
 import { isKnownRoute } from '../src/lib/routes.js'
 import { robots, sitemap } from './seo.js'
 
@@ -27,10 +28,53 @@ async function documentFor(url, request, env) {
   const headers = new Headers(index.headers)
   headers.set('cache-control', known ? 'public, max-age=0, must-revalidate' : 'no-store')
 
-  return new Response(request.method === 'HEAD' ? null : index.body, {
+  const document = new Response(request.method === 'HEAD' ? null : index.body, {
     status: known ? 200 : 404,
     headers,
   })
+
+  return withMeta(document, url.pathname)
+}
+
+/**
+ * Rewrites the head for the route being served.
+ *
+ * Every route is one built document, so without this every page ships the
+ * homepage's title, description and canonical URL. The title is a browsing
+ * problem; the canonical is worse — it tells a search engine that eight
+ * distinct pages are duplicates of the homepage.
+ *
+ * The app repeats this on client-side navigation. Doing it here as well is what
+ * covers everything that never runs the app: crawlers, link unfurlers in chat
+ * apps, and readers.
+ */
+function withMeta(response, pathname) {
+  const { title, description, canonical } = metaFor(pathname)
+
+  return new HTMLRewriter()
+    .on('title', {
+      element: (element) => element.setInnerContent(title),
+    })
+    .on('meta[name="description"], meta[property="og:description"]', {
+      element: (element) => element.setAttribute('content', description),
+    })
+    .on('meta[property="og:title"]', {
+      element: (element) => element.setAttribute('content', title),
+    })
+    .on('link[rel="canonical"], meta[property="og:url"]', {
+      element: (element) => {
+        // An unknown path is not canonical anywhere, so it claims nothing.
+        if (!canonical) return element.remove()
+        element.setAttribute(element.tagName === 'link' ? 'href' : 'content', canonical)
+      },
+    })
+    .on('head', {
+      element: (element) => {
+        // A path with no canonical URL is a 404, which should not be indexed.
+        if (!canonical) element.append('<meta name="robots" content="noindex">', { html: true })
+      },
+    })
+    .transform(response)
 }
 
 export default {

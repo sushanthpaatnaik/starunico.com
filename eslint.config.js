@@ -31,7 +31,13 @@ export default defineConfig([
     files: ['worker/**/*.js'],
     extends: [js.configs.recommended],
     languageOptions: {
-      globals: { ...globals.serviceworker, console: 'readonly' },
+      globals: {
+        ...globals.serviceworker,
+        console: 'readonly',
+        // workerd's HTML streaming rewriter: a platform global, not a service
+        // worker one, so it is not in the shared set.
+        HTMLRewriter: 'readonly',
+      },
     },
   },
 ])

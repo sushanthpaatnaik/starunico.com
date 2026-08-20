@@ -28,8 +28,11 @@ export const REDIRECTS = {
   '/partnering': PATHS.approach,
 }
 
-const strip = (pathname) =>
+/** A path in the form the tables above use: no trailing slash except at root. */
+export const normalisePath = (pathname) =>
   pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
+
+const strip = normalisePath
 
 /** True when the router will render a real page rather than the 404. */
 export function isKnownRoute(pathname) {

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { PATHS, REDIRECTS } from './lib/routes.js'
+import DocumentHead from './components/DocumentHead.jsx'
 import Layout from './components/Layout.jsx'
 import PageTransition from './components/PageTransition.jsx'
 import ScrollManager from './components/ScrollManager.jsx'
@@ -18,6 +19,7 @@ import NotFound from './pages/NotFound.jsx'
 export default function App() {
   return (
     <PageTransition>
+      <DocumentHead />
       <ScrollManager />
       <Routes>
         <Route element={<Layout />}>
