@@ -7,6 +7,16 @@ const legal = [
   { name: 'Terms', to: '/terms' },
 ]
 
+/**
+ * The address below the city heading, which already names the city — so these
+ * lines must not repeat it. Ends on the country in both cases, whether or not
+ * a street is known.
+ */
+function addressLines(office) {
+  const locality = [office.postcode, office.region].filter(Boolean).join(', ')
+  return [office.street, locality].filter(Boolean)
+}
+
 export default function Footer() {
   return (
     <footer className="border-t border-neutral-200 bg-neutral-50">
@@ -36,23 +46,19 @@ export default function Footer() {
           </FooterColumn>
 
 
-          <FooterColumn title="Offices">
+          <FooterColumn title="Offices" spacing="space-y-6">
             {offices.map((office) => (
-              <li key={office.city} className="text-neutral-600">
-                <span className="block font-medium text-neutral-900">
-                  {office.city}{' '}
-                  <span className="text-xs font-normal tracking-wider text-neutral-600 uppercase">
-                    {office.label}
-                  </span>
-                </span>
-                <address className="mt-1 block not-italic">
-                  {office.address && (
-                    <>
-                      {office.address}
-                      <br />
-                    </>
-                  )}
-                  {office.region}
+              <li key={office.city}>
+                {/* Role above name, the same eyebrow-then-content order the
+                    rest of the site uses, so the two never compete inline. */}
+                <p className="meta text-neutral-500">{office.role}</p>
+                <p className="mt-1.5 font-medium text-neutral-900">{office.city}</p>
+                <address className="mt-1 block leading-relaxed text-neutral-600 not-italic">
+                  {addressLines(office).map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
                 </address>
               </li>
             ))}
@@ -92,13 +98,13 @@ export default function Footer() {
   )
 }
 
-function FooterColumn({ title, children }) {
+function FooterColumn({ title, children, spacing = 'space-y-3' }) {
   return (
     <div>
       <h3 className="text-sm font-semibold tracking-wider text-neutral-900 uppercase">
         {title}
       </h3>
-      <ul className="mt-4 space-y-3 text-sm">{children}</ul>
+      <ul className={`mt-4 text-sm ${spacing}`}>{children}</ul>
     </div>
   )
 }

@@ -27,32 +27,51 @@ export const site = {
 /**
  * Where the firm actually is.
  *
- * One office is flagged `registered` — its address is the entity's address of
- * record, and `legal.registeredAddress` below reads it from here rather than
- * repeating it. Two copies of the same address drift; one does not.
+ * The address is held in parts rather than as one string. The footer prints
+ * the city as the heading, so a flat string repeated it — "New Delhi" appeared
+ * twice, and the city broke across lines mid-name. The legal pages need the
+ * opposite: one continuous line, in postal order. Parts serve both; a string
+ * serves neither well.
  *
- * `address` stays null while an office has a confirmed city but no confirmed
+ * `street` stays null while an office has a confirmed city but no confirmed
  * street. Everything downstream treats that as unknown and says so, rather
- * than inventing a street or quietly dropping the office.
+ * than inventing one or quietly dropping the office.
+ *
+ * One office is flagged `registered` — its address is the entity's address of
+ * record, and `legal.registeredAddress` below composes it from these parts
+ * rather than repeating it. Two copies of an address drift; one does not.
  */
 export const offices = [
   {
     city: 'Dubai',
     region: 'United Arab Emirates',
-    label: 'HQ',
+    role: 'Headquarters',
     registered: true,
-    address: null,
+    street: null,
+    postcode: null,
   },
   {
     city: 'New Delhi',
     region: 'India',
-    label: 'Branch',
+    role: 'Branch',
     registered: false,
     // Non-breaking hyphen in Part‑3: a plain hyphen lets a narrow column wrap
     // the line as "Part-" / "3", which reads as a different address.
-    address: '237, Gujranwala Town, Part‑3, New Delhi – 110009',
+    street: '237, Gujranwala Town, Part‑3',
+    postcode: '110009',
   },
 ]
+
+/**
+ * An office as one line, in postal order — street, then the city with its
+ * postcode, then the country. Used where an address has to read as prose
+ * rather than as a block.
+ */
+export function formatAddress(office) {
+  if (!office.street) return null
+  const locality = office.postcode ? `${office.city} – ${office.postcode}` : office.city
+  return [office.street, locality, office.region].join(', ')
+}
 
 const registeredOffice = offices.find((office) => office.registered)
 
@@ -63,12 +82,10 @@ const registeredOffice = offices.find((office) => office.registered)
  */
 export const legal = {
   entity: 'Starunico Capital',
-  // The registered office's address, qualified with its country because the
+  // The registered office as one postal line, country included, because the
   // legal pages name a controller to an international audience. Null while
   // that office has no confirmed street.
-  registeredAddress: registeredOffice.address
-    ? `${registeredOffice.address}, ${registeredOffice.region}`
-    : null,
+  registeredAddress: formatAddress(registeredOffice),
   jurisdiction: null,
   supervisoryAuthority: null,
   lastUpdated: '19 August 2026',
