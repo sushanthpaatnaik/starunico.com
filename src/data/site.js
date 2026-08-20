@@ -50,7 +50,7 @@ export const offices = [
     registered: false,
     // Non-breaking hyphen in Part‑3: a plain hyphen lets a narrow column wrap
     // the line as "Part-" / "3", which reads as a different address.
-    address: '237, 1st Floor, Gujranwala Town, Part‑3, New Delhi – 110009',
+    address: '237, Gujranwala Town, Part‑3, New Delhi – 110009',
   },
 ]
 
