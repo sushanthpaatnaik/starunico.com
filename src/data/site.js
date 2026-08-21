@@ -86,29 +86,32 @@ export const legal = {
   // legal pages name a controller to an international audience. Null while
   // that office has no confirmed street.
   registeredAddress: formatAddress(registeredOffice),
-  jurisdiction: null,
-  supervisoryAuthority: null,
+  jurisdiction: 'the United Arab Emirates',
+  supervisoryAuthority: 'the UAE Data Office',
   lastUpdated: '19 August 2026',
   // Counsel sign-off, tracked separately from whether the facts above exist.
   counselReviewed: true,
 }
 
 /**
- * Whether the legal pages still carry unconfirmed details.
+ * Which of the facts above each legal page actually shows.
  *
- * Derived rather than set by hand. A manual flag and the data it describes drift
- * apart — clearing the flag once left both pages publishing amber "to be
- * confirmed" markers with nothing to explain them. Fill in the three values
- * above and the notice retires itself.
+ * Scoped per page, not site-wide. The notice tells the reader that "the
+ * highlighted items below are not yet settled", so a page carrying no
+ * highlights must not carry the notice either — and once the jurisdiction was
+ * confirmed, a site-wide flag did exactly that to the terms page. The mirror of
+ * the earlier bug, where a hand-set flag was cleared while markers remained.
  */
-export const legalDetailsPending = [
-  legal.registeredAddress,
-  legal.jurisdiction,
-  legal.supervisoryAuthority,
-].some((value) => !value)
+const PENDING_BY_PAGE = {
+  privacy: [legal.registeredAddress, legal.supervisoryAuthority],
+  terms: [legal.jurisdiction],
+}
 
-/** The notice shows while anything is unconfirmed, or before counsel signs off. */
-export const showLegalNotice = legalDetailsPending || !legal.counselReviewed
+/** Whether a given legal page still has something unconfirmed on it. */
+export function legalNoticeFor(page) {
+  const facts = PENDING_BY_PAGE[page] ?? []
+  return facts.some((value) => !value) || !legal.counselReviewed
+}
 
 export const navigation = [
   { name: 'About', to: '/about' },

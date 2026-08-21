@@ -1,7 +1,7 @@
 import PageHeader from '../components/PageHeader.jsx'
 import Section from '../components/Section.jsx'
 import { Bullets, Clause, Pending, Prose, ReviewNotice } from '../components/Prose.jsx'
-import { legal, showLegalNotice, site } from '../data/site.js'
+import { legal, legalNoticeFor, site } from '../data/site.js'
 
 export default function Privacy() {
   return (
@@ -14,7 +14,7 @@ export default function Privacy() {
 
       <Section align="left">
         <Prose>
-          {showLegalNotice && <ReviewNotice />}
+          {legalNoticeFor('privacy') && <ReviewNotice />}
 
           <p className="measure text-lg text-pretty text-ink-2">
             This policy explains what {legal.entity} does with personal information when you
@@ -153,14 +153,10 @@ export default function Privacy() {
               <a href={`mailto:${site.email}`} className="text-accent hover:underline">
                 {site.email}
               </a>{' '}
-              and we will respond within the period the applicable law allows. You may also
-              complain to your data-protection regulator
-              {legal.supervisoryAuthority ? ` (${legal.supervisoryAuthority})` : ''}
-              {!legal.supervisoryAuthority && (
-                <>
-                  {' '}
-                  <Pending>relevant authority to be confirmed</Pending>
-                </>
+              and we will respond within the period the applicable law allows. You may
+              also complain to a data-protection regulator — ours is{' '}
+              {legal.supervisoryAuthority ?? (
+                <Pending>relevant authority to be confirmed</Pending>
               )}
               .
             </p>
