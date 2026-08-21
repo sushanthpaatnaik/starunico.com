@@ -626,3 +626,18 @@
 .nav-surface {
   background: var(--nav-surface);
 }
+
+/* ---- Focus ------------------------------------------------------------
+   The focus ring must not animate. Tailwind's `transition` utility includes
+   outline-color, so a focused control faded its ring in from whatever colour
+   it was before — on the primary button that meant 150ms of near-white ring on
+   a near-white page, which is no indicator at all for someone tabbing quickly.
+
+   Unlayered on purpose: this has to beat the utility that sets the transition,
+   and the other animated properties are kept so the rest of the interaction
+   still moves.
+   ------------------------------------------------------------------------ */
+:focus-visible {
+  transition-property: color, background-color, border-color, text-decoration-color,
+    fill, stroke, transform, opacity;
+}

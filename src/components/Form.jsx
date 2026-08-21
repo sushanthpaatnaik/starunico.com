@@ -98,23 +98,22 @@ export function TextArea({ label, name, error, hint, value, max, optional, ...pr
         className={`${base} ${border(error)}`}
         {...props}
       />
-      <div className="mt-1.5 flex items-baseline justify-between gap-4">
+      {/* Shares Error and Hint with the other controls rather than repeating
+          their markup. The copy here used to be its own <p>, which is why it
+          alone missed role="alert" — and step one of the founder form is a
+          textarea, so the site's most-seen validation message was the one a
+          screen reader never announced. */}
+      <div className="flex items-baseline justify-between gap-4">
         <div className="min-w-0">
           {error ? (
-            <p id={`${name}-error`} className="text-sm text-danger">
-              {error}
-            </p>
+            <Error id={`${name}-error`}>{error}</Error>
           ) : (
-            hint && (
-              <p id={`${name}-hint`} className="text-sm text-ink-3">
-                {hint}
-              </p>
-            )
+            hint && <Hint id={`${name}-hint`}>{hint}</Hint>
           )}
         </div>
         {max && (
           <span
-            className={`shrink-0 text-xs tabular-nums ${
+            className={`mt-1.5 shrink-0 text-xs tabular-nums ${
               used > max ? 'text-danger' : 'text-ink-3'
             }`}
           >

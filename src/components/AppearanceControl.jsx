@@ -41,8 +41,8 @@ export default function AppearanceControl({ tone = 'light', className = '' }) {
           return (
             <label
               key={option.value}
-              className={`group relative cursor-pointer text-sm transition-colors ${
-                onPanel ? 'py-1' : ''
+              className={`group cursor-pointer text-sm transition-colors ${
+                onPanel ? 'relative flex items-center py-3' : 'relative'
               } ${
                 selected
                   ? onPanel
@@ -61,19 +61,40 @@ export default function AppearanceControl({ tone = 'light', className = '' }) {
                 onChange={() => setMode(option.value)}
                 className="sr-only"
               />
-              {option.label}
-              <span
-                aria-hidden="true"
-                className={`absolute -bottom-1 left-0 block h-px transition-[width] duration-200 ${
-                  onPanel ? 'bg-panel-accent' : 'bg-accent'
-                } ${
-                  selected ? 'w-full' : 'w-0'
-                }`}
-              />
+              {/*
+                On the mobile plane the label is padded out to a comfortable
+                thumb target, so the underline hangs off an inner span that
+                still hugs the word. On desktop the label is the word, and the
+                markup stays as it was: wrapping it there moved the rule and
+                widened the control by a few pixels, for no benefit.
+              */}
+              {onPanel ? (
+                <span className="relative">
+                  {option.label}
+                  <Rule onPanel={onPanel} selected={selected} />
+                </span>
+              ) : (
+                <>
+                  {option.label}
+                  <Rule onPanel={onPanel} selected={selected} />
+                </>
+              )}
             </label>
           )
         })}
       </div>
     </fieldset>
+  )
+}
+
+/** The hairline that marks the selected option. */
+function Rule({ onPanel, selected }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`absolute -bottom-1 left-0 block h-px transition-[width] duration-200 ${
+        onPanel ? 'bg-panel-accent' : 'bg-accent'
+      } ${selected ? 'w-full' : 'w-0'}`}
+    />
   )
 }
