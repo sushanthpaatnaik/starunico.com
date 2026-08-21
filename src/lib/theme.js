@@ -139,6 +139,20 @@ export function sunTimes(date, latitude, longitude) {
   }
 }
 
+/**
+ * The operating system's stated preference, or null when it states none.
+ *
+ * Absence has to be detected by asking both ways: a `prefers-color-scheme:
+ * dark` query that does not match means either "light" or "no opinion", and
+ * treating no opinion as a preference would let it outrank the clock.
+ */
+export function systemPreference() {
+  if (typeof window === 'undefined' || !window.matchMedia) return null
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark'
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light'
+  return null
+}
+
 /** The visitor's IANA timezone, or null where it cannot be read. */
 export function timeZone() {
   try {
@@ -187,24 +201,29 @@ export function resolveAuto(now = new Date(), zone = timeZone()) {
         // Before every known event means the night that began earlier still holds.
         theme: started ? started.theme : next?.theme === 'light' ? 'dark' : 'light',
         until: next?.at ?? null,
-        basis: 'daylight',
+        source: 'sunrise-sunset',
       }
     }
 
     // Polar day or night: the sun settles the question without an hour angle.
     const midsummer = Math.abs(now.getMonth() - 5.5) < 3
     const polarDay = latitude > 0 ? midsummer : !midsummer
-    return { theme: polarDay ? 'light' : 'dark', until: null, basis: 'polar' }
+    return { theme: polarDay ? 'light' : 'dark', until: null, source: 'sunrise-sunset' }
   }
 
-  // No known position: the local clock, which is still local to the visitor.
+  // No usable position. The operating system is asked next, because a stated
+  // preference is a real answer, where the clock is only ever an assumption.
+  const preference = systemPreference()
+  if (preference) return { theme: preference, until: null, source: 'system' }
+
+  // Last resort: the local clock, which is at least local to the visitor.
   const hours = localHours(now)
   const isDay = hours >= 6.5 && hours < 18.5
   const boundary = new Date(now)
   boundary.setHours(isDay ? 18 : 6, 30, 0, 0)
   if (boundary <= now) boundary.setDate(boundary.getDate() + 1)
 
-  return { theme: isDay ? 'light' : 'dark', until: boundary, basis: 'clock' }
+  return { theme: isDay ? 'light' : 'dark', until: boundary, source: 'time' }
 }
 
 /** The stored mode, defaulting to auto for anyone who has not chosen. */

@@ -15,13 +15,18 @@ import { cacheResolved, resolveAuto, storedMode, timeZone } from './lib/theme.js
 const mode = storedMode()
 
 let theme
+let source
 if (mode === 'light' || mode === 'dark') {
   theme = mode
+  source = 'manual'
 } else {
   const resolved = resolveAuto(new Date(), timeZone())
   theme = resolved.theme
+  source = resolved.source
   // Left for the next visit, where it saves repeating this work before paint.
   cacheResolved(resolved.theme, resolved.until)
 }
 
 document.documentElement.dataset.theme = theme
+// Ambient light, if the device reports it, refines this once the app is running.
+document.documentElement.dataset.themeSource = source

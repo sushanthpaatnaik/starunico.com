@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { PATHS, REDIRECTS } from './lib/routes.js'
 import { AppearanceProvider } from './components/Appearance.jsx'
+import AppearanceDebug from './components/AppearanceDebug.jsx'
 import DocumentHead from './components/DocumentHead.jsx'
 import Layout from './components/Layout.jsx'
 import PageTransition from './components/PageTransition.jsx'
@@ -21,6 +22,7 @@ export default function App() {
   return (
     <PageTransition>
       <AppearanceProvider>
+        <AppearanceDebug />
         <DocumentHead />
         <ScrollManager />
         <Routes>

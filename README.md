@@ -202,6 +202,27 @@ the mobile menu. What is stored is the *mode*, never the theme it resolved to:
 saving "dark" because auto happened to resolve dark one evening would freeze a
 visitor into night permanently.
 
+Auto is a hierarchy, and `data-theme-source` on the root element records which
+layer answered — so a theme that looks wrong can be traced without guessing:
+
+1. **Ambient room light**, where the device reports it. Feature-detected, and in
+   practice never available: no current browser ships the Ambient Light Sensor
+   API. Chromium 141 does not expose it even behind
+   `--enable-generic-sensor-extra-classes`, and Firefox removed the older
+   `devicelight` event, both on fingerprinting grounds. The layer is written so
+   a device that does expose it needs no further work.
+2. **Sunrise and sunset** for the visitor's timezone.
+3. **The operating system's stated preference**, where it states one.
+4. **Local clock hours**, as a last resort.
+
+The ambient decision logic lives in `src/lib/ambient.js` as a pure state machine
+that takes readings and a timestamp, so its behaviour is testable without
+hardware — which matters when the hardware does not exist. Three mechanisms keep
+it calm and they solve different problems: smoothing removes sensor noise,
+hysteresis removes the borderline (the level that turns lights on is not the
+level that turns them off), and dwell plus cooldown remove brief events like a
+hand over the sensor.
+
 Auto resolves from daylight rather than a fixed clock, since 18:30 is after dark
 in Berlin in December and broad daylight there in June. Latitude comes from the
 browser's IANA timezone via a small table in `src/lib/theme.js` — never from GPS,
